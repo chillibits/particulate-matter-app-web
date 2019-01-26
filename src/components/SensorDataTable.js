@@ -41,11 +41,11 @@ function getSorting(order, orderBy) {
 
 const rows = [
   { id: 'time', numeric: false, disablePadding: true, label: 'Uhrzeit' },
-  { id: 'pm10', numeric: true, disablePadding: false, label: 'PM10 (µg/m³)' },
-  { id: 'pm2.5', numeric: true, disablePadding: false, label: 'PM2,5 (µg/m³)' },
-  { id: 'temp', numeric: true, disablePadding: false, label: 'Temperatur (°C)' },
-  { id: 'humidity', numeric: true, disablePadding: false, label: 'Luftfeuchtigkeit (%)' },
-  { id: 'pressure', numeric: true, disablePadding: false, label: 'Luftdruck (hPa)' },
+  { id: 'pm10', numeric: true, disablePadding: false, label: 'PM10' },
+  { id: 'pm2.5', numeric: true, disablePadding: false, label: 'PM2,5' },
+  { id: 'temp', numeric: true, disablePadding: false, label: 'Temperatur' },
+  { id: 'humidity', numeric: true, disablePadding: false, label: 'Luftfeuchtigkeit' },
+  { id: 'pressure', numeric: true, disablePadding: false, label: 'Luftdruck' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -166,7 +166,6 @@ class EnhancedTable extends React.Component {
     order: 'asc',
     orderBy: 'calories',
     selected: [],
-    data: this.props.data,
     page: 0,
     rowsPerPage: 25,
   };
@@ -217,8 +216,8 @@ class EnhancedTable extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { classes, data } = this.props;
+    const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
@@ -233,16 +232,16 @@ class EnhancedTable extends React.Component {
                 .map(n => {
                   const isSelected = this.isSelected(n.id);
                   return (
-                    <TableRow hover onClick={event => this.handleClick(event, n.id)} role="checkbox" aria-checked={isSelected} tabIndex={-1} key={n.id} selected={isSelected} >
+                    <TableRow hover onClick={event => this.handleClick(event, n.id)} role="checkbox" aria-checked={isSelected} tabIndex={-1} key={n.id} selected={isSelected}>
                       <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
                       </TableCell>
-                      <TableCell component="th" scope="row" padding="none"><b>{n.time}</b></TableCell>
-                      <TableCell align="right">{n.pm1}</TableCell>
-                      <TableCell align="right">{n.pm2}</TableCell>
-                      <TableCell align="right">{n.temp}</TableCell>
-                      <TableCell align="right">{n.humidity !== 0 ? n.humidity : "-"}</TableCell>
-                      <TableCell align="right">{n.pressure !== 0 ? n.pressure : "-"}</TableCell>
+                      <TableCell component="th" scope="row" padding="none"><b>{n.time} Uhr</b></TableCell>
+                      <TableCell align="right">{n.pm1} µg/m³</TableCell>
+                      <TableCell align="right">{n.pm2} µg/m³</TableCell>
+                      <TableCell align="right" style={n.temp === 0 && n.humidity === 0 && n.pressure === 0 ? {color: "#F00"} : {}}>{n.temp === 0 && n.humidity === 0 && n.pressure === 0 ? "-" : n.temp + " °C"}</TableCell>
+                      <TableCell align="right">{n.humidity !== 0 ? n.humidity + " %" : "-"}</TableCell>
+                      <TableCell align="right">{n.pressure !== 0 ? n.pressure + " hPa" : "-"}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -262,6 +261,7 @@ class EnhancedTable extends React.Component {
 
 EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(EnhancedTable);

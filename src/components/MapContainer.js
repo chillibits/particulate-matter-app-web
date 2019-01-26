@@ -10,6 +10,7 @@ import { SensorIcon } from './index'
 class MapContainer extends Component {
   state = {
     markers: [],
+    old_markerData: [],
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
@@ -28,7 +29,7 @@ class MapContainer extends Component {
 
   onMarkerClick = (props, marker, e) => {
     let currentComponent = this;
-    Geocode.setApiKey("AIzaSyDUiKmZIwgnhCcWldQSuScuzKE8vGg94dc");
+    Geocode.setApiKey(Keys.GOOGLE_GEOCODE_KEY);
     Geocode.fromLatLng(marker.position.lat(), marker.position.lng()).then(
       response => {
         this.setState({ selectedAddress: currentComponent.getCountry(response.results[0].address_components) + ", " + currentComponent.getCity(response.results[0].address_components) });
@@ -67,7 +68,7 @@ class MapContainer extends Component {
   };
 
   onShowSensorDataClicked = () => {
-    var sensor = { chip_id: this.state.activeMarker.name, name: "Unbekannter Sensor", color: "#000000", fav: false };
+    var sensor = { chip_id: this.state.activeMarker.name, name: this.state.selectedAddress, color: "#000000", fav: false };
     this.props.onShowSensorData(sensor);
   }
 
@@ -85,9 +86,7 @@ class MapContainer extends Component {
   }
 
   render() {
-    console.log(this.props.markerData);
-
-    if(this.props.favourites.length !== this.state.old_favourites.length || this.props.own_sensors.length !== this.state.old_own_sensors.length) {
+    if(this.props.markerData !== this.state.old_markerData || this.props.favourites.length !== this.state.old_favourites.length || this.props.own_sensors.length !== this.state.old_own_sensors.length) {
       this.state.markers = this.props.markerData.map(marker => {
         var image_url = "markers/blue.png";
         this.props.favourites.map(sensor => {
@@ -100,7 +99,7 @@ class MapContainer extends Component {
         });
         return <Marker key={marker.chip_id} icon={{ url: image_url }} title={marker.chip_id} name={marker.chip_id} onClick={this.onMarkerClick} position={{lat: marker.lat, lng: marker.lng}} />;
       });
-      this.setState({ old_favourites: this.props.favourites, old_own_sensors: this.props.own_sensors });
+      this.setState({ old_markerData: this.props.markerData, old_favourites: this.props.favourites, old_own_sensors: this.props.own_sensors });
     }
 
     return (

@@ -274,7 +274,7 @@ class FullScreenDialog extends React.Component {
             <Tooltip title="Sensordetails anzeigen">
               <IconButton color="inherit" onClick={this.showDetails} aria-label="Details anzeigen"><SensorIcon /></IconButton>
             </Tooltip>
-            <Typography variant="h6" color="inherit" className={classes.flex}>{this.props.sensor.name} - (ChipID: {this.props.sensor.chip_id})</Typography>
+            <Typography variant="h6" color="inherit" className={classes.flex}>{this.props.sensor.name} - ChipID: {this.props.sensor.chip_id}</Typography>
             <Tooltip title="Fenster schließen">
               <IconButton color="inherit" onClick={this.props.onClose} aria-label="Close"><CloseIcon /></IconButton>
             </Tooltip>
@@ -349,9 +349,10 @@ class FullScreenDialog extends React.Component {
                   lineWidth={1}
                   dotSize={this.state.disable_dots ? 0 : 5}
                   dotColor="inherit:darker(0.3)"
-                  dotBorderWidth={0}
-                  dotLabel="y"
+                  enableDotLabel={true}
+                  dotLabel={this.state.enable_time ? (function(e){return"".concat(moment(e.x).format("HH:mm"),"")}) : ""}
                   dotLabelYOffset={-12}
+                  dotBorderWidth={0}
                   animate={false}
                   motionStiffness={90}
                   motionDamping={15}
@@ -389,6 +390,7 @@ class FullScreenDialog extends React.Component {
               <br/>
               <Slider value={this.state.current_zoom} onChange={this.onZoomChange} min={1000} max={30000} step={1000} />
               <br/>
+              <FormControlLabel control={ <Switch checked={this.state.enable_time} onChange={this.onCheckedChange('enable_time')} color="primary" /> } label="Messzeiten einblenden" />
               <FormControlLabel control={ <Switch checked={this.state.disable_dots} onChange={this.onCheckedChange('disable_dots')} color="primary" /> } label="Punkte ausblenden" />
               <FormControlLabel control={ <Switch checked={this.state.smooth_curve} onChange={this.onCheckedChange('smooth_curve')} color="primary" /> } label="Weiche Kurve aktivieren" />
               {this.state.smooth_curve && <FormControlLabel control={ <Switch checked={this.state.basis_curve} onChange={this.onCheckedChange('basis_curve')} color="primary" /> } label="Kurvenglättung aktivieren" />}
