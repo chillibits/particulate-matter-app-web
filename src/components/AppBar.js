@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 //import SearchIcon from '@material-ui/icons/Search';
 import Avatar from '@material-ui/core/Avatar';
 //import { AutoComplete } from './index'
+import strings from '../strings'
 
 const styles = theme => ({
   root: {
@@ -82,10 +83,10 @@ class SearchAppBar extends Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton href="#" className={classes.menuButton} color="inherit" aria-label="Feinstaub-Karte">
-              <Avatar alt="Feinstaub-Karte" src="../favicon.ico" className={classes.avatar} />
+            <IconButton href="#" className={classes.menuButton} color="inherit" aria-label={strings.app_name}>
+              <Avatar alt={strings.app_name} src="../favicon.ico" className={classes.avatar} />
             </IconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>Feinstaub-Karte</Typography>
+            <Typography className={classes.title} variant="h6" color="inherit" noWrap>{strings.app_name}</Typography>
             <div className={classes.grow} />
             {/*<div className={classes.search}>
               <div className={classes.searchIcon}>

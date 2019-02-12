@@ -8,6 +8,7 @@ import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
 import { CirclePicker } from 'react-color'
 import fire from '../fire'
+import strings from '../strings'
 
 const styles = theme => ({
   dialog_content: {
@@ -23,17 +24,6 @@ class DialogAddFavourite extends React.Component {
     color: undefined,
     button_disabled: true,
   };
-
-  componentDidMount() {
-    /*const min = 0;
-    const max = 255;
-    var color = {};
-    color.a = 255;
-    color.r = min + Math.random() * (max - min);
-    color.g = min + Math.random() * (max - min);
-    color.b = min + Math.random() * (max - min);
-    this.setState({ default_color: color, color: color });*/
-  }
 
   onAddFavourite = () => {
     //Favourit hinzufügen
@@ -60,15 +50,15 @@ class DialogAddFavourite extends React.Component {
 
     return (
       <Dialog open={this.props.opened} onClose={this.props.onClose} aria-labelledby="dialog-title" >
-        <DialogTitle id="dialog-title">Sensor zu Favoriten hinzuf&uuml;gen</DialogTitle>
+        <DialogTitle id="dialog-title">{strings.add_sensor_to_favourites}</DialogTitle>
         <div className={classes.dialog_content}>
-          <p><TextField label="Anzeigename" style={{width: "320px"}} onChange={this.onNameChanged} variant="outlined"/></p>
-          <p><TextField label="Chip-ID" disabled value={this.props.chip_id} style={{width: "320px"}} variant="outlined"/></p>
+          <p><TextField label={strings.display_name} style={{width: "320px"}} onChange={this.onNameChanged} variant="outlined"/></p>
+          <p><TextField label={strings.chip_id} disabled value={this.props.chip_id} style={{width: "320px"}} variant="outlined"/></p>
           <CirclePicker color={this.state.color} width="340px" onChangeComplete={this.onColorChanged} />
         </div>
         <DialogActions>
-            <Button onClick={this.props.onClose} color="primary">Abbrechen</Button>
-            <Button onClick={this.onAddFavourite} color="primary" disabled={this.state.button_disabled} autoFocus>Favorit hinzuf&uuml;gen</Button>
+            <Button onClick={this.props.onClose} color="primary">{strings.cancel}</Button>
+            <Button onClick={this.onAddFavourite} color="primary" disabled={this.state.button_disabled} autoFocus>{strings.add_favourite}</Button>
           </DialogActions>
       </Dialog>
     );

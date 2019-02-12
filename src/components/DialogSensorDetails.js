@@ -7,14 +7,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import moment from 'moment';
+import strings from '../strings'
 
 class DialogSensorDetails extends React.Component {
   state = {
     public: false,
-    creation_date: "Laden...",
-    lat: "Laden...",
-    lng: "Laden...",
-    alt: "Laden...",
+    creation_date: strings.loading,
+    lat: strings.loading,
+    lng: strings.loading,
+    alt: strings.loading,
   };
 
   constructor(props) {
@@ -63,43 +64,43 @@ class DialogSensorDetails extends React.Component {
   render() {
     return (
       <Dialog open={this.props.opened} onClose={this.props.onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" >
-        <DialogTitle id="alert-dialog-title">{"Sensor Details"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{strings.sensor_details}</DialogTitle>
         <DialogContent>
           <table width="350">
             <tbody>
               <tr>
-                <td><b>Anzeigename:</b></td>
+                <td><b>{strings.display_name}:</b></td>
                 <td align="right">{this.props.name}</td>
               </tr>
               <tr>
-                <td><b>Chip-ID:</b></td>
+                <td><b>{strings.chip_id}:</b></td>
                 <td align="right">{this.props.chip_id}</td>
               </tr>
               <tr>
-                <td><b>Öffentlich:</b></td>
+                <td><b>{strings.public}:</b></td>
                 <td align="right">{this.state.public ? "Ja" : "Nein"}</td>
               </tr>
               <tr>
-                <td><b>Online seit:</b></td>
+                <td><b>{strings.public}:</b></td>
                 <td align="right">{this.state.creation_date}</td>
               </tr>
               <tr>
-                <td><b>Längengrad:</b></td>
+                <td><b>{strings.latitude}:</b></td>
                 <td align="right">{this.state.lat}</td>
               </tr>
               <tr>
-                <td><b>Breitengrad:</b></td>
+                <td><b>{strings.longitude}:</b></td>
                 <td align="right">{this.state.lng}</td>
               </tr>
               <tr>
-                <td><b>Montagehöhe:</b></td>
+                <td><b>{strings.mounting_height}:</b></td>
                 <td align="right">{this.state.alt}</td>
               </tr>
             </tbody>
           </table>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.props.onClose} color="primary" autoFocus>OK</Button>
+          <Button onClick={this.props.onClose} color="primary" autoFocus>{strings.ok}</Button>
         </DialogActions>
       </Dialog>
     );

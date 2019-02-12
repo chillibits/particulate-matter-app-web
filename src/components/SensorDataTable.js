@@ -18,6 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import strings from '../strings'
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) return -1;
@@ -40,12 +41,12 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'time', numeric: false, disablePadding: true, label: 'Uhrzeit' },
-  { id: 'pm10', numeric: true, disablePadding: false, label: 'PM10' },
-  { id: 'pm2.5', numeric: true, disablePadding: false, label: 'PM2,5' },
-  { id: 'temp', numeric: true, disablePadding: false, label: 'Temperatur' },
-  { id: 'humidity', numeric: true, disablePadding: false, label: 'Luftfeuchtigkeit' },
-  { id: 'pressure', numeric: true, disablePadding: false, label: 'Luftdruck' },
+  { id: 'time', numeric: false, disablePadding: true, label: strings.time_of_day },
+  { id: 'pm10', numeric: true, disablePadding: false, label: strings.pm1 },
+  { id: 'pm2.5', numeric: true, disablePadding: false, label: strings.pm2 },
+  { id: 'temp', numeric: true, disablePadding: false, label: strings.temperature },
+  { id: 'humidity', numeric: true, disablePadding: false, label: strings.humidity },
+  { id: 'pressure', numeric: true, disablePadding: false, label: strings.pressure },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -124,14 +125,14 @@ let EnhancedTableToolbar = props => {
       <div className={classes.spacer} />
       <div className={classes.actions}>
         {numSelected > 0 ? (
-          <Tooltip title="Löschen">
-            <IconButton aria-label="Löschen">
+          <Tooltip title={strings.delete}>
+            <IconButton aria-label={strings.delete}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip title="Bald verfügbar">
-            <IconButton aria-label="Bald verfügbar">
+          <Tooltip title={strings.soon_available}>
+            <IconButton aria-label={strings.soon_available}>
               <FilterListIcon />
             </IconButton>
           </Tooltip>
@@ -181,7 +182,7 @@ class EnhancedTable extends React.Component {
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
-      this.setState(state => ({ selected: state.data.map(n => n.id) }));
+      this.setState(state => ({ selected: this.props.data.map(n => n.id) }));
       return;
     }
     this.setState({ selected: [] });
@@ -236,7 +237,7 @@ class EnhancedTable extends React.Component {
                       <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
                       </TableCell>
-                      <TableCell component="th" scope="row" padding="none"><b>{n.time} Uhr</b></TableCell>
+                      <TableCell component="th" scope="row" padding="none"><b>{n.time}</b></TableCell>
                       <TableCell align="right">{n.pm1} µg/m³</TableCell>
                       <TableCell align="right">{n.pm2} µg/m³</TableCell>
                       <TableCell align="right" style={n.temp === 0 && n.humidity === 0 && n.pressure === 0 ? {color: "#F00"} : {}}>{n.temp === 0 && n.humidity === 0 && n.pressure === 0 ? "-" : n.temp + " °C"}</TableCell>
@@ -253,7 +254,7 @@ class EnhancedTable extends React.Component {
             </TableBody>
           </Table>
         </div>
-        <TablePagination rowsPerPageOptions={[25, 50, 100]} component="div" count={data.length} rowsPerPage={rowsPerPage} page={page} backIconButtonProps={{'aria-label': 'Vorherige Seite'}} nextIconButtonProps={{'aria-label': 'Nächste Seite'}} onChangePage={this.handleChangePage} onChangeRowsPerPage={this.handleChangeRowsPerPage} />
+        <TablePagination rowsPerPageOptions={[25, 50, 100]} component="div" count={data.length} rowsPerPage={rowsPerPage} page={page} backIconButtonProps={{'aria-label': strings.previous_page}} nextIconButtonProps={{'aria-label': strings.next_page}} onChangePage={this.handleChangePage} onChangeRowsPerPage={this.handleChangeRowsPerPage} />
       </Paper>
     );
   }

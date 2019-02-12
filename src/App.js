@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import { Grid, Typography, Button, Fab } from '@material-ui/core';
+import { Grid, Typography, Button, Fab, Paper } from '@material-ui/core';
 import { AppBar, MapContainer, LoginContainer, DialogAddSensor, DialogAddFavourite, DialogSensorData, DialogEditSensor, DialogRemoveSensor, DialogSensorDetails } from './components'
 import AddIcon from '@material-ui/icons/Add';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -16,6 +16,7 @@ import request from 'superagent'
 import md5 from 'md5'
 import fire from './fire'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import strings from './strings'
 
 const styles = theme => ({
   main: {
@@ -77,7 +78,7 @@ class App extends Component {
     dialog_sensor_details_open: false,
     dialog_edit_sensor_open: false,
     dialog_remove_sensor_open: false,
-    snackbar_message: "Die Aktion war erfolgreich!",
+    snackbar_message: strings.action_successful,
     snackbar_success_open: false,
     snackbar_error_open: false
   }
@@ -185,7 +186,7 @@ class App extends Component {
 
   onHideAddSensorDialog = (state) => {
     this.setState({ dialog_add_sensor_open: false });
-    this.onSnackbarOpen(state, "Sensor erfolgreich hinzugefügt!", "Fehler! Bitte versuchen Sie es erneut.");
+    this.onSnackbarOpen(state, strings.sensor_added_successfully, strings.error_please_try_again);
   }
 
   onShowAddFavouriteDialog = (selected_id) => {
@@ -194,7 +195,7 @@ class App extends Component {
 
   onHideAddFavouriteDialog = (state) => {
     this.setState({ dialog_add_favourite_open: false });
-    this.onSnackbarOpen(state, "Der Sensor wurde favorisiert!", "Favorisieren fehlgeschlagen! Bitte versuchen Sie es erneut.");
+    this.onSnackbarOpen(state, strings.sensor_favourized, strings.favourization_failed_try_again);
   }
 
   onShowSensorDataDialog = (sensor) => {
@@ -219,7 +220,7 @@ class App extends Component {
 
   onHideEditSensorDialog = (state) => {
     this.setState({ dialog_edit_sensor_open: false, selected: undefined });
-    this.onSnackbarOpen(state, "Änderungen erfolgreich gespeichert!", "Die Änderungen konnten nicht gespeichert werden! Bitte versuchen Sie es erneut.");
+    this.onSnackbarOpen(state, strings.changings_saved, strings.changings_save_failed);
   }
 
   onShowRemoveSensorDialog = (selected_id) => {
@@ -228,7 +229,7 @@ class App extends Component {
 
   onHideRemoveSensorDialog = (state) => {
     this.setState({ dialog_remove_sensor_open: false, selected: undefined });
-    this.onSnackbarOpen(state, "Sensor erfolgreich entfernt!", "Entfernen fehlgeschlagen! Bitte versuchen Sie es erneut.");
+    this.onSnackbarOpen(state, strings.sensor_removed_successfully, strings.sensor_removal_failed);
   }
 
   onSnackbarOpen = (state, success_message, error_message) => {
@@ -247,6 +248,8 @@ class App extends Component {
   render() {
     const { classes } = this.props;
 
+    console.log(strings.app_name);
+
     return (
       <Router>
         <Fragment>
@@ -262,7 +265,10 @@ class App extends Component {
                 {this.state.markerData && <MapContainer google={window.google} logged_in={this.state.logged_in} ownPosition={this.state.currentPosition} markerData={this.state.markerData} favourites={this.state.favourites} own_sensors={this.state.own_sensors} onAddFavourite={this.onShowAddFavouriteDialog} onShowSensorData={this.onShowSensorDataDialog} style={{position: 'absolute', top: 0, bottom: 0}}/>}
               </Grid>
             </Grid>
-            <Fab color="primary" aria-label="Sensor hinzufügen" style={{margin: 0, right: 20, bottom: 65, position: "fixed" }} onClick={this.onShowAddSensorDialog}><AddIcon/></Fab>
+            <Paper style={{margin: 0, paddingLeft: 10, paddingRight: 10, paddingTop: 3, paddingBottom: 3, right: 20, top: 80, position: "fixed", backgroundColor: 'rgba(255,255,255,0.5)' }}>
+              <Typography>{this.state.markerData.length} {strings.sensors}</Typography>
+            </Paper>
+            <Fab color="primary" aria-label={strings.add_sensor} style={{margin: 0, right: 20, bottom: 65, position: "fixed" }} onClick={this.onShowAddSensorDialog}><AddIcon/></Fab>
             { /* Dialogs */ }
             {this.state.dialog_add_sensor_open && <DialogAddSensor opened={this.state.dialog_add_sensor_open} onClose={this.onHideAddSensorDialog} onSensorAdded={this.props.onHideAddSensorDialog} user_data={this.state.user_data} sync_key={this.state.sync_key} logged_in={this.state.logged_in}/>}
             {this.state.selected_id !== undefined && this.state.dialog_add_favourite_open && <DialogAddFavourite opened={this.state.dialog_add_favourite_open} onClose={this.onHideAddFavouriteDialog} sync_key={this.state.sync_key} user_data={this.state.user_data} chip_id={this.state.selected_id} />}
@@ -272,7 +278,7 @@ class App extends Component {
             {this.state.selected !== undefined && this.state.dialog_sensor_details_open && <DialogSensorDetails opened={this.state.dialog_sensor_details_open} chip_id={this.state.selected.chip_id} name={this.state.selected.name} onClose={this.onHideDetailsDialog} />}
             {/* URL-Parameter */}
             <Route path="/s/:id" render={(props) => (
-              <DialogSensorData opened={this.state.dialog_sensor_data_route_open} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={{chip_id: props.match.params.id, name: "Unbekannter Sensor"}} />
+              <DialogSensorData opened={this.state.dialog_sensor_data_route_open} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={{chip_id: props.match.params.id, name: strings.unknown_sensor}} />
             )} />
             {/* Snackbars */}
             <Snackbar open={this.state.snackbar_success_open} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
@@ -307,9 +313,9 @@ class App extends Component {
           {/* Footer */}
           <Grid container className={classes.footer}>
             <Typography variant="body2" color="inherit" style={{marginTop: 7}} noWrap>© M&amp;R Games&nbsp;&nbsp;-&nbsp;&nbsp;2018 - 2019</Typography>
-            <Button variant="outlined" color="primary" href="https://mrgames13.jimdo.com" target="_blank" className={classes.button_homepage}>Unsere Homepage</Button>
-            <Button variant="outlined" color="primary" href="https://mrgames13.jimdo.com/feinstaub-app/info/" target="_blank" className={classes.button_info}>Info</Button>
-            <Button variant="outlined" color="secondary" href="https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp" target="_blank" className={classes.button_download}>Android-App herunterladen</Button>
+            <Button variant="outlined" color="primary" href="https://mrgames13.jimdo.com" target="_blank" className={classes.button_homepage}>{strings.our_homepage}</Button>
+            <Button variant="outlined" color="primary" href="https://mrgames13.jimdo.com/feinstaub-app/info/" target="_blank" className={classes.button_info}>{strings.info}</Button>
+            <Button variant="outlined" color="secondary" href="https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp" target="_blank" className={classes.button_download}>{strings.download_android_app}</Button>
           </Grid>
         </Fragment>
       </Router>

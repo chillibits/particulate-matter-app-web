@@ -16,6 +16,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { SensorIcon } from './index'
 import QRCode from 'qrcode-react'
 import { Scrollbars } from 'react-custom-scrollbars';
+import strings from '../strings'
+
+const isFirefox = typeof InstallTrigger !== 'undefined';
 
 const styles = theme => ({
   container: {
@@ -92,10 +95,10 @@ class LoginContainer extends Component {
                   <QRCode value={this.state.sync_key} size={210} logo={"https://map.h2801469.stratoserver.net/qr_icon.png"} logoWidth={70}/>
                 </div>
               </Avatar>
-              <Typography variant="h6" style={{position: "absolute", marginTop: 230, color: "#3F51B5"}} gutterBottom><b>Mit der Android-App verknüpfen</b></Typography>
-              <Typography variant="subtitle1" style={{position: "absolute", marginTop: 290, color: "#666", textAlign: "center"}} gutterBottom>Um Ihre Sensoren und Ihre Favouriten aus der App<br/>hier anzuzeigen, starten Sie die Feinstaub-App.</Typography>
-              <Typography variant="subtitle1" style={{position: "absolute", marginTop: 360, color: "#666", textAlign: "center"}} gutterBottom><i style={{color: "#3F51B5"}}>Drei Punkte oben rechts → 'Web-Version'.</i></Typography>
-              <Typography variant="subtitle1" style={{position: "absolute", marginTop: 415, color: "#666", textAlign: "center", marginBottom: 30}} gutterBottom>Scannen Sie den obigen QR-Code.</Typography>
+              <Typography variant="h6" style={isFirefox ? {position: "absolute", marginTop: 450, color: "#3F51B5"} : {position: "absolute", marginTop: 230, color: "#3F51B5"}} gutterBottom><b>{strings.link_with_android_app}</b></Typography>
+              <Typography variant="subtitle1" style={isFirefox ? {position: "absolute", marginTop: 560, color: "#666", textAlign: "center"} : {position: "absolute", marginTop: 290, color: "#666", textAlign: "center"}} gutterBottom>{strings.link_instruction_1}<br/>{strings.link_instruction_2}</Typography>
+              <Typography variant="subtitle1" style={isFirefox ? {position: "absolute", marginTop: 690, color: "#666", textAlign: "center"} : {position: "absolute", marginTop: 360, color: "#666", textAlign: "center"}} gutterBottom><i style={{color: "#3F51B5"}}>{strings.link_instruction_3}</i></Typography>
+              <Typography variant="subtitle1" style={isFirefox ? {position: "absolute", marginTop: 800, color: "#666", textAlign: "center", marginBottom: 30} : {position: "absolute", marginTop: 415, color: "#666", textAlign: "center", marginBottom: 30}} gutterBottom>{strings.link_instruction_4}</Typography>
             </div>
           </Scrollbars>
         }
@@ -116,10 +119,10 @@ class LoginContainer extends Component {
                             </ListItem>
                             {this.state.clicked !== undefined &&
                               <Menu anchorEl={this.state.anchorEl} open={this.state.clicked === sensor.chip_id} onClose={() => this.handleMenuClose(0, sensor)} >
-                                <MenuItem onClick={() => this.handleMenuClose(1, sensor)}>Messdaten anzeigen</MenuItem>
-                                <MenuItem onClick={() => this.handleMenuClose(2, sensor)}>Sensor bearbeiten</MenuItem>
-                                <MenuItem onClick={() => this.handleMenuClose(3, sensor)}>Sensor entfernen</MenuItem>
-                                <MenuItem onClick={() => this.handleMenuClose(4, sensor)}>Eigenschaften</MenuItem>
+                                <MenuItem onClick={() => this.handleMenuClose(1, sensor)}>{strings.show_measurements}</MenuItem>
+                                <MenuItem onClick={() => this.handleMenuClose(2, sensor)}>{strings.edit_sensor}</MenuItem>
+                                <MenuItem onClick={() => this.handleMenuClose(3, sensor)}>{strings.remove_sensor}</MenuItem>
+                                <MenuItem onClick={() => this.handleMenuClose(4, sensor)}>{strings.properties}</MenuItem>
                               </Menu>
                             }
                           </Fragment>
@@ -129,8 +132,8 @@ class LoginContainer extends Component {
                   }
                   {this.props.favourites.length === 0 &&
                     <Fragment>
-                      <Avatar alt="Favourites" src="/images/star_impossible.png" style={{width: 250, height: 250, marginLeft: 60, marginTop: 50, padding: 15}} />
-                      <Typography variant="subtitle1" style={{marginLeft: 20, marginRight: 20, marginTop: 40, color: "#666", textAlign: "center"}} gutterBottom><b>Noch keine Favouriten vorhanden. Um Favoriten hinzuzufügen, tippen Sie auf der Karte auf einen Sensor und wählen Sie 'Favorit hinzufügen'.</b></Typography>
+                      <Avatar src="/images/star_impossible.png" style={{width: 250, height: 250, marginLeft: 60, marginTop: 50, padding: 15}} />
+                      <Typography variant="subtitle1" style={{marginLeft: 20, marginRight: 20, marginTop: 40, color: "#666", textAlign: "center"}} gutterBottom><b>{strings.no_favourites}</b></Typography>
                     </Fragment>
                   }
                 </TabContainer>
@@ -147,10 +150,10 @@ class LoginContainer extends Component {
                             </ListItem>
                             {this.state.clicked !== undefined &&
                               <Menu anchorEl={this.state.anchorEl} open={this.state.clicked === sensor.chip_id} onClose={() => this.handleMenuClose(0, sensor)} >
-                                <MenuItem onClick={() => this.handleMenuClose(1, sensor)}>Messdaten anzeigen</MenuItem>
-                                <MenuItem onClick={() => this.handleMenuClose(2, sensor)}>Sensor bearbeiten</MenuItem>
-                                <MenuItem onClick={() => this.handleMenuClose(3, sensor)}>Sensor entfernen</MenuItem>
-                                <MenuItem onClick={() => this.handleMenuClose(4, sensor)}>Eigenschaften</MenuItem>
+                                <MenuItem onClick={() => this.handleMenuClose(1, sensor)}>{strings.show_measurements}</MenuItem>
+                                <MenuItem onClick={() => this.handleMenuClose(2, sensor)}>{strings.edit_sensor}</MenuItem>
+                                <MenuItem onClick={() => this.handleMenuClose(3, sensor)}>{strings.remove_sensor}</MenuItem>
+                                <MenuItem onClick={() => this.handleMenuClose(4, sensor)}>{strings.properties}</MenuItem>
                               </Menu>
                             }
                           </Fragment>
@@ -160,16 +163,16 @@ class LoginContainer extends Component {
                   }
                   {this.props.own_sensors.length === 0 &&
                     <Fragment>
-                      <Avatar alt="Own Sensors" src="/images/sensor_large.png" style={{width: 200, height: 200, marginLeft: 85, marginTop: 75, padding: 15}} />
-                      <Typography variant="subtitle1" style={{marginLeft: 20, marginRight: 20, marginTop: 65, color: "#666", textAlign: "center"}} gutterBottom><b>Falls Sie einen eigenen Feinstaubsensor von <a href="https://luftdaten.info/feinstaubsensor-bauen/" target="blank">www.luftdaten.info</a> haben, können Sie ihn hier verknüpfen. Tippen Sie auf den '+'-Button ganz unten rechts auf der Seite.</b></Typography>
+                      <Avatar src="/images/sensor_large.png" style={{width: 200, height: 200, marginLeft: 85, marginTop: 75, padding: 15}} />
+                      <Typography variant="subtitle1" style={{marginLeft: 20, marginRight: 20, marginTop: 65, color: "#666", textAlign: "center"}} gutterBottom><b>{strings.no_own_sensors}</b></Typography>
                     </Fragment>
                   }
                 </TabContainer>
               </SwipeableViews>
             </Scrollbars>
             <Tabs value={this.state.page} onChange={this.handlePageChange} variant="fullWidth" indicatorColor="primary" textColor="primary">
-              <Tab icon={<StarIcon />} label="Favoriten" />
-              <Tab icon={<SensorIcon />} label="Meine Sensoren" />
+              <Tab icon={<StarIcon />} label={strings.favourites} />
+              <Tab icon={<SensorIcon />} label={strings.own_sensors} />
             </Tabs>
           </div>
         }

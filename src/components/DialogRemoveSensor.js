@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import fire from '../fire'
+import strings from '../strings'
 
 class DialogRemoveSensor extends React.Component {
   onRemove = () => {
@@ -25,13 +26,13 @@ class DialogRemoveSensor extends React.Component {
   render() {
     return (
       <Dialog open={this.props.opened} onClose={this.props.onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" >
-        <DialogTitle id="alert-dialog-title">{"Sensor entfernen"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{strings.remove_sensor}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">Wollen Sie den Sensor mit der Chip-ID <b>{this.props.chip_id}</b> wirklich entfernen? Sie können ihn jederzeit wieder verknüpfen.</DialogContentText>
+          <DialogContentText id="alert-dialog-description">{strings.remove_sensor_message_1} <b>{this.props.chip_id}</b> {strings.remove_sensor_message_2}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.props.onClose} color="primary" autoFocus>Abbrechen</Button>
-          <Button onClick={this.onRemove} color="primary">Entfernen</Button>
+          <Button onClick={this.props.onClose} color="primary" autoFocus>{strings.cancel}</Button>
+          <Button onClick={this.onRemove} color="primary">{strings.remove}</Button>
         </DialogActions>
       </Dialog>
     );

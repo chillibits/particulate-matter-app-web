@@ -18,6 +18,7 @@ import { CirclePicker } from 'react-color'
 import { LocationPickerDialog } from './index'
 import green from '@material-ui/core/colors/green';
 import fire from '../fire'
+import strings from '../strings'
 
 const styles = theme => ({
   buttonProgress: {
@@ -59,7 +60,7 @@ class DialogAddSensor extends React.Component {
           if(result === "true") {
             currentComponent.setState({ loading: false, active_step: 2, next_disabled: true });
           } else {
-            currentComponent.setState({ loading: false, chip_id_error: true, next_disabled: true, error_desc: "Sie haben entweder die falsche Chip-ID angegeben oder in der Konfiguration Ihres Sensors ist die Option 'Senden an Feinstaub-App' nicht aktiviert. Nachdem die Option aktiviert ist, kann es bis zu 10 Minuten dauern, bis Daten auf dem Server ankommen." });
+            currentComponent.setState({ loading: false, chip_id_error: true, next_disabled: true, error_desc: strings.error_add_sensor });
           }
         });
     } else if(step === 3) {
@@ -157,65 +158,65 @@ class DialogAddSensor extends React.Component {
     return (
       <Fragment>
         <Dialog open={this.props.opened} fullWidth onClose={this.props.onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" >
-          <DialogTitle id="alert-dialog-title">{"Sensor hinzufügen"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{strings.add_sensor}</DialogTitle>
           <DialogContent>
             <Stepper activeStep={this.state.active_step -1} orientation="vertical">
               {/* Step 1 */}
-              <Step key={'Chip-ID angeben'}>
-                <StepLabel>{'Chip-ID angeben'}</StepLabel>
+              <Step key={strings.enter_chip_id}>
+                <StepLabel>{strings.enter_chip_id}</StepLabel>
                 <StepContent>
                   {/* Content */}
                   <div>
-                    <Typography>Bitte geben Sie die Chip-ID Ihres Sensors in das Feld unten ein. Sie finden die ID in der Konfiguration Ihres Sensors. Falls Sie die Sensor-ID dennoch nicht finden sollten, finden Sie auf unserer <a href="https://mrgames13.jimdo.com/feinstaub-app/faq/#6" target="blank">FAQ-Seite</a> einen Eintrag.</Typography>
-                    <TextField value={this.state.chip_id} label="Chip-ID" type="number" error={this.state.chip_id_error} onChange={this.chipIDChange} variant="outlined" style={{marginTop: 15}} />
+                    <Typography>{strings.enter_chip_id_instruction}</Typography>
+                    <TextField value={this.state.chip_id} label={strings.chip_id} type="number" error={this.state.chip_id_error} onChange={this.chipIDChange} variant="outlined" style={{marginTop: 15}} />
                     {this.state.error_desc !== "" && <Typography color="error" style={{marginTop: 15}}>{this.state.error_desc}</Typography>}
                   </div>
                   {/* Buttons */}
-                  <Button disabled={true} onClick={this.handleBack} style={{marginTop: 15, marginRight: 15}}>Zurück</Button>
+                  <Button disabled={true} onClick={this.handleBack} style={{marginTop: 15, marginRight: 15}}>{strings.back}</Button>
                   <span style={{position: "relative", width: 80}}>
-                    <Button variant="contained" color="primary" disabled={this.state.loading || this.state.next_disabled} style={{marginTop: 15}} onClick={() => this.handleNext(1)}>{'Weiter'}</Button>
+                    <Button variant="contained" color="primary" disabled={this.state.loading || this.state.next_disabled} style={{marginTop: 15}} onClick={() => this.handleNext(1)}>{strings.next}</Button>
                     {this.state.loading && <CircularProgress size={24} style={{marginTop: 0}} className={classes.buttonProgress} />}
                   </span>
                 </StepContent>
               </Step>
               {/* Step 2 */}
-              <Step key={'Basisdaten angeben'}>
-                <StepLabel>{'Basisdaten angeben'}</StepLabel>
+              <Step key={strings.enter_base_data}>
+                <StepLabel>{strings.enter_base_data}</StepLabel>
                 <StepContent>
                   {/* Content */}
                   <div>
-                    <Typography>Bitte vergeben Sie für Ihren Sensor einen Anzeigenamen und bestimmen Sie eine Farbe für den Sensor innerhalb der Diagramme.</Typography>
-                    <TextField label="Anzeigename" value={this.state.sensor_name} style={{width: 360, marginTop: 15, marginBottom: 15}} onChange={this.nameChange} variant="outlined"/>
+                    <Typography>{strings.display_name_color_instruction}</Typography>
+                    <TextField label={strings.display_name} value={this.state.sensor_name} style={{width: 360, marginTop: 15, marginBottom: 15}} onChange={this.nameChange} variant="outlined"/>
                     <CirclePicker color={this.state.color} width="380px" onChangeComplete={this.colorChange} />
                   </div>
                   {/* Buttons */}
-                  <Button onClick={this.handleBack} style={{marginTop: 15, marginRight: 15}}>Zurück</Button>
+                  <Button onClick={this.handleBack} style={{marginTop: 15, marginRight: 15}}>{strings.back}</Button>
                   <span style={{position: "relative", width: 80}}>
-                    <Button variant="contained" color="primary" disabled={this.state.next_disabled} style={{marginTop: 15}} onClick={() => this.handleNext(2)}>{'Weiter'}</Button>
+                    <Button variant="contained" color="primary" disabled={this.state.next_disabled} style={{marginTop: 15}} onClick={() => this.handleNext(2)}>{strings.next}</Button>
                   </span>
                 </StepContent>
               </Step>
               {/* Step 3 */}
-              <Step key={'Auf die Karte bringen'}>
-                <StepLabel>{'Auf die Karte bringen'}</StepLabel>
+              <Step key={strings.add_sensor_to_map}>
+                <StepLabel>{strings.add_sensor_to_map}</StepLabel>
                 <StepContent>
                   {/* Content */}
                   <div>
-                    <Typography>Um Ihren Sensor auf die Karte zu bekommen, müssen Sie die genaue Position des Sensors und die Montagehöhe <b>über dem Boden</b> angeben.<br/><b>HINWEIS:</b> Diese Daten können später nur noch geändert werden, indem Sie per E-Mail mit uns in <a href="mailto:mrgames@outlook.de">Kontakt</a> treten.</Typography>
-                    <Tooltip title="Bald verfügbar">
-                      <Button variant="outlined" color="primary" _onClick={this.chooseLocation} style={{margin: 10, width: 440}}>Position des Sensors wählen</Button>
+                    <Typography>{strings.add_sensor_to_map_instruction}</Typography>
+                    <Tooltip title={strings.soon_available}>
+                      <Button variant="outlined" color="primary" _onClick={this.chooseLocation} style={{margin: 10, width: 440}}>{strings.choose_location}</Button>
                     </Tooltip>
                     <span>
-                      <TextField label="Längengrad" style={{margin: 10}} type="number" onChange={this.latChanged} variant="outlined" />
-                      <TextField label="Breitengrad" style={{margin: 10}} type="number" onChange={this.lngChanged} variant="outlined" />
+                      <TextField label={strings.latitude} style={{margin: 10}} type="number" onChange={this.latChanged} variant="outlined" />
+                      <TextField label={strings.longitude} style={{margin: 10}} type="number" onChange={this.lngChanged} variant="outlined" />
                     </span>
-                    <TextField label="Montagehöhe (in Meter)" style={{margin: 10}} type="number" onChange={this.altChanged} variant="outlined" />
+                    <TextField label={strings.mounting_height} style={{margin: 10}} type="number" onChange={this.altChanged} variant="outlined" />
                   </div>
                   {/* Buttons */}
-                  <Button onClick={this.handleBack} style={{marginTop: 15, marginRight: 15}}>Zurück</Button>
-                  {this.props.logged_in && <Button variant="outlined" onClick={this.addSensorPrivate} style={{marginTop: 15, marginRight: 15}}>Überspringen</Button>}
+                  <Button onClick={this.handleBack} style={{marginTop: 15, marginRight: 15}}>{strings.back}</Button>
+                  {this.props.logged_in && <Button variant="outlined" onClick={this.addSensorPrivate} style={{marginTop: 15, marginRight: 15}}>{strings.skip}</Button>}
                   <span style={{position: "relative", width: 80}}>
-                    <Button variant="contained" color="primary" disabled={this.state.loading || this.state.next_disabled} style={{marginTop: 15}} onClick={() => this.handleNext(3)}>{'Sensor hinzufügen'}</Button>
+                    <Button variant="contained" color="primary" disabled={this.state.loading || this.state.next_disabled} style={{marginTop: 15}} onClick={() => this.handleNext(3)}>{strings.add_sensor}</Button>
                     {this.state.loading && <CircularProgress size={24} style={{marginTop: 0}} className={classes.buttonProgress} />}
                   </span>
                 </StepContent>

@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { CirclePicker } from 'react-color'
 import fire from '../fire'
+import strings from '../strings'
 
 const styles = theme => ({
   dialog_content: {
@@ -55,15 +56,15 @@ class DialogEditSensor extends React.Component {
 
     return (
       <Dialog open={this.props.opened} onClose={this.props.onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" >
-        <DialogTitle id="alert-dialog-title">{"Sensor bearbeiten"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{strings.edit_sensor}</DialogTitle>
         <div className={classes.dialog_content}>
-          <p><TextField label="Anzeigename" value={this.state.name} style={{width: "320px"}} onChange={this.nameChanged} variant="outlined"/></p>
-          <p><TextField label="Chip-ID" value={this.props.chip_id} style={{width: "320px"}} variant="outlined" disabled/></p>
+          <p><TextField label={strings.display_name} value={this.state.name} style={{width: "320px"}} onChange={this.nameChanged} variant="outlined"/></p>
+          <p><TextField label={strings.chip_id} value={this.props.chip_id} style={{width: "320px"}} variant="outlined" disabled/></p>
           <CirclePicker colors={[this.props.color, "#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#795548", "#607d8b"]} color={this.state.color} width="340px" onChangeComplete={this.colorChanged} />
         </div>
         <DialogActions>
-          <Button onClick={this.props.onClose} color="primary">Abbrechen</Button>
-          <Button onClick={this.saveChangings} color="primary" disabled={this.state.error} autoFocus>Speichern</Button>
+          <Button onClick={this.props.onClose} color="primary">{strings.cancel}</Button>
+          <Button onClick={this.saveChangings} color="primary" disabled={this.state.error} autoFocus>{strings.save}</Button>
         </DialogActions>
       </Dialog>
     );

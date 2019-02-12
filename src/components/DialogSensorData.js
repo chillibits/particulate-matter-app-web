@@ -31,6 +31,7 @@ import Slider from '@material-ui/lab/Slider';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Switch from '@material-ui/core/Switch';
+import strings from '../strings'
 
 let counter = 0;
 
@@ -179,11 +180,11 @@ class FullScreenDialog extends React.Component {
         return true;
       })
 
-      if(this.state.enabled_pm10) data_records_graph.push({ id: "PM10", color: "hsl(353, 70%, 50%)", data: list_pm1 });
-      if(this.state.enabled_pm2_5) data_records_graph.push({ id: "PM2,5", color: "hsl(87, 70%, 50%)", data: list_pm2 });
-      if(this.state.enabled_temp) data_records_graph.push({ id: "Temperatur", color: "hsl(183, 70%, 50%)", data: list_temp });
-      if(this.state.enabled_humidity) data_records_graph.push({ id: "Luftfeuchtigkeit", color: "hsl(281, 70%, 50%)", data: list_humidity });
-      if(this.state.enabled_pressure) data_records_graph.push({ id: "Luftdruck", color: "hsl(61, 70%, 50%)", data: list_pressure });
+      if(this.state.enabled_pm10) data_records_graph.push({ id: strings.pm1, color: "hsl(353, 70%, 50%)", data: list_pm1 });
+      if(this.state.enabled_pm2_5) data_records_graph.push({ id: strings.pm2, color: "hsl(87, 70%, 50%)", data: list_pm2 });
+      if(this.state.enabled_temp) data_records_graph.push({ id: strings.temperature, color: "hsl(183, 70%, 50%)", data: list_temp });
+      if(this.state.enabled_humidity) data_records_graph.push({ id: strings.humidity, color: "hsl(281, 70%, 50%)", data: list_humidity });
+      if(this.state.enabled_pressure) data_records_graph.push({ id: strings.pressure, color: "hsl(61, 70%, 50%)", data: list_pressure });
 
       currentComponent.setState({ data: data_records, data_graph: data_records_graph, data_pm10: list_pm1, data_pm2_5: list_pm2, data_temp: list_temp, data_humidity: list_humidity, data_pressure: list_pressure, loading: false});
     })
@@ -237,29 +238,29 @@ class FullScreenDialog extends React.Component {
   onCheckedChange = name => event => {
     var data = [];
     if(name === "enabled_pm10" && event.target.checked) {
-      data.push({ id: "PM10", color: "hsl(353, 70%, 50%)", data: this.state.data_pm10 });
+      data.push({ id: strings.pm1, color: "hsl(353, 70%, 50%)", data: this.state.data_pm10 });
     } else if(name !== "enabled_pm10" && this.state.enabled_pm10) {
-      data.push({ id: "PM10", color: "hsl(353, 70%, 50%)", data: this.state.data_pm10 });
+      data.push({ id: strings.pm1, color: "hsl(353, 70%, 50%)", data: this.state.data_pm10 });
     }
     if(name === "enabled_pm2_5" && event.target.checked) {
-      data.push({ id: "PM2,5", color: "hsl(87, 70%, 50%)", data: this.state.data_pm2_5 });
+      data.push({ id: strings.pm2, color: "hsl(87, 70%, 50%)", data: this.state.data_pm2_5 });
     } else if(name !== "enabled_pm2_5" && this.state.enabled_pm2_5) {
-      data.push({ id: "PM2,5", color: "hsl(87, 70%, 50%)", data: this.state.data_pm2_5 });
+      data.push({ id: strings.pm2, color: "hsl(87, 70%, 50%)", data: this.state.data_pm2_5 });
     }
     if(name === "enabled_temp" && event.target.checked) {
-      data.push({ id: "Temperatur", color: "hsl(183, 70%, 50%)", data: this.state.data_temp });
+      data.push({ id: strings.temperature, color: "hsl(183, 70%, 50%)", data: this.state.data_temp });
     } else if(name !== "enabled_temp" && this.state.enabled_temp) {
-      data.push({ id: "Temperatur", color: "hsl(183, 70%, 50%)", data: this.state.data_temp });
+      data.push({ id: strings.temperature, color: "hsl(183, 70%, 50%)", data: this.state.data_temp });
     }
     if(name === "enabled_humidity" && event.target.checked) {
-      data.push({ id: "Luftfeuchtigkeit", color: "hsl(281, 70%, 50%)", data: this.state.data_humidity });
+      data.push({ id: strings.humidity, color: "hsl(281, 70%, 50%)", data: this.state.data_humidity });
     } else if(name !== "enabled_humidity" && this.state.enabled_humidity) {
-      data.push({ id: "Luftfeuchtigkeit", color: "hsl(281, 70%, 50%)", data: this.state.data_humidity });
+      data.push({ id: strings.humidity, color: "hsl(281, 70%, 50%)", data: this.state.data_humidity });
     }
     if(name === "enabled_pressure" && event.target.checked) {
-      data.push({ id: "Luftdruck", color: "hsl(61, 70%, 50%)", data: this.state.data_pressure });
+      data.push({ id: strings.pressure, color: "hsl(61, 70%, 50%)", data: this.state.data_pressure });
     } else if(name !== "enabled_pressure" && this.state.enabled_pressure) {
-      data.push({ id: "Luftdruck", color: "hsl(61, 70%, 50%)", data: this.state.data_pressure });
+      data.push({ id: strings.pressure, color: "hsl(61, 70%, 50%)", data: this.state.data_pressure });
     }
     this.setState({ [name]: event.target.checked, data_graph: data });
   }
@@ -271,35 +272,35 @@ class FullScreenDialog extends React.Component {
       <Dialog fullScreen open={this.props.opened} onClose={this.props.onClose} TransitionComponent={Transition} >
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <Tooltip title="Sensordetails anzeigen">
-              <IconButton color="inherit" onClick={this.showDetails} aria-label="Details anzeigen"><SensorIcon /></IconButton>
+            <Tooltip title={strings.show_sensor_details}>
+              <IconButton color="inherit" onClick={this.showDetails} aria-label={strings.show_details}><SensorIcon /></IconButton>
             </Tooltip>
             <Typography variant="h6" color="inherit" className={classes.flex}>{this.props.sensor.name} - ChipID: {this.props.sensor.chip_id}</Typography>
-            <Tooltip title="Fenster schließen">
-              <IconButton color="inherit" onClick={this.props.onClose} aria-label="Close"><CloseIcon /></IconButton>
+            <Tooltip title={strings.close_window}>
+              <IconButton color="inherit" onClick={this.props.onClose}><CloseIcon /></IconButton>
             </Tooltip>
           </Toolbar>
         </AppBar>
         {this.state.loading && <LinearProgress />}
         <Card className={classes.card}>
           <CardContent className={classes.card_content}>
-            <Tooltip title="Tag davor">
-              <IconButton aria-label="Tag davor" onClick={this.minusDay}><KeyboardArrowLeft /></IconButton>
+            <Tooltip title={strings.day_before}>
+              <IconButton onClick={this.minusDay}><KeyboardArrowLeft /></IconButton>
             </Tooltip>
             <MuiPickersUtilsProvider utils={DateFnsUtils} locale={deLocale}>
               <DatePicker value={this.state.selected_date} onChange={this.handleDateChange} className={classes.date_selection} showTodayButton disableFuture cancelLabel="Abbrechen" todayLabel="Heute" okLabel="OK" invalidLabel="Ungültige Eingabe" format="dd.MM.yyyy" ref={node => { this.picker = node; }}/>
             </MuiPickersUtilsProvider>
-            <Tooltip title="Anderes Datum wählen">
-              <IconButton aria-label="Datum bearbeiten"onClick={this.openPicker}><Edit /></IconButton>
+            <Tooltip title={strings.choose_another_date}>
+              <IconButton onClick={this.openPicker}><Edit /></IconButton>
             </Tooltip>
-            {this.state.selected_date >= this.state.default_date && <Tooltip title="Tag danach"><IconButton aria-label="Tag danach" onClick={this.plusDay} disabled><KeyboardArrowRight disabled/></IconButton></Tooltip>}
-            {this.state.selected_date < this.state.default_date && <Tooltip title="Tag danach"><IconButton aria-label="Tag danach" onClick={this.plusDay}><KeyboardArrowRight /></IconButton></Tooltip>}
+            {this.state.selected_date >= this.state.default_date && <Tooltip title={strings.day_after}><IconButton onClick={this.plusDay} disabled><KeyboardArrowRight disabled/></IconButton></Tooltip>}
+            {this.state.selected_date < this.state.default_date && <Tooltip title={strings.day_after}><IconButton onClick={this.plusDay}><KeyboardArrowRight /></IconButton></Tooltip>}
           </CardContent>
         </Card>
         <AppBar position="static" color="default">
           <Tabs value={this.state.value} onChange={this.handleTabChange} indicatorColor="primary" textColor="primary" variant="fullWidth">
-            <Tab label="Diagramm" />
-            <Tab label="Datensätze" />
+            <Tab label={strings.diagram} />
+            <Tab label={strings.data_records} />
           </Tabs>
         </AppBar>
         <Scrollbars>
@@ -331,7 +332,7 @@ class FullScreenDialog extends React.Component {
                       "tickSize": 5,
                       "tickPadding": 5,
                       "tickRotation": 0,
-                      "legend": "Uhrzeit",
+                      "legend": strings.time_of_day,
                       "legendOffset": 35,
                       "format": '%H:%m',
                       "legendPosition": "middle"
@@ -341,7 +342,7 @@ class FullScreenDialog extends React.Component {
                       "tickSize": 5,
                       "tickPadding": 5,
                       "tickRotation": 0,
-                      "legend": "Messwert",
+                      "legend": strings.measurement,
                       "legendOffset": -40,
                       "legendPosition": "middle"
                   }}
@@ -381,24 +382,24 @@ class FullScreenDialog extends React.Component {
                     ]}
                 /></div>}
               </Scrollbars>
-              <FormControlLabel control={ <Checkbox checked={this.state.enabled_pm10} onChange={this.onCheckedChange('enabled_pm10')} value="pm10" color="primary" /> } label="PM10-Kurve anzeigen" />
-              <FormControlLabel control={ <Checkbox checked={this.state.enabled_pm2_5} onChange={this.onCheckedChange('enabled_pm2_5')} value="pm2_5" color="primary" /> } label="PM2,5-Kurve anzeigen" />
-              <FormControlLabel control={ <Checkbox checked={this.state.enabled_temp} onChange={this.onCheckedChange('enabled_temp')} value="temp" color="primary" /> } label="Temperatur-Kurve anzeigen" />
-              <FormControlLabel control={ <Checkbox checked={this.state.enabled_humidity} onChange={this.onCheckedChange('enabled_humidity')} value="humidity" color="primary" /> } label="Luftfeuchtigkeit-Kurve anzeigen" />
-              <FormControlLabel control={ <Checkbox checked={this.state.enabled_pressure} onChange={this.onCheckedChange('enabled_pressure')} value="pressure" color="primary" /> } label="Luftdruck-Kurve anzeigen" />
-              <Typography variant="h6">Zoom des Diagrammes:</Typography>
+              <FormControlLabel control={ <Checkbox checked={this.state.enabled_pm10} onChange={this.onCheckedChange('enabled_pm10')} value="pm10" color="primary" /> } label={strings.show_pm1} />
+              <FormControlLabel control={ <Checkbox checked={this.state.enabled_pm2_5} onChange={this.onCheckedChange('enabled_pm2_5')} value="pm2_5" color="primary" /> } label={strings.show_pm2} />
+              <FormControlLabel control={ <Checkbox checked={this.state.enabled_temp} onChange={this.onCheckedChange('enabled_temp')} value="temp" color="primary" /> } label={strings.show_temperature} />
+              <FormControlLabel control={ <Checkbox checked={this.state.enabled_humidity} onChange={this.onCheckedChange('enabled_humidity')} value="humidity" color="primary" /> } label={strings.show_humidity} />
+              <FormControlLabel control={ <Checkbox checked={this.state.enabled_pressure} onChange={this.onCheckedChange('enabled_pressure')} value="pressure" color="primary" /> } label={strings.show_pressure} />
+              <Typography variant="h6">{strings.zoom_of_diagram_}</Typography>
               <br/>
               <Slider value={this.state.current_zoom} onChange={this.onZoomChange} min={1000} max={30000} step={1000} />
               <br/>
-              <FormControlLabel control={ <Switch checked={this.state.enable_time} onChange={this.onCheckedChange('enable_time')} color="primary" /> } label="Messzeiten einblenden" />
-              <FormControlLabel control={ <Switch checked={this.state.disable_dots} onChange={this.onCheckedChange('disable_dots')} color="primary" /> } label="Punkte ausblenden" />
-              <FormControlLabel control={ <Switch checked={this.state.smooth_curve} onChange={this.onCheckedChange('smooth_curve')} color="primary" /> } label="Weiche Kurve aktivieren" />
-              {this.state.smooth_curve && <FormControlLabel control={ <Switch checked={this.state.basis_curve} onChange={this.onCheckedChange('basis_curve')} color="primary" /> } label="Kurvenglättung aktivieren" />}
-              {!this.state.smooth_curve && <FormControlLabel control={ <Switch checked={this.state.basis_curve} onChange={this.onCheckedChange('basis_curve')} color="primary" disabled/> } label="Kurvenglättung aktivieren" />}
+              <FormControlLabel control={ <Switch checked={this.state.enable_time} onChange={this.onCheckedChange('enable_time')} color="primary" /> } label={strings.show_time} />
+              <FormControlLabel control={ <Switch checked={this.state.disable_dots} onChange={this.onCheckedChange('disable_dots')} color="primary" /> } label={strings.hide_dots} />
+              <FormControlLabel control={ <Switch checked={this.state.smooth_curve} onChange={this.onCheckedChange('smooth_curve')} color="primary" /> } label={strings.enable_soft_curve} />
+              {this.state.smooth_curve && <FormControlLabel control={ <Switch checked={this.state.basis_curve} onChange={this.onCheckedChange('basis_curve')} color="primary" /> } label={strings.enable_curve_smoothing} />}
+              {!this.state.smooth_curve && <FormControlLabel control={ <Switch checked={this.state.basis_curve} onChange={this.onCheckedChange('basis_curve')} color="primary" disabled/> } label={strings.enable_curve_smoothing} />}
             </TabContainer>
             <TabContainer dir={theme.direction}>
               {this.state.data && <SensorDataTable data={this.state.data} />}
-              {this.state.data === undefined && <Fragment>Keine Daten vorhanden</Fragment>}
+              {this.state.data === undefined && <Fragment>{strings.no_data}</Fragment>}
             </TabContainer>
           </SwipeableViews>
         </Scrollbars>

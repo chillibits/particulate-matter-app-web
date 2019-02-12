@@ -6,6 +6,7 @@ import { Paper, Typography, Avatar, Grid, Button } from '@material-ui/core'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
 import Geocode from "react-geocode"
 import { SensorIcon } from './index'
+import strings from '../strings'
 
 class MapContainer extends Component {
   state = {
@@ -24,7 +25,7 @@ class MapContainer extends Component {
   constructor(props) {
     super(props)
 
-    this.state.markers = this.props.markerData.map(marker => <Marker key={marker.chip_id} icon={{ url: "markers/blue.png" }} title={marker.chip_id} name={marker.chip_id} onClick={this.onMarkerClick} position={{lat: marker.lat, lng: marker.lng}} />);
+    this.state.markers = this.props.markerData.map(marker => <Marker key={marker.i} icon={{ url: "markers/blue.png" }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />);
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -39,7 +40,7 @@ class MapContainer extends Component {
       }
     );
 
-    this.setState({ selectedPlace: props, activeMarker: marker, selectedMarkerLat: Math.round(marker.position.lat() * 1000) / 1000, selectedMarkerLng: Math.round(marker.position.lng() * 1000) / 1000, selectedAddress: "Adresse wird geladen ...", showingInfoWindow: true });
+    this.setState({ selectedPlace: props, activeMarker: marker, selectedMarkerLat: Math.round(marker.position.lat() * 1000) / 1000, selectedMarkerLng: Math.round(marker.position.lng() * 1000) / 1000, selectedAddress: strings.loading_address, showingInfoWindow: true });
   };
 
   getCountry = (addrComponents) => {
@@ -47,7 +48,7 @@ class MapContainer extends Component {
         if (addrComponents[i].types[0] === "country") return addrComponents[i].long_name;
         if (addrComponents[i].types.length === 2 && addrComponents[i].types[0] === "political") return addrComponents[i].long_name;
     }
-    return "Unbekanntes Land";
+    return strings.unknown_country;
   }
 
   getCity = (addrComponents) => {
@@ -55,7 +56,7 @@ class MapContainer extends Component {
         if (addrComponents[i].types[0] === "locality" || addrComponents[i].types[0] === "postal_town") return addrComponents[i].long_name;
         if (addrComponents[i].types.length === 2 && addrComponents[i].types[0] === "political") return addrComponents[i].long_name;
     }
-    return "Unbekannte Stadt";
+    return strings.unknown_city;
   }
 
   onMapClicked = (props) => {
@@ -77,10 +78,10 @@ class MapContainer extends Component {
   }
 
   onInfoWindowOpen(props, e) {
-    const show_data = (<Button variant="outlined" color="primary" onClick={this.onShowSensorDataClicked} style={{marginTop: 5, width: 210}}>Messwerte&nbsp;anzeigen</Button>);
+    const show_data = (<Button variant="outlined" color="primary" onClick={this.onShowSensorDataClicked} style={{marginTop: 5, width: 210}}>{strings.show_measurements}</Button>);
     ReactDOM.render(React.Children.only(show_data), document.getElementById("show_data"));
     if(this.props.logged_in) {
-      const add_favourite = (<Button variant="contained" color="primary" onClick={this.onAddFavouriteClicked} style={{marginTop: 5, width: 210}}>Favorit&nbsp;hinzuf&uuml;gen</Button>);
+      const add_favourite = (<Button variant="contained" color="primary" onClick={this.onAddFavouriteClicked} style={{marginTop: 5, width: 210}}>{strings.add_favourite}</Button>);
       ReactDOM.render(React.Children.only(add_favourite), document.getElementById("add_favourite"));
     }
   }
@@ -90,14 +91,14 @@ class MapContainer extends Component {
       this.state.markers = this.props.markerData.map(marker => {
         var image_url = "markers/blue.png";
         this.props.favourites.map(sensor => {
-          if(sensor.chip_id === marker.chip_id) image_url = "markers/red.png";
+          if(sensor.chip_id === marker.i) image_url = "markers/red.png";
           return true;
         });
         this.props.own_sensors.map(sensor => {
-          if(sensor.chip_id === marker.chip_id) image_url = "markers/green.png";
+          if(sensor.chip_id === marker.i) image_url = "markers/green.png";
           return true;
         });
-        return <Marker key={marker.chip_id} icon={{ url: image_url }} title={marker.chip_id} name={marker.chip_id} onClick={this.onMarkerClick} position={{lat: marker.lat, lng: marker.lng}} />;
+        return <Marker key={marker.i} icon={{ url: image_url }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />;
       });
       this.setState({ old_markerData: this.props.markerData, old_favourites: this.props.favourites, old_own_sensors: this.props.own_sensors });
     }
