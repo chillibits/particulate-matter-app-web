@@ -52,7 +52,7 @@ class DialogAddSensor extends React.Component {
       this.setState({ loading: true });
       //Existiert eine ID bereits
       let currentComponent = this;
-      request.post('https://h2801469.stratoserver.net/ServerScript.php')
+      request.post('https://h2801469.stratoserver.net/ServerScriptWeb_v100.php')
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({command: "issensordataexisting", chip_id: this.state.chip_id})
         .end(function(err, res) {
@@ -128,7 +128,7 @@ class DialogAddSensor extends React.Component {
 
     //Auf dem Server hinzufügen
     let currentComponent = this;
-    request.post('https://h2801469.stratoserver.net/ServerScript.php')
+    request.post('https://h2801469.stratoserver.net/ServerScriptWeb_v100.php')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({command: "addsensor", chip_id: this.state.chip_id, lat: this.state.lat, lng: this.state.lng, alt: this.state.alt})
       .end(function(err, res) {
@@ -167,7 +167,7 @@ class DialogAddSensor extends React.Component {
                 <StepContent>
                   {/* Content */}
                   <div>
-                    <Typography>{strings.enter_chip_id_instruction}</Typography>
+                    <Typography>{strings.enter_chip_id_instruction_1} <a href='https://mrgames13.jimdo.com/feinstaub-app/faq/#6' target='blank'>{strings.faq_site}</a> {strings.enter_chip_id_instruction_2}</Typography>
                     <TextField value={this.state.chip_id} label={strings.chip_id} type="number" error={this.state.chip_id_error} onChange={this.chipIDChange} variant="outlined" style={{marginTop: 15}} />
                     {this.state.error_desc !== "" && <Typography color="error" style={{marginTop: 15}}>{this.state.error_desc}</Typography>}
                   </div>
@@ -202,7 +202,7 @@ class DialogAddSensor extends React.Component {
                 <StepContent>
                   {/* Content */}
                   <div>
-                    <Typography>{strings.add_sensor_to_map_instruction}</Typography>
+                    <Typography>{strings.add_sensor_to_map_instruction_1} <a href='mailto:mrgames@outlook.de'>{strings.contact}</a> {strings.add_sensor_to_map_instruction_2}</Typography>
                     <Tooltip title={strings.soon_available}>
                       <Button variant="outlined" color="primary" _onClick={this.chooseLocation} style={{margin: 10, width: 440}}>{strings.choose_location}</Button>
                     </Tooltip>

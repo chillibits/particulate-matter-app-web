@@ -27,13 +27,13 @@ class DialogSensorDetails extends React.Component {
   loadSensorDetails = () => {
     //Serveranfrage machen
     let currentComponent = this;
-    request.post('https://h2801469.stratoserver.net/ServerScript.php')
+    request.post('https://h2801469.stratoserver.net/ServerScriptWeb_v100.php')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({command: "issensorexisting", chip_id: this.props.chip_id})
       .end(function(err, res) {
         var result = res.text.trim();
         if(result === "1") {
-          request.post('https://h2801469.stratoserver.net/ServerScript.php')
+          request.post('https://h2801469.stratoserver.net/ServerScriptWeb_v100.php')
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .send({command: "getsensorinfo", chip_id: currentComponent.props.chip_id})
             .end(function(err, res) {

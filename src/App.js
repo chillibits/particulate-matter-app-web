@@ -148,7 +148,7 @@ class App extends Component {
 
   loadAllSensors = () => {
     let currentComponent = this;
-    request.post('https://h2801469.stratoserver.net/ServerScript.php')
+    request.post('https://h2801469.stratoserver.net/ServerScriptWeb_v100.php')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({command: "getall"})
       .end(function(err, res) {
@@ -247,8 +247,6 @@ class App extends Component {
   /* Render-Method */
   render() {
     const { classes } = this.props;
-
-    console.log(strings.app_name);
 
     return (
       <Router>
