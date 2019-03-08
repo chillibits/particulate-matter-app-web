@@ -15,7 +15,7 @@ import red from '@material-ui/core/colors/red';
 import request from 'superagent'
 import md5 from 'md5'
 import fire from './fire'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import strings from './strings'
 
 const styles = theme => ({
@@ -275,9 +275,12 @@ class App extends Component {
             {this.state.selected_id !== undefined && this.state.dialog_remove_sensor_open && <DialogRemoveSensor opened={this.state.dialog_remove_sensor_open} sync_key={this.state.sync_key} user_data={this.state.user_data} onClose={this.onHideRemoveSensorDialog} chip_id={this.state.selected_id} />}
             {this.state.selected !== undefined && this.state.dialog_sensor_details_open && <DialogSensorDetails opened={this.state.dialog_sensor_details_open} chip_id={this.state.selected.chip_id} name={this.state.selected.name} onClose={this.onHideDetailsDialog} />}
             {/* URL-Parameter */}
-            <Route path="/s/:id" render={(props) => (
-              <DialogSensorData opened={this.state.dialog_sensor_data_route_open} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={{chip_id: props.match.params.id, name: strings.unknown_sensor}} />
-            )} />
+            <Switch>
+              <Route path="/s/:id" render={(props) => (
+                <DialogSensorData opened={this.state.dialog_sensor_data_route_open} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={{chip_id: props.match.params.id, name: strings.unknown_sensor}} />
+              )} />
+              <Redirect strict from={'/'} to={"."} />
+            </Switch>
             {/* Snackbars */}
             <Snackbar open={this.state.snackbar_success_open} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
               <SnackbarContent
