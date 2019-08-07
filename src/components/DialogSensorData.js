@@ -24,13 +24,13 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Edit from '@material-ui/icons/Edit';
 import { SensorDataTable } from './index';
 import { Scrollbars } from 'react-custom-scrollbars';
-import CSV from 'csv-string';
 import moment from 'moment';
 import { ResponsiveLine } from '@nivo/line'
 import Slider from '@material-ui/lab/Slider';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Switch from '@material-ui/core/Switch';
+import request from 'superagent'
 import strings from '../strings'
 
 let counter = 0;
@@ -116,78 +116,49 @@ class FullScreenDialog extends React.Component {
 
     let currentComponent = this;
     counter = 0;
-    fetch('https://h2801469.stratoserver.net/contents.php?path=esp8266-' + this.props.sensor.chip_id + '/data-' + moment(this.state.selected_date).format('YYYY-MM-DD') + '.csv')
-    .then((r) => r.text())
-    .then(result  => {
-      var arr = CSV.parse(result);
 
-      var data_records = [];
-      var data_records_graph = [];
-      var list_pm1 = [];
-      var list_pm2 = [];
-      var list_temp = [];
-      var list_humidity = [];
-      var list_pressure = [];
+    var from = new Date();
+    from.setHours(0,0,0,0);
+    var to = new Date(from.getTime() + 86400000);
 
-      var row_index = 0;
-      arr.map(function(record) {
-        if(row_index > 0) {
-          var time = new Date();
-          var pm1 = 0.0;
-          var pm2 = 0.0;
-          var temp = 0.0;
-          var humidity = 0.0;
-          var pressure = 0.0;
-          if(record[0] !== "") time = record[0];
-          if(record[1] !== "") pm1 = record[1];
-          if(record[2] !== "") pm1 = record[2];
-          if(record[3] !== "") pm1 = record[3];
-          if(record[4] !== "") pm2 = record[4];
-          if(record[5] !== "") pm2 = record[5];
-          if(record[6] !== "") pm2 = record[6];
-          if(record[7] !== "") pm1 = record[7];
-          if(record[8] !== "") pm2 = record[8];
-          if(record[9] !== "") temp = record[9];
-          if(record[10] !== "") humidity = record[10];
-          if(record[11] !== "") temp = record[11];
-          if(record[12] !== "") pressure = record[12];
-          if(record[13] !== "") temp = record[13];
-          if(record[14] !== "") humidity = record[14];
-          if(record[15] !== "") pressure = record[15];
-          if(record[20] !== "") pm1 = record[20];
-          if(record[21] !== "") pm2 = record[21];
-          if(record[22] !== "") pm1 = record[22];
-          if(record[23] !== "") pm2 = record[23];
+    request.post('https://h2801469.stratoserver.net/get.php')
+      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .send({ id: this.props.sensor.chip_id, from: from.getTime() / 1000, to: to.getTime() / 1000, minimize: true, with_gps: false, with_note: false })
+      .end(function(err, res) {
+        var result = res.text.trim();
+        var obj = JSON.parse(result);
 
-          temp = round(temp, 1);
-          humidity = round(humidity, 1);
-          pressure = round(pressure / 100, 2);
+        var data_records = [];
+        var data_records_graph = [];
+        var list_pm1 = [];
+        var list_pm2 = [];
+        var list_temp = [];
+        var list_humidity = [];
+        var list_pressure = [];
 
-          data_records.push(createData(time.substring(11), pm1, pm2, temp, humidity, pressure));
-          time = new Date(time);
-          var pm1_double = parseFloat(pm1);
-          var pm2_double = parseFloat(pm2);
-          var temp_double = parseFloat(temp);
-          var humidity_double = parseFloat(humidity);
-          var pressure_double = parseFloat(pressure);
+        obj.map((item, key) => {
+          var time = new Date(item.time * 1000);
+          data_records.push(createData(moment(item.time * 1000).format("HH:mm:ss"), item.p1, item.p2, round(item.t, 1), round(item.h, 1), round(item.p / 100, 2)));
+          var pm1_double = parseFloat(item.p1);
+          var pm2_double = parseFloat(item.p2);
+          var temp_double = parseFloat(round(item.t, 1));
+          var humidity_double = parseFloat(round(item.h, 1));
+          var pressure_double = parseFloat(round(item.p / 100, 2));
           list_pm1.push({ x: time, y: pm1_double });
           list_pm2.push({ x: time, y: pm2_double });
           list_temp.push({ x: time, y: temp_double });
           list_humidity.push({ x: time, y: humidity_double });
           list_pressure.push({ x: time, y: pressure_double });
-        }
-        row_index++;
-        return true;
-      })
+        });
 
-      if(this.state.enabled_pm10) data_records_graph.push({ id: strings.pm1, color: "hsl(353, 70%, 50%)", data: list_pm1 });
-      if(this.state.enabled_pm2_5) data_records_graph.push({ id: strings.pm2, color: "hsl(87, 70%, 50%)", data: list_pm2 });
-      if(this.state.enabled_temp) data_records_graph.push({ id: strings.temperature, color: "hsl(183, 70%, 50%)", data: list_temp });
-      if(this.state.enabled_humidity) data_records_graph.push({ id: strings.humidity, color: "hsl(281, 70%, 50%)", data: list_humidity });
-      if(this.state.enabled_pressure) data_records_graph.push({ id: strings.pressure, color: "hsl(61, 70%, 50%)", data: list_pressure });
+        if(currentComponent.state.enabled_pm10) data_records_graph.push({ id: strings.pm1, color: "hsl(353, 70%, 50%)", data: list_pm1 });
+        if(currentComponent.state.enabled_pm2_5) data_records_graph.push({ id: strings.pm2, color: "hsl(87, 70%, 50%)", data: list_pm2 });
+        if(currentComponent.state.enabled_temp) data_records_graph.push({ id: strings.temperature, color: "hsl(183, 70%, 50%)", data: list_temp });
+        if(currentComponent.state.enabled_humidity) data_records_graph.push({ id: strings.humidity, color: "hsl(281, 70%, 50%)", data: list_humidity });
+        if(currentComponent.state.enabled_pressure) data_records_graph.push({ id: strings.pressure, color: "hsl(61, 70%, 50%)", data: list_pressure });
 
-      currentComponent.setState({ data: data_records, data_graph: data_records_graph, data_pm10: list_pm1, data_pm2_5: list_pm2, data_temp: list_temp, data_humidity: list_humidity, data_pressure: list_pressure, loading: false});
-    })
+        currentComponent.setState({ data: data_records, data_graph: data_records_graph, data_pm10: list_pm1, data_pm2_5: list_pm2, data_temp: list_temp, data_humidity: list_humidity, data_pressure: list_pressure, loading: false});
+      });
   }
 
   handleClickOpen = () => {

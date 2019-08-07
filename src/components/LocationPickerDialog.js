@@ -9,7 +9,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import LocationPicker from 'react-location-picker';
-import strings from '../strings'
+//import strings from '../strings'
 
 const styles = {
   appBar: {
