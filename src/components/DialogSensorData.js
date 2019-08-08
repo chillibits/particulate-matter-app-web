@@ -117,7 +117,7 @@ class FullScreenDialog extends React.Component {
     let currentComponent = this;
     counter = 0;
 
-    var from = new Date();
+    var from = this.state.selected_date;
     from.setHours(0,0,0,0);
     var to = new Date(from.getTime() + 86400000);
 
