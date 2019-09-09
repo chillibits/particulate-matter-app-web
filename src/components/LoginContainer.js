@@ -113,7 +113,7 @@ class LoginContainer extends Component {
                         return (
                           <Fragment>
                             <ListItem button onClick={() => this.props.onShowSensorData(sensor)}>
-                              <Avatar style={{ backgroundColor: sensor.color }}><SensorIcon/></Avatar>
+                              <Avatar style={{ backgroundColor: sensor.color, marginRight: 15 }}><SensorIcon/></Avatar>
                               <ListItemText primary={sensor.name} secondary={sensor.chip_id} />
                               <IconButton aria-label="Weitere Optionen" onClick={(event) => this.handleMenuClick(event, sensor.chip_id)} style={{zIndex: "3"}} aria-haspopup="true"><MoreVertIcon /></IconButton>
                             </ListItem>
@@ -144,7 +144,7 @@ class LoginContainer extends Component {
                         return (
                           <Fragment>
                             <ListItem button onClick={() => this.props.onShowSensorData(sensor)}>
-                              <Avatar style={{ backgroundColor: sensor.color }}><SensorIcon/></Avatar>
+                              <Avatar style={{ backgroundColor: sensor.color, marginRight: 15 }}><SensorIcon/></Avatar>
                               <ListItemText primary={sensor.name} secondary={sensor.chip_id} />
                               <IconButton aria-label="Weitere Optionen" onClick={(event) => this.handleMenuClick(event, sensor.chip_id)} style={{zIndex: "3"}} aria-haspopup="true"><MoreVertIcon /></IconButton>
                             </ListItem>
