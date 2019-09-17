@@ -47,11 +47,11 @@ const styles = theme => ({
   },
   button_info: {
     position: 'absolute',
-    right: 265,
+    right: 272,
   },
   button_homepage: {
     position: 'absolute',
-    right: 338,
+    right: 344,
   }
 });
 
@@ -313,10 +313,10 @@ class App extends Component {
           </main>
           {/* Footer */}
           <Grid container className={classes.footer}>
-            <Typography variant="body2" color="inherit" style={{marginTop: 7}} noWrap>© M&amp;R Games&nbsp;&nbsp;-&nbsp;&nbsp;2018 - 2019</Typography>
+            <Typography variant="body2" color="inherit" style={{marginTop: 7}} noWrap>© M&amp;R Games&nbsp;&nbsp;-&nbsp;&nbsp;2018 - {new Date().getFullYear()}</Typography>
             <Button variant="outlined" color="primary" href="https://mrgames13.jimdo.com" target="_blank" className={classes.button_homepage}>{strings.our_homepage}</Button>
             <Button variant="outlined" color="primary" href="https://mrgames13.jimdo.com/feinstaub-app/info/" target="_blank" className={classes.button_info}>{strings.info}</Button>
-            <Button variant="outlined" color="secondary" href="https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp" target="_blank" className={classes.button_download}>{strings.download_android_app}</Button>
+            <Button variant="contained" color="secondary" href="https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp" target="_blank" className={classes.button_download}>{strings.download_android_app}</Button>
           </Grid>
         </Fragment>
       </Router>
