@@ -16,6 +16,7 @@ import request from 'superagent'
 import md5 from 'md5'
 import fire from './fire'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import { CustomView, isAndroid } from "react-device-detect";
 import strings from './strings'
 
 const styles = theme => ({
@@ -248,77 +249,87 @@ class App extends Component {
   render() {
     const { classes } = this.props;
 
+    if(isAndroid) {
+      // Android-Geräte auf Playstore weiterleiten
+      window.location = "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp"
+    }
+
     return (
       <Router>
-        <Fragment>
-          {/* Header */}
-          <AppBar suggestions={this.state.suggestions} onChange={this.handleSearchChange("single")}/>
-          {/* Main */}
-          <main className={classes.main}>
-            <Grid container style={{height: "100%"}}>
-              <Grid item style={{width: 400}}>
-                <LoginContainer logged_in={this.state.logged_in} sync_key={this.state.sync_key} favourites={this.state.favourites} own_sensors={this.state.own_sensors} onShowSensorData={this.onShowSensorDataDialog} onEditSensor={this.onShowEditSensorDialog} onRemoveSensor={this.onShowRemoveSensorDialog} onSensorDetails={this.onShowDetailsDialog} />
+        <CustomView condition={isAndroid}>
+            <div><p>Sie werden weitergeleitet ...</p></div>
+        </CustomView>
+        <CustomView condition={!isAndroid}>
+          <Fragment>
+            {/* Header */}
+            <AppBar suggestions={this.state.suggestions} onChange={this.handleSearchChange("single")}/>
+            {/* Main */}
+            <main className={classes.main}>
+              <Grid container style={{height: "100%"}}>
+                <Grid item style={{width: 400}}>
+                  <LoginContainer logged_in={this.state.logged_in} sync_key={this.state.sync_key} favourites={this.state.favourites} own_sensors={this.state.own_sensors} onShowSensorData={this.onShowSensorDataDialog} onEditSensor={this.onShowEditSensorDialog} onRemoveSensor={this.onShowRemoveSensorDialog} onSensorDetails={this.onShowDetailsDialog} />
+                </Grid>
+                <Grid item>
+                  {this.state.markerData && <MapContainer google={window.google} logged_in={this.state.logged_in} ownPosition={this.state.currentPosition} markerData={this.state.markerData} favourites={this.state.favourites} own_sensors={this.state.own_sensors} onAddFavourite={this.onShowAddFavouriteDialog} onShowSensorData={this.onShowSensorDataDialog} style={{position: 'absolute', top: 0, bottom: 0}}/>}
+                </Grid>
               </Grid>
-              <Grid item>
-                {this.state.markerData && <MapContainer google={window.google} logged_in={this.state.logged_in} ownPosition={this.state.currentPosition} markerData={this.state.markerData} favourites={this.state.favourites} own_sensors={this.state.own_sensors} onAddFavourite={this.onShowAddFavouriteDialog} onShowSensorData={this.onShowSensorDataDialog} style={{position: 'absolute', top: 0, bottom: 0}}/>}
-              </Grid>
+              <Paper style={{margin: 0, paddingLeft: 10, paddingRight: 10, paddingTop: 3, paddingBottom: 3, right: 20, top: 80, position: "fixed", backgroundColor: 'rgba(255,255,255,0.5)', cursor: "pointer" }} onClick={() => window.open("https://h2801469.stratoserver.net/stats.php", "_blank")}>
+                <Typography>{this.state.markerData.length} {strings.sensors}</Typography>
+              </Paper>
+              <Fab color="primary" aria-label={strings.add_sensor} style={{margin: 0, right: 20, bottom: 65, position: "fixed" }} onClick={this.onShowAddSensorDialog}><AddIcon/></Fab>
+              { /* Dialogs */ }
+              {this.state.dialog_add_sensor_open && <DialogAddSensor opened={this.state.dialog_add_sensor_open} onClose={this.onHideAddSensorDialog} onSensorAdded={this.props.onHideAddSensorDialog} user_data={this.state.user_data} sync_key={this.state.sync_key} logged_in={this.state.logged_in}/>}
+              {this.state.selected_id !== undefined && this.state.dialog_add_favourite_open && <DialogAddFavourite opened={this.state.dialog_add_favourite_open} onClose={this.onHideAddFavouriteDialog} sync_key={this.state.sync_key} user_data={this.state.user_data} chip_id={this.state.selected_id} />}
+              {this.state.selected !== undefined && this.state.dialog_sensor_data_open && <DialogSensorData opened={this.state.dialog_sensor_data_open} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={this.state.selected} />}
+              {this.state.selected !== undefined && this.state.dialog_edit_sensor_open && <DialogEditSensor opened={this.state.dialog_edit_sensor_open} sync_key={this.state.sync_key} data={this.state.user_data} onClose={this.onHideEditSensorDialog} chip_id={this.state.selected.chip_id} name={this.state.selected.name} fav={this.state.selected.fav} color={this.state.selected.color}/>}
+              {this.state.selected_id !== undefined && this.state.dialog_remove_sensor_open && <DialogRemoveSensor opened={this.state.dialog_remove_sensor_open} sync_key={this.state.sync_key} user_data={this.state.user_data} onClose={this.onHideRemoveSensorDialog} chip_id={this.state.selected_id} />}
+              {this.state.selected !== undefined && this.state.dialog_sensor_details_open && <DialogSensorDetails opened={this.state.dialog_sensor_details_open} chip_id={this.state.selected.chip_id} name={this.state.selected.name} onClose={this.onHideDetailsDialog} />}
+              {/* URL-Parameter */}
+              <Switch>
+                <Route path="/s/:id" render={(props) => (
+                  <DialogSensorData opened={this.state.dialog_sensor_data_route_open} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={{chip_id: props.match.params.id, name: strings.unknown_sensor}} />
+                )} />
+                <Redirect strict from={'/'} to={"."} />
+              </Switch>
+              {/* Snackbars */}
+              <Snackbar open={this.state.snackbar_success_open} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
+                <SnackbarContent
+                  message={
+                    <span style={{ display: 'flex', alignItems: 'center' }}>
+                      <CheckCircleIcon style={{ fontSize: 20, opacity: 0.9, marginRight: 15 }}/>
+                      {this.state.snackbar_message}
+                    </span>}
+                  action={[
+                    <IconButton key="success" color="inherit" onClick={this.onSnackbarClose}>
+                      <CloseIcon style={{fontSize: 20}} />
+                    </IconButton>,
+                  ]}
+                  style={{backgroundColor: green[600]}} />
+              </Snackbar>
+              <Snackbar open={this.state.snackbar_error_open} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
+                <SnackbarContent
+                  message={
+                    <span style={{ display: 'flex', alignItems: 'center' }}>
+                      <ErrorIcon style={{ fontSize: 20, opacity: 0.9, marginRight: 15 }}/>
+                      {this.state.snackbar_message}
+                    </span>}
+                  action={[
+                    <IconButton key="error" color="inherit" onClick={this.onSnackbarClose}>
+                      <CloseIcon style={{fontSize: 20}} />
+                    </IconButton>,
+                  ]}
+                  style={{backgroundColor: red[600]}} />
+              </Snackbar>
+            </main>
+            {/* Footer */}
+            <Grid container className={classes.footer}>
+              <Typography variant="body2" color="inherit" style={{marginTop: 7}} noWrap>© M&amp;R Games&nbsp;&nbsp;-&nbsp;&nbsp;2018 - {new Date().getFullYear()}</Typography>
+              <Button variant="outlined" color="primary" href="https://mrgames13.jimdo.com" target="_blank" className={classes.button_homepage}>{strings.our_homepage}</Button>
+              <Button variant="outlined" color="primary" href="https://mrgames13.jimdo.com/feinstaub-app/info/" target="_blank" className={classes.button_info}>{strings.info}</Button>
+              <Button variant="contained" color="secondary" href="https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp" target="_blank" className={classes.button_download}>{strings.download_android_app}</Button>
             </Grid>
-            <Paper style={{margin: 0, paddingLeft: 10, paddingRight: 10, paddingTop: 3, paddingBottom: 3, right: 20, top: 80, position: "fixed", backgroundColor: 'rgba(255,255,255,0.5)', cursor: "pointer" }} onClick={() => window.open("https://h2801469.stratoserver.net/stats.php", "_blank")}>
-              <Typography>{this.state.markerData.length} {strings.sensors}</Typography>
-            </Paper>
-            <Fab color="primary" aria-label={strings.add_sensor} style={{margin: 0, right: 20, bottom: 65, position: "fixed" }} onClick={this.onShowAddSensorDialog}><AddIcon/></Fab>
-            { /* Dialogs */ }
-            {this.state.dialog_add_sensor_open && <DialogAddSensor opened={this.state.dialog_add_sensor_open} onClose={this.onHideAddSensorDialog} onSensorAdded={this.props.onHideAddSensorDialog} user_data={this.state.user_data} sync_key={this.state.sync_key} logged_in={this.state.logged_in}/>}
-            {this.state.selected_id !== undefined && this.state.dialog_add_favourite_open && <DialogAddFavourite opened={this.state.dialog_add_favourite_open} onClose={this.onHideAddFavouriteDialog} sync_key={this.state.sync_key} user_data={this.state.user_data} chip_id={this.state.selected_id} />}
-            {this.state.selected !== undefined && this.state.dialog_sensor_data_open && <DialogSensorData opened={this.state.dialog_sensor_data_open} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={this.state.selected} />}
-            {this.state.selected !== undefined && this.state.dialog_edit_sensor_open && <DialogEditSensor opened={this.state.dialog_edit_sensor_open} sync_key={this.state.sync_key} data={this.state.user_data} onClose={this.onHideEditSensorDialog} chip_id={this.state.selected.chip_id} name={this.state.selected.name} fav={this.state.selected.fav} color={this.state.selected.color}/>}
-            {this.state.selected_id !== undefined && this.state.dialog_remove_sensor_open && <DialogRemoveSensor opened={this.state.dialog_remove_sensor_open} sync_key={this.state.sync_key} user_data={this.state.user_data} onClose={this.onHideRemoveSensorDialog} chip_id={this.state.selected_id} />}
-            {this.state.selected !== undefined && this.state.dialog_sensor_details_open && <DialogSensorDetails opened={this.state.dialog_sensor_details_open} chip_id={this.state.selected.chip_id} name={this.state.selected.name} onClose={this.onHideDetailsDialog} />}
-            {/* URL-Parameter */}
-            <Switch>
-              <Route path="/s/:id" render={(props) => (
-                <DialogSensorData opened={this.state.dialog_sensor_data_route_open} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={{chip_id: props.match.params.id, name: strings.unknown_sensor}} />
-              )} />
-              <Redirect strict from={'/'} to={"."} />
-            </Switch>
-            {/* Snackbars */}
-            <Snackbar open={this.state.snackbar_success_open} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
-              <SnackbarContent
-                message={
-                  <span style={{ display: 'flex', alignItems: 'center' }}>
-                    <CheckCircleIcon style={{ fontSize: 20, opacity: 0.9, marginRight: 15 }}/>
-                    {this.state.snackbar_message}
-                  </span>}
-                action={[
-                  <IconButton key="success" color="inherit" onClick={this.onSnackbarClose}>
-                    <CloseIcon style={{fontSize: 20}} />
-                  </IconButton>,
-                ]}
-                style={{backgroundColor: green[600]}} />
-            </Snackbar>
-            <Snackbar open={this.state.snackbar_error_open} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
-              <SnackbarContent
-                message={
-                  <span style={{ display: 'flex', alignItems: 'center' }}>
-                    <ErrorIcon style={{ fontSize: 20, opacity: 0.9, marginRight: 15 }}/>
-                    {this.state.snackbar_message}
-                  </span>}
-                action={[
-                  <IconButton key="error" color="inherit" onClick={this.onSnackbarClose}>
-                    <CloseIcon style={{fontSize: 20}} />
-                  </IconButton>,
-                ]}
-                style={{backgroundColor: red[600]}} />
-            </Snackbar>
-          </main>
-          {/* Footer */}
-          <Grid container className={classes.footer}>
-            <Typography variant="body2" color="inherit" style={{marginTop: 7}} noWrap>© M&amp;R Games&nbsp;&nbsp;-&nbsp;&nbsp;2018 - {new Date().getFullYear()}</Typography>
-            <Button variant="outlined" color="primary" href="https://mrgames13.jimdo.com" target="_blank" className={classes.button_homepage}>{strings.our_homepage}</Button>
-            <Button variant="outlined" color="primary" href="https://mrgames13.jimdo.com/feinstaub-app/info/" target="_blank" className={classes.button_info}>{strings.info}</Button>
-            <Button variant="contained" color="secondary" href="https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp" target="_blank" className={classes.button_download}>{strings.download_android_app}</Button>
-          </Grid>
-        </Fragment>
+          </Fragment>
+        </CustomView>
       </Router>
     )
   }
