@@ -1,15 +1,121 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+#logo-container {
+  position: absolute;
+  z-index: 10000;
+  width: 100%;
+  height: 100vh;
+  background: rgb(0,254,161);
+  background: linear-gradient(135deg, rgba(0,254,161,1) 0%, rgb(0, 166, 216) 70%, rgba(0,191,230,1) 100%);
+  animation: transition_out 1s ease forwards 6.5s;
+}
+
+#logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#logo path:nth-child(1) {
+    stroke-dasharray: 385.0560302734375px;
+    stroke-dashoffset: 385.0560302734375px;
+    animation: line-anim 2.7s 2 ease forwards;
+    animation-direction: alternate;
+}
+#logo path:nth-child(2) {
+    stroke-dasharray: 515.2626953125px;
+    stroke-dashoffset: 515.2626953125px;
+    animation: line-anim 2.6s 2 ease forwards 1.1s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(3) {
+    stroke-dasharray: 239.8089141845703px;
+    stroke-dashoffset: 239.8089141845703px;
+    animation: line-anim 2.5s 2 ease forwards 1.2s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(4) {
+    stroke-dasharray: 422.50054931640625px;
+    stroke-dashoffset: 422.50054931640625px;
+    animation: line-anim 2.4s 2 ease forwards 1.3s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(5) {
+    stroke-dasharray: 418.81884765625px;
+    stroke-dashoffset: 418.81884765625px;
+    animation: line-anim 2.3s 2 ease forwards 1.4s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(6) {
+    stroke-dasharray: 314.94970703125px;
+    stroke-dashoffset: 314.94970703125px;
+    animation: line-anim 2.2s 2 ease forwards 1.5s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(7) {
+    stroke-dasharray: 506.4462890625px;
+    stroke-dashoffset: 506.4462890625px;
+    animation: line-anim 2.1s 2 ease forwards 1.6s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(8) {
+    stroke-dasharray: 422.1620178222656px;
+    stroke-dashoffset: 422.1620178222656px;
+    animation: line-anim 2s 2 ease forwards 1.7s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(9) {
+    stroke-dasharray: 562.0042114257812px;
+    stroke-dashoffset: 562.0042114257812px;
+    animation: line-anim 1.9s 2 ease forwards 1.8s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(10) {
+    stroke-dasharray: 137.08798217773438px;
+    stroke-dashoffset: 137.08798217773438px;
+    animation: line-anim 1.8s 2 ease forwards 1.9s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(11) {
+    stroke-dasharray: 490.2921447753906px;
+    stroke-dashoffset: 490.2921447753906px;
+    animation: line-anim 1.7s 2 ease forwards 2.0s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(12) {
+    stroke-dasharray: 581.2545166015625px;
+    stroke-dashoffset: 581.2545166015625px;
+    animation: line-anim 1.6s 2 ease forwards 2.1s;
+    animation-direction: alternate;
+}
+#logo path:nth-child(13) {
+    stroke-dasharray: 581.2614135742188px;
+    stroke-dashoffset: 581.2614135742188px;
+    animation: line-anim 1.5s 2 ease forwards 2.2s;
+    animation-direction: alternate;
+}
+
+@keyframes line-anim {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes transition_out {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
 }
