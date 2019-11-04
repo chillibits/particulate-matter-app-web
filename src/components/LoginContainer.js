@@ -92,7 +92,7 @@ class LoginContainer extends Component {
             <div className={classes.container}>
               <Avatar className={classes.qr_container}>
                 <div style={{backgroundColor: "#FFF", padding: 10, borderRadius: 10}}>
-                  <QRCode value={this.state.sync_key} size={210} logo={"https://map.h2801469.stratoserver.net/qr_icon.png"} logoWidth={70}/>
+                  <QRCode value={this.state.sync_key} size={210} logo={"https://h2801469.stratoserver.net/qr_icon.png"} logoWidth={70}/>
                 </div>
               </Avatar>
               <Typography variant="h6" style={isFirefox ? {position: "absolute", marginTop: 450, color: "#3F51B5"} : {position: "absolute", marginTop: 230, color: "#3F51B5"}} gutterBottom><b>{strings.link_with_android_app}</b></Typography>
