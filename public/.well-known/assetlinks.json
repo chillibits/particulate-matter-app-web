@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.mrgames13.jimdo.feinstaubapp",
+    "sha256_cert_fingerprints":
+    ["19:2B:AF:EA:E7:88:97:B3:2F:BF:B7:A8:61:85:EC:E4:2C:02:79:73:AD:CB:7B:9F:03:1F:6F:D6:D7:2E:72:EC"]
+  }
+}]

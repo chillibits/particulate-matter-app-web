@@ -149,6 +149,7 @@ class FullScreenDialog extends React.Component {
           list_temp.push({ x: time, y: temp_double });
           list_humidity.push({ x: time, y: humidity_double });
           list_pressure.push({ x: time, y: pressure_double });
+          return (item, key);
         });
 
         if(currentComponent.state.enabled_pm10) data_records_graph.push({ id: strings.pm1, color: "hsl(353, 70%, 50%)", data: list_pm1 });
