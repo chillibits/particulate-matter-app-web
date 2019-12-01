@@ -12,6 +12,7 @@ import strings from '../strings'
 class DialogSensorDetails extends React.Component {
   state = {
     public: false,
+    firmware_version: strings.loading,
     creation_date: strings.loading,
     lat: strings.loading,
     lng: strings.loading,
@@ -43,6 +44,7 @@ class DialogSensorDetails extends React.Component {
 
               currentComponent.setState({
                 creation_date: moment.unix(obj.creation_date).format("DD.MM.YYYY"),
+                firmware_version: obj.firmware_version,
                 public: true,
                 lat: obj.lat,
                 lng: obj.lng,
@@ -81,7 +83,11 @@ class DialogSensorDetails extends React.Component {
                 <td align="right">{this.state.public ? "Ja" : "Nein"}</td>
               </tr>
               <tr>
-                <td><b>{strings.public}:</b></td>
+                <td><b>{strings.firmware_version}:</b></td>
+                <td align="right">{this.state.firmware_version}</td>
+              </tr>
+              <tr>
+                <td><b>{strings.online_since}:</b></td>
                 <td align="right">{this.state.creation_date}</td>
               </tr>
               <tr>
