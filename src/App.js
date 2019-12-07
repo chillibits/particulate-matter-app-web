@@ -289,7 +289,7 @@ class App extends Component {
                     <LoginContainer logged_in={this.state.logged_in} sync_key={this.state.sync_key} favourites={this.state.favourites} own_sensors={this.state.own_sensors} onShowSensorData={this.onShowSensorDataDialog} onEditSensor={this.onShowEditSensorDialog} onRemoveSensor={this.onShowRemoveSensorDialog} onSensorDetails={this.onShowDetailsDialog} />
                   </Grid>
                   <Grid item>
-                    {this.state.markerData && <MapContainer google={window.google} logged_in={this.state.logged_in} ownPosition={this.state.currentPosition} markerData={this.state.markerData} favourites={this.state.favourites} own_sensors={this.state.own_sensors} onAddFavourite={this.onShowAddFavouriteDialog} onShowSensorData={this.onShowSensorDataDialog} style={{position: 'absolute', top: 0, bottom: 0}}/>}
+                    {this.state.markerData && <MapContainer google={window.google} logged_in={this.state.logged_in} ownPosition={this.state.currentPosition} markerData={this.state.markerData} favourites={this.state.favourites} own_sensors={this.state.own_sensors} onAddFavourite={this.onShowAddFavouriteDialog} onShowSensorData={this.onShowSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} style={{position: 'absolute', top: 0, bottom: 0}}/>}
                   </Grid>
                 </Grid>
                 <Paper style={{margin: 0, paddingLeft: 10, paddingRight: 10, paddingTop: 3, paddingBottom: 3, right: 20, top: 80, position: "fixed", backgroundColor: 'rgba(255,255,255,0.5)', cursor: "pointer" }} onClick={() => window.open("https://h2801469.stratoserver.net/stats.php", "_blank")}>
