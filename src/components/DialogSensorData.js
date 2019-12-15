@@ -26,7 +26,7 @@ import { SensorDataTable } from './index';
 import { Scrollbars } from 'react-custom-scrollbars';
 import moment from 'moment';
 import { ResponsiveLine } from '@nivo/line'
-import Slider from '@material-ui/lab/Slider';
+import Slider from '@material-ui/core/Slider';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Switch from '@material-ui/core/Switch';

@@ -6,9 +6,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
-//import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@material-ui/icons/Search';
 import Avatar from '@material-ui/core/Avatar';
-//import { AutoComplete } from './index'
+import LocationSearch from './LocationSearch';
 import strings from '../strings'
 
 const styles = theme => ({
@@ -35,15 +35,14 @@ const styles = theme => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit,
+      marginLeft: 10,
       width: 'auto',
     },
   },
   searchIcon: {
-    width: theme.spacing.unit * 9,
+    width: 50,
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
@@ -51,33 +50,11 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-  },
-  inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 120,
-      '&:focus': {
-        width: 350,
-      },
-    },
-  },
 });
 
 class SearchAppBar extends Component {
-  handleChange = name => (event, { newValue }) => {
-    this.props.onChange(event, { newValue });
-  };
-
   render() {
-    const { classes, /*suggestions*/ } = this.props;
+    const { classes } = this.props;
 
     return (
       <div className={classes.root}>
@@ -88,12 +65,10 @@ class SearchAppBar extends Component {
             </IconButton>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>{strings.app_name}</Typography>
             <div className={classes.grow} />
-            {/*<div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <AutoComplete placeholder="Ort suchen …" suggestions={suggestions} onChange={this.handleChange("single")} classes={{ root: classes.inputRoot, input: classes.inputInput }} />
-            </div>*/}
+            <div className={classes.search}>
+              <div className={classes.searchIcon}><SearchIcon /></div>
+              <LocationSearch onChange={this.props.onChange}/>
+            </div>
           </Toolbar>
         </AppBar>
       </div>

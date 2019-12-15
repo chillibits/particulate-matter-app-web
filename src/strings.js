@@ -98,6 +98,7 @@ export default new LocalizedStrings({
     delete: "Delete",
     previous_page: "Previous page",
     next_page: "Next page",
+    search_location: "Search location ...",
   },
   de: {
     app_name: "Feinstaub-App",
@@ -196,5 +197,6 @@ export default new LocalizedStrings({
     delete: "Löschen",
     previous_page: "Vorherige Seite",
     next_page: "Nächste Seite",
+    search_location: "Ort suchen ...",
   }},
 );

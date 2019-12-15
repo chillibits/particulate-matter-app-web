@@ -13,7 +13,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import request from 'superagent'
-import md5 from 'md5'
 import fire from './fire'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import { CustomView, isAndroid } from "react-device-detect";
@@ -159,26 +158,9 @@ class App extends Component {
       });
   }
 
-  handleSearchChange = name => (event, { newValue }) => {
-    let currentComponent = this;
-    if(newValue !== "") {
-      var key_enc = md5("AIzaSyDUiKmZIwgnhCcWldQSuScuzKE8vGg94dc");
-      request.post('https://h2801469.stratoserver.net/autocomplete.php')
-        .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({key: key_enc, q: newValue})
-        .end(function(err, res) {
-          try{
-            var result = res.text.trim();
-            var suggestions_string = JSON.parse(result);
-
-            currentComponent.setState({
-              suggestions: suggestions_string.predictions
-            });
-          } catch(e){
-            console.log("Error: Loading place predictions");
-          }
-        });
-    }
+  handleSearchChange = (lat, lng) => {
+    alert(lat)
+    alert(lng)
   };
 
   onShowAddSensorDialog = () => {
@@ -281,7 +263,7 @@ class App extends Component {
             </div>
             <div id="app-container">
               {/* Header */}
-              <AppBar suggestions={this.state.suggestions} onChange={this.handleSearchChange("single")}/>
+              <AppBar suggestions={this.state.suggestions} onChange={this.handleSearchChange}/>
               {/* Main */}
               <main className={classes.main}>
                 <Grid container style={{height: "100%"}}>

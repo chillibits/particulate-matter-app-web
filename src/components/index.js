@@ -1,6 +1,6 @@
 import AppBar from './AppBar'
 import MapContainer from './MapContainer'
-import AutoComplete from './Autocomplete'
+import LocationSearch from './LocationSearch'
 import LoginContainer from './LoginContainer'
 import SensorIcon from './SensorIcon'
 import DialogAddSensor from './DialogAddSensor'
@@ -13,5 +13,5 @@ import LocationPickerDialog from './LocationPickerDialog'
 import SensorDataTable from './SensorDataTable'
 
 export {
-  AppBar, MapContainer, AutoComplete, LoginContainer, SensorIcon, DialogAddSensor, DialogAddFavourite, DialogSensorData, DialogEditSensor, DialogRemoveSensor, DialogSensorDetails, SensorDataTable, LocationPickerDialog
+  AppBar, MapContainer, LocationSearch, LoginContainer, SensorIcon, DialogAddSensor, DialogAddFavourite, DialogSensorData, DialogEditSensor, DialogRemoveSensor, DialogSensorDetails, SensorDataTable, LocationPickerDialog
 }
