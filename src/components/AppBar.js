@@ -64,11 +64,11 @@ class SearchAppBar extends Component {
               <Avatar alt={strings.app_name} src="../favicon.ico" className={classes.avatar} />
             </IconButton>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>{strings.app_name}</Typography>
-            <div className={classes.grow} />
+            {/* <div className={classes.grow} />
             <div className={classes.search}>
               <div className={classes.searchIcon}><SearchIcon /></div>
               <LocationSearch onChange={this.props.onChange}/>
-            </div>
+            </div> */}
           </Toolbar>
         </AppBar>
       </div>
