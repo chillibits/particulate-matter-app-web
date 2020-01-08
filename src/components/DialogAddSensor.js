@@ -207,8 +207,8 @@ class DialogAddSensor extends React.Component {
                       <Button variant="outlined" color="primary" _onClick={this.chooseLocation} style={{margin: 10, width: 440}}>{strings.choose_location}</Button>
                     </Tooltip>
                     <span>
-                      <TextField label={strings.latitude} style={{margin: 10}} type="number" onChange={this.latChanged} variant="outlined" />
                       <TextField label={strings.longitude} style={{margin: 10}} type="number" onChange={this.lngChanged} variant="outlined" />
+                      <TextField label={strings.latitude} style={{margin: 10}} type="number" onChange={this.latChanged} variant="outlined" />
                     </span>
                     <TextField label={strings.mounting_height} style={{margin: 10}} type="number" onChange={this.altChanged} variant="outlined" />
                   </div>
