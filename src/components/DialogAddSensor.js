@@ -167,7 +167,7 @@ class DialogAddSensor extends React.Component {
                 <StepContent>
                   {/* Content */}
                   <div>
-                    <Typography>{strings.enter_chip_id_instruction_1} <a href='https://mrgames13.jimdo.com/feinstaub-app/faq/#6' target='blank'>{strings.faq_site}</a> {strings.enter_chip_id_instruction_2}</Typography>
+                    <Typography>{strings.enter_chip_id_instruction_1} <a href='https://chillibits.com/pmapp/en/faq/#6' target='blank'>{strings.faq_site}</a> {strings.enter_chip_id_instruction_2}</Typography>
                     <TextField value={this.state.chip_id} label={strings.chip_id} type="number" error={this.state.chip_id_error} onChange={this.chipIDChange} variant="outlined" style={{marginTop: 15}} />
                     {this.state.error_desc !== "" && <Typography color="error" style={{marginTop: 15}}>{this.state.error_desc}</Typography>}
                   </div>

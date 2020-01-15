@@ -33,7 +33,7 @@
     "react-native-device-info": "^5.4.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
-    "react-swipeable-views": "^0.13.3",
+    "react-swipeable-views": "^0.13.4",
     "superagent": "^5.2.1"
   },
   "scripts": {
