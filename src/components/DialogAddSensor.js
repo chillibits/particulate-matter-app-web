@@ -202,7 +202,7 @@ class DialogAddSensor extends React.Component {
                 <StepContent>
                   {/* Content */}
                   <div>
-                    <Typography>{strings.add_sensor_to_map_instruction_1} <a href='mailto:mrgames@outlook.de'>{strings.contact}</a> {strings.add_sensor_to_map_instruction_2}</Typography>
+                    <Typography>{strings.add_sensor_to_map_instruction_1} <a href='mailto:contact@chillibits.com'>{strings.contact}</a> {strings.add_sensor_to_map_instruction_2}</Typography>
                     <Tooltip title={strings.soon_available}>
                       <Button variant="outlined" color="primary" _onClick={this.chooseLocation} style={{margin: 10, width: 440}}>{strings.choose_location}</Button>
                     </Tooltip>
