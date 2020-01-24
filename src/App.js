@@ -138,7 +138,7 @@ class App extends Component {
           }
 
           //Anwenden
-          currentComponent.setState({ logged_in: true, user_data: data, favourites: favourites, own_sensors: own_sensors, snackbar_success_open: currentComponent.state.first_sync_complete === false, snackbar_message: "Verknüpfung mit Android-App erfolgreich", first_sync_complete: true });
+          currentComponent.setState({ logged_in: true, user_data: data, favourites: favourites, own_sensors: own_sensors, snackbar_success_open: !currentComponent.state.first_sync_complete, snackbar_message: "Verknüpfung mit Android-App erfolgreich", first_sync_complete: true });
         }
       } else {
         currentComponent.setState({ logged_in: false, user_data: [], favourites: [], own_sensors: [], snackbar_error_open: true, snackbar_message: "Verbindung zur Android-App beendet", first_sync_complete: false });
