@@ -32,6 +32,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Switch from '@material-ui/core/Switch';
 import request from 'superagent'
 import strings from '../strings'
+import * as Constants from '../constants'
 
 let counter = 0;
 
@@ -121,7 +122,7 @@ class FullScreenDialog extends React.Component {
     from.setHours(0,0,0,0);
     var to = new Date(from.getTime() + 86400000);
 
-    request.post('https://h2801469.stratoserver.net/get.php')
+    request.post(Constants.BACKEND_DATA_URL)
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({ id: this.props.sensor.chip_id, from: from.getTime() / 1000, to: to.getTime() / 1000, minimize: true, with_gps: false, with_note: false })
       .end(function(err, res) {
