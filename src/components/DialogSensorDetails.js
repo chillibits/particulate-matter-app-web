@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import moment from 'moment';
 import strings from '../strings'
+import * as Constants from '../constants'
 
 class DialogSensorDetails extends React.Component {
   state = {
@@ -28,13 +29,13 @@ class DialogSensorDetails extends React.Component {
   loadSensorDetails = () => {
     //Serveranfrage machen
     let currentComponent = this;
-    request.post('https://h2801469.stratoserver.net/ServerScriptWeb_v100.php')
+    request.post(Constants.BACKEND_URL)
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({command: "issensorexisting", chip_id: this.props.chip_id})
       .end(function(err, res) {
         var result = res.text.trim();
         if(result === "1") {
-          request.post('https://h2801469.stratoserver.net/ServerScriptWeb_v100.php')
+          request.post(Constants.BACKEND_URL)
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .send({command: "getsensorinfo", chip_id: currentComponent.props.chip_id})
             .end(function(err, res) {

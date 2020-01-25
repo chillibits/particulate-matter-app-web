@@ -17,6 +17,7 @@ import fire from './fire'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import { CustomView, isAndroid } from "react-device-detect";
 import strings from './strings'
+import * as Constants from './constants'
 
 const styles = theme => ({
   main: {
@@ -148,7 +149,7 @@ class App extends Component {
 
   loadAllSensors = () => {
     let currentComponent = this;
-    request.post('https://h2801469.stratoserver.net/ServerScriptWeb_v100.php')
+    request.post(Constants.BACKEND_URL)
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({command: "getall"})
       .end(function(err, res) {

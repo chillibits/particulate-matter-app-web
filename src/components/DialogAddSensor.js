@@ -19,6 +19,7 @@ import { LocationPickerDialog } from './index'
 import green from '@material-ui/core/colors/green';
 import fire from '../fire'
 import strings from '../strings'
+import * as Constants from '../constants'
 
 const styles = theme => ({
   buttonProgress: {
@@ -52,7 +53,7 @@ class DialogAddSensor extends React.Component {
       this.setState({ loading: true });
       //Existiert eine ID bereits
       let currentComponent = this;
-      request.post('https://h2801469.stratoserver.net/ServerScriptWeb_v100.php')
+      request.post(Constants.BACKEND_URL)
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({command: "issensordataexisting", chip_id: this.state.chip_id})
         .end(function(err, res) {
@@ -128,7 +129,7 @@ class DialogAddSensor extends React.Component {
 
     //Auf dem Server hinzufügen
     let currentComponent = this;
-    request.post('https://h2801469.stratoserver.net/ServerScriptWeb_v100.php')
+    request.post(Constants.BACKEND_URL)
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({command: "addsensor", chip_id: this.state.chip_id, lat: this.state.lat, lng: this.state.lng, alt: this.state.alt})
       .end(function(err, res) {
