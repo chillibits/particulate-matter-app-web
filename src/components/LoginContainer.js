@@ -111,7 +111,7 @@ class LoginContainer extends Component {
                     <List style={{overflow: 'auto'}}>
                       {this.props.favourites.map(sensor => {
                         return (
-                          <Fragment>
+                          <div key={sensor.chip_id}>
                             <ListItem button onClick={() => this.props.onShowSensorData(sensor)}>
                               <Avatar style={{ backgroundColor: sensor.color, marginRight: 15 }}><SensorIcon/></Avatar>
                               <ListItemText primary={sensor.name} secondary={sensor.chip_id} />
@@ -125,7 +125,7 @@ class LoginContainer extends Component {
                                 <MenuItem onClick={() => this.handleMenuClose(4, sensor)}>{strings.properties}</MenuItem>
                               </Menu>
                             }
-                          </Fragment>
+                          </div>
                         );
                       }, this)}
                     </List>
@@ -142,7 +142,7 @@ class LoginContainer extends Component {
                     <List style={{overflow: 'auto'}}>
                       {this.props.own_sensors.map(sensor => {
                         return (
-                          <Fragment>
+                          <div key={sensor.chip_id}>
                             <ListItem button onClick={() => this.props.onShowSensorData(sensor)}>
                               <Avatar style={{ backgroundColor: sensor.color, marginRight: 15 }}><SensorIcon/></Avatar>
                               <ListItemText primary={sensor.name} secondary={sensor.chip_id} />
@@ -156,7 +156,7 @@ class LoginContainer extends Component {
                                 <MenuItem onClick={() => this.handleMenuClose(4, sensor)}>{strings.properties}</MenuItem>
                               </Menu>
                             }
-                          </Fragment>
+                          </div>
                         );
                       }, this)}
                     </List>
