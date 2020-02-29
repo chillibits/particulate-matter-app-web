@@ -55,6 +55,7 @@ class DialogSensorDetails extends React.Component {
         } else {
           currentComponent.setState({
             creation_date: "-",
+            firmware_version: "-",
             public: false,
             lat:  "-",
             lng:  "-",
