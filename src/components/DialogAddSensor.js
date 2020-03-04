@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
+import * as Keys from '../keys';
 import { withStyles } from '@material-ui/core/styles'
 import request from 'superagent'
 import Button from '@material-ui/core/Button';
@@ -20,6 +21,7 @@ import green from '@material-ui/core/colors/green';
 import fire from '../fire'
 import strings from '../strings'
 import * as Constants from '../constants'
+import Geocode from "react-geocode"
 
 const styles = theme => ({
   buttonProgress: {
@@ -102,16 +104,19 @@ class DialogAddSensor extends React.Component {
 
   latChanged = (event) => {
     var next_disabled = event.target.value.length === 0 || this.state.lng.length === 0 || this.state.alt.length === 0;
+    if(event.target.value.length > 0 && this.state.lng.length > 0) this.checkPlace();
     this.setState({ lat: event.target.value, next_disabled: next_disabled });
   }
 
   lngChanged = (event) => {
     var next_disabled = this.state.lat.length === 0 || event.target.value.length === 0 || this.state.alt.length === 0;
+    if(event.target.value.length > 0 && this.state.lat.length > 0) this.checkPlace();
     this.setState({ lng: event.target.value, next_disabled: next_disabled });
   }
 
   altChanged = (event) => {
     var next_disabled = this.state.lat.length === 0 || this.state.lng.length === 0 || event.target.value.length === 0;
+    if(this.state.lat.length > 0 && this.state.lng.length > 0) this.checkPlace();
     this.setState({ alt: event.target.value, next_disabled: next_disabled });
   }
 
@@ -134,9 +139,7 @@ class DialogAddSensor extends React.Component {
       .send({command: "addsensor", chip_id: this.state.chip_id, lat: this.state.lat, lng: this.state.lng, alt: this.state.alt})
       .end(function(err, res) {
         var result = res.text.trim();
-        console.log(result);
         if(result === 0) result = 2;
-        //currentComponent.props.onSensorAdded();
         currentComponent.props.onClose(parseInt(result));
       });
   }
@@ -151,6 +154,26 @@ class DialogAddSensor extends React.Component {
     var obj = { time: timestamp, device: "web", data: data_new }
     fire.database().ref('sync/' + this.props.sync_key).set(obj)
     this.props.onClose(1);
+  }
+
+  checkPlace = () => {
+    let currentComponent = this;
+    Geocode.setApiKey(Keys.GOOGLE_GEOCODE_KEY);
+    Geocode.fromLatLng(this.state.lat, this.state.lng).then(
+      response => {
+        this.setState({ selectedAddress: response.results[0].formatted_address });
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
+  onEnterPressed = (ev) => {
+    if (ev.key === 'Enter') {
+      if(!this.state.next_disabled) this.handleNext(this.state.active_step);
+      ev.preventDefault();
+    }
   }
 
   render() {
@@ -169,7 +192,7 @@ class DialogAddSensor extends React.Component {
                   {/* Content */}
                   <div>
                     <Typography>{strings.enter_chip_id_instruction_1} <a href='https://chillibits.com/pmapp/en/faq/#6' target='blank'>{strings.faq_site}</a> {strings.enter_chip_id_instruction_2}</Typography>
-                    <TextField value={this.state.chip_id} label={strings.chip_id} type="number" error={this.state.chip_id_error} onChange={this.chipIDChange} variant="outlined" style={{marginTop: 15}} />
+                    <TextField value={this.state.chip_id} label={strings.chip_id} type="number" error={this.state.chip_id_error} onChange={this.chipIDChange} variant="outlined" onKeyPress={this.onEnterPressed} style={{ marginTop: 15 }} />
                     {this.state.error_desc !== "" && <Typography color="error" style={{marginTop: 15}}>{this.state.error_desc}</Typography>}
                   </div>
                   {/* Buttons */}
@@ -187,7 +210,7 @@ class DialogAddSensor extends React.Component {
                   {/* Content */}
                   <div>
                     <Typography>{strings.display_name_color_instruction}</Typography>
-                    <TextField label={strings.display_name} value={this.state.sensor_name} style={{width: 360, marginTop: 15, marginBottom: 15}} onChange={this.nameChange} variant="outlined"/>
+                    <TextField label={strings.display_name} value={this.state.sensor_name} style={{width: 360, marginTop: 15, marginBottom: 15}} onChange={this.nameChange} onKeyPress={this.onEnterPressed} variant="outlined"/>
                     <CirclePicker color={this.state.color} width="380px" onChangeComplete={this.colorChange} />
                   </div>
                   {/* Buttons */}
@@ -205,13 +228,15 @@ class DialogAddSensor extends React.Component {
                   <div>
                     <Typography>{strings.add_sensor_to_map_instruction_1} <a href='mailto:contact@chillibits.com'>{strings.contact}</a> {strings.add_sensor_to_map_instruction_2}</Typography>
                     <Tooltip title={strings.soon_available}>
-                      <Button variant="outlined" color="primary" _onClick={this.chooseLocation} style={{margin: 10, width: 440}}>{strings.choose_location}</Button>
+                      <Button variant="outlined" color="primary" _onClick={this.chooseLocation} style={{marginTop: 10, width: "100%"}}>{strings.choose_location}</Button>
                     </Tooltip>
-                    <span>
-                      <TextField label={strings.longitude} style={{margin: 10}} type="number" onChange={this.lngChanged} variant="outlined" />
-                      <TextField label={strings.latitude} style={{margin: 10}} type="number" onChange={this.latChanged} variant="outlined" />
-                    </span>
-                    <TextField label={strings.mounting_height} style={{margin: 10}} type="number" onChange={this.altChanged} variant="outlined" />
+                    <TextField label={strings.longitude} style={{marginTop: 10, marginRight: "2%", width: "49%"}} type="number" onChange={this.lngChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: -180, max: 180, maxLength: 9 }}variant="outlined" />
+                    <TextField label={strings.latitude} style={{marginTop: 10, width: "49%"}} type="number" onChange={this.latChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: -90, max: 90, maxLength: 8 }} variant="outlined" />
+                    <TextField label={strings.mounting_height} style={{marginTop: 10, width: "49%"}} type="number" onChange={this.altChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: 0, max: 999, maxLength: 3 }} variant="outlined" />
+                    {this.state.selectedAddress !== undefined && <div>
+                      <Typography style={{ marginTop: 5, marginBottom: 5 }}>><b>{this.state.selectedAddress}</b></Typography>
+                      <Typography>{strings.is_this_the_right_place}</Typography>
+                    </div>}
                   </div>
                   {/* Buttons */}
                   <Button onClick={this.handleBack} style={{marginTop: 15, marginRight: 15}}>{strings.back}</Button>

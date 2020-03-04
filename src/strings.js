@@ -99,6 +99,7 @@ export default new LocalizedStrings({
     previous_page: "Previous page",
     next_page: "Next page",
     search_location: "Search location ...",
+    is_this_the_right_place: "Is this the right place? If not, please try to switch the coordinats.",
   },
   de: {
     app_name: "Feinstaub-App",
@@ -198,6 +199,7 @@ export default new LocalizedStrings({
     previous_page: "Vorherige Seite",
     next_page: "Nächste Seite",
     search_location: "Ort suchen ...",
+    is_this_the_right_place: "Ist dies der korrekte Standort? Falls nicht, versuchen Sie die Koordinaten zu vertauschen.",
   },
   fr:{
     app_name: "App Matière Particulaire",
@@ -297,5 +299,6 @@ export default new LocalizedStrings({
     previous_page: "Page précédente",
     next_page: "Page suivante",
     search_location: "Rechercher un lieu ...",
+    is_this_the_right_place: "Est-ce le bon endroit? Sinon, essayez de changer les coordonnées.",
   }},
 );
