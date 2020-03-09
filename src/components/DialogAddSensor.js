@@ -157,7 +157,6 @@ class DialogAddSensor extends React.Component {
   }
 
   checkPlace = () => {
-    let currentComponent = this;
     Geocode.setApiKey(Keys.GOOGLE_GEOCODE_KEY);
     Geocode.fromLatLng(this.state.lat, this.state.lng).then(
       response => {

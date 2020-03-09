@@ -27,7 +27,7 @@ class MapContainer extends Component {
   constructor(props) {
     super(props)
 
-    this.state.markers = this.props.markerData.map(marker => <Marker key={marker.i} icon={{ url: "markers/blue.png" }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />);
+    // this.state.markers = this.props.markerData.map(marker => <Marker key={marker.i} icon={{ url: "markers/blue.png" }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />);
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -116,7 +116,7 @@ class MapContainer extends Component {
           if(sensor.chip_id === marker.i) image_url = "markers/green.png";
           return true;
         });
-        return <Marker key={marker.i} icon={{ url: image_url }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />;
+        if(marker.l !== 0 || marker.b !== 0) return <Marker key={marker.i} icon={{ url: image_url }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />;
       });
       this.setState({ markers: markers, old_markerData: this.props.markerData, old_favourites: this.props.favourites, old_own_sensors: this.props.own_sensors });
     }
