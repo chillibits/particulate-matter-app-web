@@ -38,7 +38,7 @@ class MapContainer extends Component {
         var country = currentComponent.getCountry(response.results[0].address_components)
         var city = currentComponent.getCity(response.results[0].address_components)
         this.setState({
-          selectedAddress: country+ ", " + city,
+          selectedAddress: country + ", " + city,
           country: country,
           city: city,
         });
@@ -116,7 +116,8 @@ class MapContainer extends Component {
           if(sensor.chip_id === marker.i) image_url = "markers/green.png";
           return true;
         });
-        if(marker.l !== 0 || marker.b !== 0) return <Marker key={marker.i} icon={{ url: image_url }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />;
+        // Attention: !== does not work!
+        if(marker.l != 0 || marker.b != 0) return <Marker key={marker.i} icon={{ url: image_url }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />;
       });
       this.setState({ markers: markers, old_markerData: this.props.markerData, old_favourites: this.props.favourites, old_own_sensors: this.props.own_sensors });
     }
