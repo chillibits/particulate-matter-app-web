@@ -1,28 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import request from 'superagent'
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import moment from 'moment';
-import strings from '../strings'
-import * as Constants from '../constants'
+import React from "react";
+import PropTypes from "prop-types";
+import request from "superagent";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import moment from "moment";
+import strings from "../strings";
+import * as Constants from "../constants";
 
 class DialogSensorDetails extends React.Component {
   state = {
     public: false,
-    firmware_version: strings.loading,
-    creation_date: strings.loading,
+    firmwareVersion: strings.loading,
+    creationDate: strings.loading,
     lat: strings.loading,
     lng: strings.loading,
     alt: strings.loading,
   };
 
   constructor(props) {
-    super(props)
-
+    super(props);
     this.loadSensorDetails();
   }
 
@@ -31,21 +30,21 @@ class DialogSensorDetails extends React.Component {
     let currentComponent = this;
     request.post(Constants.BACKEND_URL)
       .set('Content-Type', 'application/x-www-form-urlencoded')
-      .send({command: "issensorexisting", chip_id: this.props.chip_id})
+      .send({ command: "issensorexisting", chip_id: this.props.chipId })
       .end(function(err, res) {
         var result = res.text.trim();
         if(result === "1") {
           request.post(Constants.BACKEND_URL)
             .set('Content-Type', 'application/x-www-form-urlencoded')
-            .send({command: "getsensorinfo", chip_id: currentComponent.props.chip_id})
+            .send({ command: "getsensorinfo", chip_id: currentComponent.props.chipId })
             .end(function(err, res) {
               var result = res.text.trim();
               var obj = JSON.parse(result)[0];
               var alt = obj.alt + "m";
 
               currentComponent.setState({
-                creation_date: moment.unix(obj.creation_date).format("DD.MM.YYYY"),
-                firmware_version: obj.firmware_version,
+                creationDate: moment.unix(obj.creation_date).format("DD.MM.YYYY"),
+                firmwareVersion: obj.firmware_version,
                 public: true,
                 lat: obj.lat,
                 lng: obj.lng,
@@ -54,8 +53,8 @@ class DialogSensorDetails extends React.Component {
             });
         } else {
           currentComponent.setState({
-            creation_date: "-",
-            firmware_version: "-",
+            creationDate: "-",
+            firmwareVersion: "-",
             public: false,
             lat:  "-",
             lng:  "-",
@@ -68,29 +67,29 @@ class DialogSensorDetails extends React.Component {
   render() {
     return (
       <Dialog open={this.props.opened} onClose={this.props.onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" >
-        <DialogTitle id="alert-dialog-title">{strings.sensor_details}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{strings.sensorDetails}</DialogTitle>
         <DialogContent>
           <table width="350">
             <tbody>
               <tr>
-                <td><b>{strings.display_name}:</b></td>
+                <td><b>{strings.displayName}:</b></td>
                 <td align="right">{this.props.name}</td>
               </tr>
               <tr>
-                <td><b>{strings.chip_id}:</b></td>
-                <td align="right">{this.props.chip_id}</td>
+                <td><b>{strings.chipId}:</b></td>
+                <td align="right">{this.props.chipId}</td>
               </tr>
               <tr>
                 <td><b>{strings.public}:</b></td>
                 <td align="right">{this.state.public ? "Ja" : "Nein"}</td>
               </tr>
               <tr>
-                <td><b>{strings.firmware_version}:</b></td>
-                <td align="right">{this.state.firmware_version}</td>
+                <td><b>{strings.firmwareVersion}:</b></td>
+                <td align="right">{this.state.firmwareVersion}</td>
               </tr>
               <tr>
-                <td><b>{strings.online_since}:</b></td>
-                <td align="right">{this.state.creation_date}</td>
+                <td><b>{strings.onlineSince}:</b></td>
+                <td align="right">{this.state.creationDate}</td>
               </tr>
               <tr>
                 <td><b>{strings.latitude}:</b></td>
@@ -101,7 +100,7 @@ class DialogSensorDetails extends React.Component {
                 <td align="right">{this.state.lng}</td>
               </tr>
               <tr>
-                <td><b>{strings.mounting_height}:</b></td>
+                <td><b>{strings.mountingHeight}:</b></td>
                 <td align="right">{this.state.alt}</td>
               </tr>
             </tbody>
@@ -118,7 +117,7 @@ class DialogSensorDetails extends React.Component {
 DialogSensorDetails.propTypes = {
   opened: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  chip_id: PropTypes.string.isRequired,
+  chipId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 };
 

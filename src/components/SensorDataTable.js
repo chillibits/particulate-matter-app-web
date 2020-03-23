@@ -1,24 +1,24 @@
-import React from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import { lighten } from '@material-ui/core/styles/colorManipulator';
-import strings from '../strings'
+import React from "react";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import DeleteIcon from "@material-ui/icons/Delete";
+import FilterListIcon from "@material-ui/icons/FilterList";
+import { lighten } from "@material-ui/core/styles/colorManipulator";
+import strings from "../strings"
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) return -1;
@@ -37,16 +37,16 @@ function stableSort(array, cmp) {
 }
 
 function getSorting(order, orderBy) {
-  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
+  return order === "desc" ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
 const rows = [
-  { id: 'time', numeric: false, disablePadding: true, label: strings.time_of_day },
-  { id: 'pm10', numeric: true, disablePadding: false, label: strings.pm1 },
-  { id: 'pm2.5', numeric: true, disablePadding: false, label: strings.pm2 },
-  { id: 'temp', numeric: true, disablePadding: false, label: strings.temperature },
-  { id: 'humidity', numeric: true, disablePadding: false, label: strings.humidity },
-  { id: 'pressure', numeric: true, disablePadding: false, label: strings.pressure },
+  { id: "time", numeric: false, disablePadding: true, label: strings.timeOfDay },
+  { id: "pm10", numeric: true, disablePadding: false, label: strings.pm1 },
+  { id: "pm2.5", numeric: true, disablePadding: false, label: strings.pm2 },
+  { id: "temp", numeric: true, disablePadding: false, label: strings.temperature },
+  { id: "humidity", numeric: true, disablePadding: false, label: strings.humidity },
+  { id: "pressure", numeric: true, disablePadding: false, label: strings.pressure },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -65,8 +65,8 @@ class EnhancedTableHead extends React.Component {
           </TableCell>
           {rows.map(row => {
             return (
-              <TableCell key={row.id} align={row.numeric ? 'right' : 'left'} padding={row.disablePadding ? 'none' : 'default'} sortDirection={orderBy === row.id ? order : false} >
-                <Tooltip title="Sortieren" placement={row.numeric ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+              <TableCell key={row.id} align={row.numeric ? "right" : "left"} padding={row.disablePadding ? "none" : "default"} sortDirection={orderBy === row.id ? order : false} >
+                <Tooltip title="Sortieren" placement={row.numeric ? "bottom-end" : "bottom-start"} enterDelay={300} >
                   <TableSortLabel active={orderBy === row.id} direction={order} onClick={this.createSortHandler(row.id)} >
                     {row.label}
                   </TableSortLabel>
@@ -94,7 +94,7 @@ const toolbarStyles = theme => ({
     paddingRight: theme.spacing.unit,
   },
   highlight:
-    theme.palette.type === 'light'
+    theme.palette.type === "light"
       ? {
           color: theme.palette.secondary.main,
           backgroundColor: lighten(theme.palette.secondary.light, 0.85),
@@ -104,13 +104,13 @@ const toolbarStyles = theme => ({
           backgroundColor: theme.palette.secondary.dark,
         },
   spacer: {
-    flex: '1 1 100%',
+    flex: "1 1 100%",
   },
   actions: {
     color: theme.palette.text.secondary,
   },
   title: {
-    flex: '0 0 auto',
+    flex: "0 0 auto",
   },
 });
 
@@ -131,8 +131,8 @@ let EnhancedTableToolbar = props => {
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip title={strings.soon_available}>
-            <IconButton aria-label={strings.soon_available}>
+          <Tooltip title={strings.availableSoon}>
+            <IconButton aria-label={strings.availableSoon}>
               <FilterListIcon />
             </IconButton>
           </Tooltip>
@@ -151,21 +151,21 @@ EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: "100%",
     marginTop: theme.spacing.unit * 3,
   },
   table: {
     minWidth: 1020,
   },
   tableWrapper: {
-    overflowX: 'auto',
+    overflowX: "auto",
   },
 });
 
 class EnhancedTable extends React.Component {
   state = {
-    order: 'asc',
-    orderBy: 'calories',
+    order: "asc",
+    orderBy: "calories",
     selected: [],
     page: 0,
     rowsPerPage: 25,
@@ -173,9 +173,9 @@ class EnhancedTable extends React.Component {
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
-    let order = 'desc';
+    let order = "desc";
 
-    if (this.state.orderBy === property && this.state.order === 'desc') order = 'asc';
+    if (this.state.orderBy === property && this.state.order === "desc") order = "asc";
 
     this.setState({ order, orderBy });
   };
@@ -254,7 +254,7 @@ class EnhancedTable extends React.Component {
             </TableBody>
           </Table>
         </div>
-        <TablePagination rowsPerPageOptions={[25, 50, 100]} component="div" count={data.length} rowsPerPage={rowsPerPage} page={page} backIconButtonProps={{'aria-label': strings.previous_page}} nextIconButtonProps={{'aria-label': strings.next_page}} onChangePage={this.handleChangePage} onChangeRowsPerPage={this.handleChangeRowsPerPage} />
+        <TablePagination rowsPerPageOptions={[25, 50, 100]} component="div" count={data.length} rowsPerPage={rowsPerPage} page={page} backIconButtonProps={{"aria-label": strings.previousPage}} nextIconButtonProps={{"aria-label": strings.nextPage}} onChangePage={this.handleChangePage} onChangeRowsPerPage={this.handleChangeRowsPerPage} />
       </Paper>
     );
   }

@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import DoneIcon from '@material-ui/icons/Done';
-import Slide from '@material-ui/core/Slide';
-import Typography from '@material-ui/core/Typography';
-import LocationPicker from 'react-location-picker';
-//import strings from '../strings'
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import DoneIcon from "@material-ui/icons/Done";
+import Slide from "@material-ui/core/Slide";
+import Typography from "@material-ui/core/Typography";
+import LocationPicker from "react-location-picker";
+//import strings from "../strings"
 
 const styles = {
   appBar: {
-    position: 'relative',
+    position: "relative",
   },
   flex: {
     flex: 1,
@@ -56,11 +56,11 @@ class LocationPickerDialog extends React.Component {
       <Dialog fullScreen open={true} onClose={this.onClose} TransitionComponent={Transition} >
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" className={classes.flex}> Wählen Sie den genauen Standort des Sensors auf der Karte </Typography>
+            <Typography variant="h6" color="inherit" className={classes.flex}>Wählen Sie den genauen Standort des Sensors auf der Karte</Typography>
             <IconButton color="inherit" onClick={this.onClose} aria-label="Fertig"><DoneIcon/></IconButton>
           </Toolbar>
         </AppBar>
-        <LocationPicker containerElement={ <div style={{height: '100%', overflowY: "hidden"}} /> } mapElement={ <div style={{height: '100%'}} /> } radius={-1} defaultPosition={this.state.position} onChange={this.handleLocationChange} />
+        <LocationPicker containerElement={ <div style={{height: "100%", overflowY: "hidden"}} /> } mapElement={ <div style={{height: "100%"}} /> } radius={-1} defaultPosition={this.state.position} onChange={this.handleLocationChange} />
       </Dialog>
     );
   }

@@ -1,24 +1,22 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import parse from 'autosuggest-highlight/parse';
-import throttle from 'lodash/throttle';
-import * as Keys from '../keys';
-import strings from '../strings'
-import request from 'superagent'
+import React from "react";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import parse from "autosuggest-highlight/parse";
+import throttle from "lodash/throttle";
+import * as Keys from "../keys";
+import strings from "../strings"
+import request from "superagent"
 
 function loadScript(src, position, id) {
-  if (!position) {
-    return;
-  }
+  if (!position) return;
 
-  const script = document.createElement('script');
-  script.setAttribute('async', '');
-  script.setAttribute('id', id);
+  const script = document.createElement("script");
+  script.setAttribute("async", "");
+  script.setAttribute("id", id);
   script.src = src;
   position.appendChild(script);
 }
@@ -33,23 +31,23 @@ const useStyles = makeStyles(theme => ({
   input: {
     padding: 10,
     paddingLeft: 50,
-    transition: theme.transitions.create('width'),
-    width: '100%'
+    transition: theme.transitions.create("width"),
+    width: "100%"
   },
 }));
 
 export default function GoogleMaps(props) {
   const classes = useStyles();
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState([]);
   const loaded = React.useRef(false);
 
-  if (typeof window !== 'undefined' && !loaded.current) {
-    if (!document.querySelector('#google-maps')) {
+  if (typeof window !== "undefined" && !loaded.current) {
+    if (!document.querySelector("#google-maps")) {
       loadScript(
-        'https://maps.googleapis.com/maps/api/js?key=' + Keys.GOOGLE_API_KEY + '&libraries=places',
-        document.querySelector('head'),
-        'google-maps',
+        "https://maps.googleapis.com/maps/api/js?key=" + Keys.GOOGLE_API_KEY + "&libraries=places",
+        document.querySelector("head"),
+        "google-maps",
       );
     }
 
@@ -61,8 +59,8 @@ export default function GoogleMaps(props) {
   };
 
   const handleClick = id => {
-    /*request.get('https://maps.googleapis.com/maps/api/place/details/json')
-      .set('Content-Type', 'application/x-www-form-urlencoded')
+    /*request.get("https://maps.googleapis.com/maps/api/place/details/json")
+      .set("Content-Type", "application/x-www-form-urlencoded")
       .send({key: Keys.GOOGLE_GEOCODE_KEY, place_id: id, fields: "geometry"})
       .end(function(err, res) {
         alert(err)
@@ -73,7 +71,7 @@ export default function GoogleMaps(props) {
 
       var request = {
         placeId: id,
-        fields: ['geometry']
+        fields: ["geometry"]
       };
 
       autocompleteService.current.getDetails(request, callback);
@@ -101,7 +99,7 @@ export default function GoogleMaps(props) {
       return undefined;
     }
 
-    if (inputValue === '') {
+    if (inputValue === "") {
       setOptions([]);
       return undefined;
     }
@@ -121,7 +119,7 @@ export default function GoogleMaps(props) {
     <Autocomplete
       id="google-map-demo"
       style={{ width: 500 }}
-      getOptionLabel={option => (typeof option === 'string' ? option : option.description)}
+      getOptionLabel={option => (typeof option === "string" ? option : option.description)}
       filterOptions={x => x}
       options={options}
       autoComplete
@@ -131,7 +129,7 @@ export default function GoogleMaps(props) {
       renderInput={params => (
         <TextField
           {...params}
-          placeholder={strings.search_location}
+          placeholder={strings.searchLocation}
           style={{ padding: 10, marginLeft: 40, width: 440 }}
           onChange={handleChange}
         />

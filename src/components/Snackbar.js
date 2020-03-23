@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
-import green from '@material-ui/core/colors/green';
-import amber from '@material-ui/core/colors/amber';
-import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import WarningIcon from '@material-ui/icons/Warning';
-import { withStyles } from '@material-ui/core/styles';
+import React from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import Button from "@material-ui/core/Button";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import ErrorIcon from "@material-ui/icons/Error";
+import InfoIcon from "@material-ui/icons/Info";
+import CloseIcon from "@material-ui/icons/Close";
+import green from "@material-ui/core/colors/green";
+import amber from "@material-ui/core/colors/amber";
+import IconButton from "@material-ui/core/IconButton";
+import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import WarningIcon from "@material-ui/icons/Warning";
+import { withStyles } from "@material-ui/core/styles";
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -42,8 +42,8 @@ const styles1 = theme => ({
     marginRight: theme.spacing.unit,
   },
   message: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
 });
 
@@ -74,7 +74,7 @@ SnackbarContent.propTypes = {
   className: PropTypes.string,
   message: PropTypes.node,
   onClose: PropTypes.func,
-  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
+  variant: PropTypes.oneOf(["success", "warning", "error", "info"]).isRequired,
 };
 
 const SnackbarContentWrapper = withStyles(styles1)(SnackbarContent);
@@ -96,7 +96,7 @@ class CustomizedSnackbars extends React.Component {
 
   render() {
     return (
-      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left', }} open={this.state.open} autoHideDuration={6000} onClose={this.handleClose} >
+      <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "left", }} open={this.state.open} autoHideDuration={6000} onClose={this.handleClose} >
         <SnackbarContentWrapper onClose={this.handleClose} variant={this.props.type} message={this.props.message} />
       </Snackbar>
     );

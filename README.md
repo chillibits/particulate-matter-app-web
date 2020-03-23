@@ -1,12 +1,12 @@
 # Particulate Matter App Web
 
-Live at https://pm.chillibits.com!
+Live at [https://pm.chillibits.com](https://pm.chillibits.com)!
 
 ## General information
 
 Source code of the Particulate Matter App web version, built with the React framework.
 
-For more information, please visit https://chillibits.com/pmapp.
+For more information, please visit [https://chillibits.com/pmapp](https://chillibits.com/pmapp).
 
 ## Contribute to this project
 

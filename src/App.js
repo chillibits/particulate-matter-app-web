@@ -1,37 +1,37 @@
-import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import { Grid, Typography, Button, Fab, Paper } from '@material-ui/core';
-import { AppBar, MapContainer, LoginContainer, DialogAddSensor, DialogAddFavourite, DialogSensorData, DialogEditSensor, DialogRemoveSensor, DialogSensorDetails } from './components'
-import AddIcon from '@material-ui/icons/Add';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import IconButton from '@material-ui/core/IconButton';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import CloseIcon from '@material-ui/icons/Close';
-import green from '@material-ui/core/colors/green';
-import red from '@material-ui/core/colors/red';
-import request from 'superagent'
-import fire from './fire'
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import { Grid, Typography, Button, Fab, Paper } from "@material-ui/core";
+import { AppBar, MapContainer, LoginContainer, DialogAddSensor, DialogAddFavourite, DialogSensorData, DialogEditSensor, DialogRemoveSensor, DialogSensorDetails } from "./components";
+import AddIcon from "@material-ui/icons/Add";
+import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import IconButton from "@material-ui/core/IconButton";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import ErrorIcon from "@material-ui/icons/Error";
+import CloseIcon from "@material-ui/icons/Close";
+import green from "@material-ui/core/colors/green";
+import red from "@material-ui/core/colors/red";
+import request from "superagent";
+import fire from "./fire";
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom"
 import { CustomView, isAndroid } from "react-device-detect";
-import strings from './strings'
-import * as Constants from './constants'
+import strings from "./strings";
+import * as Constants from "./constants";
 
 const styles = theme => ({
   main: {
     flexGrow: 1,
-    display: 'flex',
-    position: 'absolute',
+    display: "flex",
+    position: "absolute",
     width: "100%",
     height: "calc(100% - 64px - 45px)",
     zIndex: 1,
     top: 64,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   footer: {
-    position: 'absolute',
+    position: "absolute",
     backgroundColor: "#32a087",
     height: 45,
     paddingLeft: 13,
@@ -42,46 +42,46 @@ const styles = theme => ({
     left: 0,
     right: 0,
   },
-  button_download: {
-    position: 'absolute',
+  buttonDownload: {
+    position: "absolute",
     right: 13,
   },
-  button_info: {
-    position: 'absolute',
+  buttonInfo: {
+    position: "absolute",
     right: 272,
   },
-  button_homepage: {
-    position: 'absolute',
+  buttonHomepage: {
+    position: "absolute",
     right: 344,
   }
 });
 
 class App extends Component {
   state = {
-    sync_key: "",
-    user_data: [],
-    favourites: [],
-    own_sensors: [],
-    first_sync_complete: false,
-    logged_in: false,
+    syncKey: "",
+    userData: [],
+    favorites: [],
+    ownSensors: [],
+    firstSyncComplete: false,
+    signedIn: false,
     markerData: [],
     currentPosition: {
       lat: 52.520008,
       lng: 13.404954
     },
     selected: undefined,
-    selected_id: undefined,
+    selectedId: undefined,
     suggestions: [],
-    dialog_add_sensor_open: false,
-    dialog_add_favourite_open: false,
-    dialog_sensor_data_open: false,
-    dialog_sensor_data_route_open: true,
-    dialog_sensor_details_open: false,
-    dialog_edit_sensor_open: false,
-    dialog_remove_sensor_open: false,
-    snackbar_message: strings.action_successful,
-    snackbar_success_open: false,
-    snackbar_error_open: false
+    dialogAddSensorOpen: false,
+    dialogAddFavouriteOpen: false,
+    dialogSensorDataOpen: false,
+    dialogSensorDataRouteOpen: true,
+    dialogSensorDetailsOpen: false,
+    dialogEditSensorOpen: false,
+    dialogRemoveSensorOpen: false,
+    snackbarMessage: strings.actionSuccessful,
+    snackbarSuccessOpen: false,
+    snackbarErrorOpen: false
   }
 
   constructor(props) {
@@ -98,12 +98,12 @@ class App extends Component {
     });
 
     //Zufälligen String für QR-Code generieren
-    var randomString = require('random-string');
+    var randomString = require("random-string");
     var rand = randomString({length: 25});
-    this.state.sync_key = rand;
+    this.state.syncKey = rand;
 
     window.addEventListener("beforeunload", (ev) => {
-        fire.database().ref('sync/' + this.state.sync_key).remove();
+        fire.database().ref("sync/" + this.state.syncKey).remove();
     });
 
     //Alle Sensoren laden
@@ -116,21 +116,23 @@ class App extends Component {
 
     var obj = { time: timestamp, device: "web" }
 
-    fire.database().ref('sync/' + this.state.sync_key).set(obj)
-    fire.database().ref('sync/' + this.state.sync_key).on('value', function(snap) {
+    fire.database().ref("sync/" + this.state.syncKey).set(obj)
+    fire.database().ref("sync/" + this.state.syncKey).on("value", function(snap) {
       if(snap.val() !== null) {
         if(snap.child("time").val() > timestamp) {
           //Daten auslesen
           var data = snap.child("data").val();
-          var favourites = [];
-          var own_sensors = [];
+          var favorites = [];
+          var ownSensors = [];
 
           if(data!== null) {
             data.map(sensor => {
               if(sensor.fav) {
-                favourites.push(sensor);
+                sensor.chipId = sensor.chip_id;
+                favorites.push(sensor);
               } else {
-                own_sensors.push(sensor);
+                sensor.chipId = sensor.chip_id;
+                ownSensors.push(sensor);
               }
               return true;
             });
@@ -139,10 +141,10 @@ class App extends Component {
           }
 
           //Anwenden
-          currentComponent.setState({ logged_in: true, user_data: data, favourites: favourites, own_sensors: own_sensors, snackbar_success_open: !currentComponent.state.first_sync_complete, snackbar_message: "Verknüpfung mit Android-App erfolgreich", first_sync_complete: true });
+          currentComponent.setState({ signedIn: true, userData: data, favorites: favorites, ownSensors: ownSensors, snackbarSuccessOpen: !currentComponent.state.firstSyncComplete, snackbarMessage: "Verknüpfung mit Android-App erfolgreich", firstSyncComplete: true });
         }
       } else {
-        currentComponent.setState({ logged_in: false, user_data: [], favourites: [], own_sensors: [], snackbar_error_open: true, snackbar_message: "Verbindung zur Android-App beendet", first_sync_complete: false });
+        currentComponent.setState({ signedIn: false, userData: [], favorites: [], ownSensors: [], snackbarErrorOpen: true, snackbarMessage: "Verbindung zur Android-App beendet", firstSyncComplete: false });
       }
     })
   }
@@ -150,7 +152,7 @@ class App extends Component {
   loadAllSensors = () => {
     let currentComponent = this;
     request.post(Constants.BACKEND_URL)
-      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .set("Content-Type", "application/x-www-form-urlencoded")
       .send({command: "getall"})
       .end(function(err, res) {
         var result = res.text.trim();
@@ -165,67 +167,67 @@ class App extends Component {
   };
 
   onShowAddSensorDialog = () => {
-    this.setState({ dialog_add_sensor_open: true });
+    this.setState({ dialogAddSensorOpen: true });
   }
 
   onHideAddSensorDialog = (state) => {
-    this.setState({ dialog_add_sensor_open: false });
-    this.onSnackbarOpen(state, strings.sensor_added_successfully, strings.error_please_try_again);
+    this.setState({ dialogAddSensorOpen: false });
+    this.onSnackbarOpen(state, strings.sensorAddedSuccessfully, strings.errorPleaseTryAgain);
   }
 
-  onShowAddFavouriteDialog = (selected_id) => {
-    this.setState({ dialog_add_favourite_open: true, selected_id: selected_id });
+  onShowAddFavouriteDialog = (selectedId) => {
+    this.setState({ dialogAddFavouriteOpen: true, selectedId: selectedId });
   }
 
   onHideAddFavouriteDialog = (state) => {
-    this.setState({ dialog_add_favourite_open: false });
-    this.onSnackbarOpen(state, strings.sensor_favourized, strings.favourization_failed_try_again);
+    this.setState({ dialogAddFavouriteOpen: false });
+    this.onSnackbarOpen(state, strings.sensorFavourized, strings.favourizationFailedTryAgain);
   }
 
   onShowSensorDataDialog = (sensor) => {
-    this.setState({ dialog_sensor_data_open: true, selected: sensor });
+    this.setState({ dialogSensorDataOpen: true, selected: sensor });
   }
 
   onHideSensorDataDialog = () => {
-    this.setState({ dialog_sensor_data_open: false, dialog_sensor_data_route_open: false});
+    this.setState({ dialogSensorDataOpen: false, dialogSensorDataRouteOpen: false});
   }
 
   onShowDetailsDialog = (sensor) => {
-    this.setState({ dialog_sensor_details_open: true, selected: sensor });
+    this.setState({ dialogSensorDetailsOpen: true, selected: sensor });
   }
 
   onHideDetailsDialog = () => {
-    this.setState({ dialog_sensor_details_open: false });
+    this.setState({ dialogSensorDetailsOpen: false });
   }
 
   onShowEditSensorDialog = (sensor) => {
-    this.setState({ dialog_edit_sensor_open: true, selected: sensor });
+    this.setState({ dialogEditSensorOpen: true, selected: sensor });
   }
 
   onHideEditSensorDialog = (state) => {
-    this.setState({ dialog_edit_sensor_open: false, selected: undefined });
-    this.onSnackbarOpen(state, strings.changings_saved, strings.changings_save_failed);
+    this.setState({ dialogEditSensorOpen: false, selected: undefined });
+    this.onSnackbarOpen(state, strings.changesSaved, strings.changesSaveFailed);
   }
 
-  onShowRemoveSensorDialog = (selected_id) => {
-    this.setState({ dialog_remove_sensor_open: true, selected_id: selected_id});
+  onShowRemoveSensorDialog = (selectedId) => {
+    this.setState({ dialogRemoveSensorOpen: true, selectedId: selectedId});
   }
 
   onHideRemoveSensorDialog = (state) => {
-    this.setState({ dialog_remove_sensor_open: false, selected: undefined });
-    this.onSnackbarOpen(state, strings.sensor_removed_successfully, strings.sensor_removal_failed);
+    this.setState({ dialogRemoveSensorOpen: false, selected: undefined });
+    this.onSnackbarOpen(state, strings.sensorRemovedSuccessfully, strings.sensorRemovalFailed);
   }
 
-  onSnackbarOpen = (state, success_message, error_message) => {
+  onSnackbarOpen = (state, successMessage, errorMessage) => {
     if(state === 1) {
-      this.setState({ snackbar_success_open: true, snackbar_message: success_message });
+      this.setState({ snackbarSuccessOpen: true, snackbarMessage: successMessage });
     } else if(state === 2) {
-      this.setState({ snackbar_error_open: true, snackbar_message: error_message });
+      this.setState({ snackbarErrorOpen: true, snackbarMessage: errorMessage });
     }
   }
 
   onSnackbarClose = (event, reason) => {
-    if(reason !== 'clickaway') this.setState({ snackbar_success_open: false, snackbar_error_open: false });
+    if(reason !== "clickaway") this.setState({ snackbarSuccessOpen: false, snackbarErrorOpen: false });
   }
 
   /* Render-Method */
@@ -269,37 +271,37 @@ class App extends Component {
               <main className={classes.main}>
                 <Grid container style={{height: "100%"}}>
                   <Grid item style={{width: 400}}>
-                    <LoginContainer logged_in={this.state.logged_in} sync_key={this.state.sync_key} favourites={this.state.favourites} own_sensors={this.state.own_sensors} onShowSensorData={this.onShowSensorDataDialog} onEditSensor={this.onShowEditSensorDialog} onRemoveSensor={this.onShowRemoveSensorDialog} onSensorDetails={this.onShowDetailsDialog} />
+                    <LoginContainer signedIn={this.state.signedIn} syncKey={this.state.syncKey} favorites={this.state.favorites} ownSensors={this.state.ownSensors} onShowSensorData={this.onShowSensorDataDialog} onEditSensor={this.onShowEditSensorDialog} onRemoveSensor={this.onShowRemoveSensorDialog} onSensorDetails={this.onShowDetailsDialog} />
                   </Grid>
                   <Grid item>
-                    {this.state.markerData && <MapContainer google={window.google} logged_in={this.state.logged_in} ownPosition={this.state.currentPosition} markerData={this.state.markerData} favourites={this.state.favourites} own_sensors={this.state.own_sensors} onAddFavourite={this.onShowAddFavouriteDialog} onShowSensorData={this.onShowSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} style={{position: 'absolute', top: 0, bottom: 0}}/>}
+                    {this.state.markerData && <MapContainer google={window.google} signedIn={this.state.signedIn} ownPosition={this.state.currentPosition} markerData={this.state.markerData} favorites={this.state.favorites} ownSensors={this.state.ownSensors} onAddFavourite={this.onShowAddFavouriteDialog} onShowSensorData={this.onShowSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} style={{position: 'absolute', top: 0, bottom: 0}}/>}
                   </Grid>
                 </Grid>
                 <Paper style={{margin: 0, paddingLeft: 10, paddingRight: 10, paddingTop: 3, paddingBottom: 3, right: 20, top: 80, position: "fixed", backgroundColor: 'rgba(255,255,255,0.5)', cursor: "pointer" }} onClick={() => window.open("https://h2801469.stratoserver.net/stats.php", "_blank")}>
                   <Typography>{this.state.markerData.length} {strings.sensors}</Typography>
                 </Paper>
-                <Fab color="primary" aria-label={strings.add_sensor} style={{margin: 0, right: 20, bottom: 65, position: "fixed" }} onClick={this.onShowAddSensorDialog}><AddIcon/></Fab>
+                <Fab color="primary" aria-label={strings.addSensor} style={{margin: 0, right: 20, bottom: 65, position: "fixed" }} onClick={this.onShowAddSensorDialog}><AddIcon/></Fab>
                 { /* Dialogs */ }
-                {this.state.dialog_add_sensor_open && <DialogAddSensor opened={this.state.dialog_add_sensor_open} onClose={this.onHideAddSensorDialog} onSensorAdded={this.props.onHideAddSensorDialog} user_data={this.state.user_data} sync_key={this.state.sync_key} logged_in={this.state.logged_in}/>}
-                {this.state.selected_id !== undefined && this.state.dialog_add_favourite_open && <DialogAddFavourite opened={this.state.dialog_add_favourite_open} onClose={this.onHideAddFavouriteDialog} sync_key={this.state.sync_key} user_data={this.state.user_data} chip_id={this.state.selected_id} />}
-                {this.state.selected !== undefined && this.state.dialog_sensor_data_open && <DialogSensorData opened={this.state.dialog_sensor_data_open} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={this.state.selected} />}
-                {this.state.selected !== undefined && this.state.dialog_edit_sensor_open && <DialogEditSensor opened={this.state.dialog_edit_sensor_open} sync_key={this.state.sync_key} data={this.state.user_data} onClose={this.onHideEditSensorDialog} chip_id={this.state.selected.chip_id} name={this.state.selected.name} fav={this.state.selected.fav} color={this.state.selected.color}/>}
-                {this.state.selected_id !== undefined && this.state.dialog_remove_sensor_open && <DialogRemoveSensor opened={this.state.dialog_remove_sensor_open} sync_key={this.state.sync_key} user_data={this.state.user_data} onClose={this.onHideRemoveSensorDialog} chip_id={this.state.selected_id} />}
-                {this.state.selected !== undefined && this.state.dialog_sensor_details_open && <DialogSensorDetails opened={this.state.dialog_sensor_details_open} chip_id={this.state.selected.chip_id} name={this.state.selected.name} onClose={this.onHideDetailsDialog} />}
+                {this.state.dialogAddSensorOpen && <DialogAddSensor opened={this.state.dialogAddSensorOpen} onClose={this.onHideAddSensorDialog} onSensorAdded={this.props.onHideAddSensorDialog} userData={this.state.userData} syncKey={this.state.syncKey} signedIn={this.state.signedIn}/>}
+                {this.state.selectedId !== undefined && this.state.dialogAddFavouriteOpen && <DialogAddFavourite opened={this.state.dialogAddFavouriteOpen} onClose={this.onHideAddFavouriteDialog} syncKey={this.state.syncKey} userData={this.state.userData} chipId={this.state.selectedId} />}
+                {this.state.selected !== undefined && this.state.dialogSensorDataOpen && <DialogSensorData opened={this.state.dialogSensorDataOpen} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={this.state.selected} />}
+                {this.state.selected !== undefined && this.state.dialogEditSensorOpen && <DialogEditSensor opened={this.state.dialogEditSensorOpen} syncKey={this.state.syncKey} data={this.state.userData} onClose={this.onHideEditSensorDialog} chipId={this.state.selected.chipId} name={this.state.selected.name} fav={this.state.selected.fav} color={this.state.selected.color}/>}
+                {this.state.selectedId !== undefined && this.state.dialogRemoveSensorOpen && <DialogRemoveSensor opened={this.state.dialogRemoveSensorOpen} syncKey={this.state.syncKey} userData={this.state.userData} onClose={this.onHideRemoveSensorDialog} chipId={this.state.selectedId} />}
+                {this.state.selected !== undefined && this.state.dialogSensorDetailsOpen && <DialogSensorDetails opened={this.state.dialogSensorDetailsOpen} chipId={this.state.selected.chipId} name={this.state.selected.name} onClose={this.onHideDetailsDialog} />}
                 {/* URL-Parameter */}
                 <Switch>
                   <Route path="/s/:id" render={(props) => (
-                    <DialogSensorData opened={this.state.dialog_sensor_data_route_open} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={{chip_id: props.match.params.id, name: strings.unknown_sensor}} />
+                    <DialogSensorData opened={this.state.dialogSensorDataRouteOpen} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={{chipId: props.match.params.id, name: strings.unknownSensor}} />
                   )} />
-                  <Redirect strict from={'/'} to={"."} />
+                  <Redirect strict from={"/"} to={"."} />
                 </Switch>
                 {/* Snackbars */}
-                <Snackbar open={this.state.snackbar_success_open} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
+                <Snackbar open={this.state.snackbarSuccessOpen} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
                   <SnackbarContent
                     message={
-                      <span style={{ display: 'flex', alignItems: 'center' }}>
+                      <span style={{ display: "flex", alignItems: "center" }}>
                         <CheckCircleIcon style={{ fontSize: 20, opacity: 0.9, marginRight: 15 }}/>
-                        {this.state.snackbar_message}
+                        {this.state.snackbarMessage}
                       </span>}
                     action={[
                       <IconButton key="success" color="inherit" onClick={this.onSnackbarClose}>
@@ -308,12 +310,12 @@ class App extends Component {
                     ]}
                     style={{backgroundColor: green[600]}} />
                 </Snackbar>
-                <Snackbar open={this.state.snackbar_error_open} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
+                <Snackbar open={this.state.snackbarErrorOpen} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
                   <SnackbarContent
                     message={
-                      <span style={{ display: 'flex', alignItems: 'center' }}>
+                      <span style={{ display: "flex", alignItems: "center" }}>
                         <ErrorIcon style={{ fontSize: 20, opacity: 0.9, marginRight: 15 }}/>
-                        {this.state.snackbar_message}
+                        {this.state.snackbarMessage}
                       </span>}
                     action={[
                       <IconButton key="error" color="inherit" onClick={this.onSnackbarClose}>
@@ -326,9 +328,9 @@ class App extends Component {
               {/* Footer */}
               <Grid container className={classes.footer}>
                 <Typography variant="body2" color="inherit" style={{marginTop: 7}} noWrap>© ChilliBits&nbsp;&nbsp;-&nbsp;&nbsp;2018 - {new Date().getFullYear()}</Typography>
-                <Button variant="outlined" color="primary" href="https://chillibits.com" target="_blank" className={classes.button_homepage}>{strings.our_homepage}</Button>
-                <Button variant="outlined" color="primary" href="https://chillibits.com/pmapp" target="_blank" className={classes.button_info}>{strings.info}</Button>
-                <Button variant="contained" color="secondary" href="https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp" target="_blank" className={classes.button_download}>{strings.download_android_app}</Button>
+                <Button variant="outlined" color="primary" href="https://chillibits.com" target="_blank" className={classes.buttonHomepage}>{strings.ourHomepage}</Button>
+                <Button variant="outlined" color="primary" href="https://chillibits.com/pmapp" target="_blank" className={classes.buttonInfo}>{strings.info}</Button>
+                <Button variant="contained" color="secondary" href="https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp" target="_blank" className={classes.buttonDownload}>{strings.downloadAndroidApp}</Button>
               </Grid>
             </div>
           </Fragment>

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import SvgIcon from '@material-ui/core/SvgIcon'
+import React, { Component } from "react"
+import SvgIcon from "@material-ui/core/SvgIcon"
 
 export default class extends Component {
   render() {

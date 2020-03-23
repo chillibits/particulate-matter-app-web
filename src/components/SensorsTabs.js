@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import Icon from '@material-ui/core/Icon';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import Icon from "@material-ui/core/Icon";
+import RestoreIcon from "@material-ui/icons/Restore";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 const styles = {
   root: {
@@ -16,7 +16,7 @@ const styles = {
 
 class LabelBottomNavigation extends React.Component {
   state = {
-    value: 'recents',
+    value: "recents",
   };
 
   handleChange = (event, value) => {
@@ -30,7 +30,7 @@ class LabelBottomNavigation extends React.Component {
     return (
       <BottomNavigation value={value} onChange={this.handleChange} className={classes.root}>
         <BottomNavigationAction label="Favoriten" value="favorites" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="Meine Sensoren" value="my_sensors" icon={<FavoriteIcon />} />
+        <BottomNavigationAction label="Meine Sensoren" value="mySensors" icon={<FavoriteIcon />} />
       </BottomNavigation>
     );
   }
