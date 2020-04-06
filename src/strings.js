@@ -100,6 +100,10 @@ export default new LocalizedStrings({
     nextPage: "Next page",
     searchLocation: "Search location ...",
     isThisTheRightPlace: "Is this the right place? If not, please try to switch the coordinats.",
+    enableEUThreshold: "Enable EU Threshold",
+    enableWHOThreshold: "Enable WHO Threshold",
+    euThreshold: "EU Threshold",
+    whoThreshold: "WHO Threshold",
   },
   de: {
     appName: "Feinstaub-App",
@@ -200,6 +204,10 @@ export default new LocalizedStrings({
     nextPage: "Nächste Seite",
     searchLocation: "Ort suchen ...",
     isThisTheRightPlace: "Ist dies der korrekte Standort? Falls nicht, versuchen Sie die Koordinaten zu vertauschen.",
+    enableEUThreshold: "EU Grenzwert aktivieren",
+    enableWHOThreshold: "WHO Grenzwert aktivieren",
+    euThreshold: "EU Grenzwert",
+    whoThreshold: "WHO Grenzwert",
   },
   fr: {
     appName: "App Matière Particulaire",
@@ -300,5 +308,9 @@ export default new LocalizedStrings({
     nextPage: "Page suivante",
     searchLocation: "Rechercher un lieu ...",
     isThisTheRightPlace: "Est-ce le bon endroit? Sinon, essayez de changer les coordonnées.",
+    enableEUThreshold: "Enable EU Threshold",
+    enableWHOThreshold: "Enable WHO Threshold",
+    euThreshold: "EU Threshold",
+    whoThreshold: "WHO Threshold",
   }},
 );

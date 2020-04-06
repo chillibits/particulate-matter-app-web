@@ -85,11 +85,15 @@ function round(x, n) {
 class FullScreenDialog extends React.Component {
   state = {
     data: undefined,
-    dataPM1 : [],
-    dataPM2 : [],
-    dataTemp : [],
-    dataHumidity : [],
-    dataPressure : [],
+    dataPM1: [],
+    dataPM2: [],
+    dataTemp: [],
+    dataHumidity: [],
+    dataPressure: [],
+    dataEUThreshold1: [],
+    dataEUThreshold2: [],
+    dataWHOThreshold1: [],
+    dataWHOThreshold2: [],
     dataGraph: [],
     loading: true,
     picker: null,
@@ -104,6 +108,8 @@ class FullScreenDialog extends React.Component {
     enabledTemp: false,
     enabledHumidity: false,
     enabledPressure: false,
+    enabledEUThreshold: false,
+    enabledWHOThreshold: false
   };
 
   constructor(props) {
@@ -136,6 +142,10 @@ class FullScreenDialog extends React.Component {
         var listTemp = [];
         var listHumidity = [];
         var listPressure = [];
+        var listEU1 = [];
+        var listEU2 = [];
+        var listWHO1 = [];
+        var listWHO2 = [];
 
         obj.map((item, key) => {
           var time = new Date(item.time * 1000);
@@ -150,6 +160,10 @@ class FullScreenDialog extends React.Component {
           listTemp.push({ x: time, y: tempDouble });
           listHumidity.push({ x: time, y: humidityDouble });
           listPressure.push({ x: time, y: pressureDouble });
+          listEU1.push({ x: time, y: 40 });
+          listEU2.push({ x: time, y: 25 });
+          listWHO1.push({ x: time, y: 20 });
+          listWHO2.push({ x: time, y: 10 });
           return (item, key);
         });
 
@@ -158,8 +172,16 @@ class FullScreenDialog extends React.Component {
         if(currentComponent.state.enabledTemp) dataRecordsGraph.push({ id: strings.temperature, color: "hsl(183, 70%, 50%)", data: listTemp });
         if(currentComponent.state.enabledHumidity) dataRecordsGraph.push({ id: strings.humidity, color: "hsl(281, 70%, 50%)", data: listHumidity });
         if(currentComponent.state.enabledPressure) dataRecordsGraph.push({ id: strings.pressure, color: "hsl(61, 70%, 50%)", data: listPressure });
+        if(currentComponent.state.enabledEUThreshold) {
+          dataRecordsGraph.push({ id: strings.euThreshold, color: "hsl(0, 100%, 50%)", data: listEU1 });
+          dataRecordsGraph.push({ id: strings.euThreshold, color: "hsl(1, 100%, 50%)", data: listEU2 });
+        }
+        if(currentComponent.state.enabledWHOThreshold) {
+          dataRecordsGraph.push({ id: strings.whoThreshold, color: "hsl(2, 100%, 50%)", data: listWHO1 });
+          dataRecordsGraph.push({ id: strings.whoThreshold, color: "hsl(3, 100%, 50%)", data: listWHO2 });
+        }
 
-        currentComponent.setState({ data: dataRecords, dataGraph: dataRecordsGraph, dataPM1: listPM1, dataPM2: listPM2, dataTemp: listTemp, dataHumidity: listHumidity, dataPressure: listPressure, loading: false});
+        currentComponent.setState({ data: dataRecords, dataGraph: dataRecordsGraph, dataPM1: listPM1, dataPM2: listPM2, dataTemp: listTemp, dataHumidity: listHumidity, dataPressure: listPressure, dataEUThreshold1: listEU1, dataEUThreshold2: listEU2, dataWHOThreshold1: listWHO1, dataWHOThreshold2: listWHO2 , loading: false});
       });
   }
 
@@ -234,6 +256,20 @@ class FullScreenDialog extends React.Component {
       data.push({ id: strings.pressure, color: "hsl(61, 70%, 50%)", data: this.state.dataPressure });
     } else if(name !== "enabledPressure" && this.state.enabledPressure) {
       data.push({ id: strings.pressure, color: "hsl(61, 70%, 50%)", data: this.state.dataPressure });
+    }
+    if(name === "enabledEUThreshold" && event.target.checked) {
+      data.push({ id: strings.euThreshold + " - " + strings.pm1, color: "hsl(0, 100%, 50%)", data: this.state.dataEUThreshold1 })
+      data.push({ id: strings.euThreshold + " - " + strings.pm2, color: "hsl(1, 100%, 50%)", data: this.state.dataEUThreshold2 })
+    } else if(name !== "enabledEUThreshold" && this.state.enabledEUThreshold) {
+      data.push({ id: strings.euThreshold + " - " + strings.pm1, color: "hsl(0, 100%, 50%)", data: this.state.dataEUThreshold1 })
+      data.push({ id: strings.euThreshold + " - " + strings.pm2, color: "hsl(1, 100%, 50%)", data: this.state.dataEUThreshold2 })
+    }
+    if(name === "enabledWHOThreshold" && event.target.checked) {
+      data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 })
+      data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 })
+    } else if(name !== "enabledWHOThreshold" && this.state.enabledEUThreshold) {
+      data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 })
+      data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 })
     }
     this.setState({ [name]: event.target.checked, dataGraph: data });
   }
@@ -369,6 +405,8 @@ class FullScreenDialog extends React.Component {
               <FormControlLabel control={ <Switch checked={this.state.smoothCurve} onChange={this.onCheckedChange("smoothCurve")} color="primary" /> } label={strings.enableSoftCurve} />
               {this.state.smoothCurve && <FormControlLabel control={ <Switch checked={this.state.basisCurve} onChange={this.onCheckedChange("basisCurve")} color="primary" /> } label={strings.enableCurveSmoothing} />}
               {!this.state.smoothCurve && <FormControlLabel control={ <Switch checked={this.state.basisCurve} onChange={this.onCheckedChange("basisCurve")} color="primary" disabled/> } label={strings.enableCurveSmoothing} />}
+              <FormControlLabel control={ <Switch checked={this.state.enabledEUThreshold} onChange={this.onCheckedChange("enabledEUThreshold")} color="primary" /> } label={strings.enableEUThreshold} />
+              <FormControlLabel control={ <Switch checked={this.state.enabledWHOThreshold} onChange={this.onCheckedChange("enabledWHOThreshold")} color="primary" /> } label={strings.enableWHOThreshold} />
             </TabContainer>
             <TabContainer dir={theme.direction}>
               {this.state.data && <SensorDataTable data={this.state.data} />}
