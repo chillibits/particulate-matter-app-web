@@ -1,4 +1,7 @@
 # Particulate Matter App Web
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8c8c74cc74c5493b940cea84750b7863)](https://app.codacy.com/gh/ChilliBits/particulate-matter-app-web?utm_source=github.com&utm_medium=referral&utm_content=ChilliBits/particulate-matter-app-web&utm_campaign=Badge_Grade_Dashboard)
+
 Live at [https://pm.chillibits.com](https://pm.chillibits.com)!
 
 ## General information
