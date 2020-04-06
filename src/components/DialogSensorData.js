@@ -84,7 +84,7 @@ function round(x, n) {
 
 class FullScreenDialog extends React.Component {
   state = {
-    data: undefined,
+    data: null,
     dataPM1: [],
     dataPM2: [],
     dataTemp: [],
@@ -413,7 +413,7 @@ class FullScreenDialog extends React.Component {
             </TabContainer>
             <TabContainer dir={theme.direction}>
               {this.state.data && <SensorDataTable data={this.state.data} />}
-              {this.state.data === undefined && <Fragment>{strings.noData}</Fragment>}
+              {this.state.data === null && <Fragment>{strings.noData}</Fragment>}
             </TabContainer>
           </SwipeableViews>
         </Scrollbars>

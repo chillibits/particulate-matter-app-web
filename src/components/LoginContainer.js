@@ -19,6 +19,8 @@ import { Scrollbars } from "react-custom-scrollbars";
 import strings from "../strings";
 
 const isFirefox = typeof InstallTrigger !== "undefined";
+const isIE = /*@cc_on!@*/false || !!document.documentMode;
+const isEdge = !isIE && !!window.StyleMedia;
 
 const styles = (theme) => ({
   container: {
@@ -49,7 +51,7 @@ class LoginContainer extends Component {
     syncKey: this.props.syncKey,
     favorites: this.props.favorites,
     ownSensors: this.props.ownSensors,
-    clicked: undefined,
+    clicked: null,
     anchorEl: null,
     page: 0,
   };
@@ -67,23 +69,23 @@ class LoginContainer extends Component {
   handleMenuClose = (itemId, sensor) => {
     switch(itemId) {
       case 0:
-        this.setState({ clicked: undefined, anchorEl: null });
+        this.setState({ clicked: null, anchorEl: null });
         break;
       case 1:
         this.props.onShowSensorData(sensor);
-        this.setState({ clicked: undefined, anchorEl: null });
+        this.setState({ clicked: null, anchorEl: null });
         break;
       case 2:
         this.props.onEditSensor(sensor);
-        this.setState({ clicked: undefined, anchorEl: null });
+        this.setState({ clicked: null, anchorEl: null });
         break;
       case 3:
         this.props.onRemoveSensor(sensor.chipId);
-        this.setState({ clicked: undefined, anchorEl: null });
+        this.setState({ clicked: null, anchorEl: null });
         break;
       case 4:
         this.props.onSensorDetails(sensor);
-        this.setState({ clicked: undefined, anchorEl: null });
+        this.setState({ clicked: null, anchorEl: null });
         break;
       default:
         return;
@@ -103,10 +105,10 @@ class LoginContainer extends Component {
                   <QRCode value={this.state.syncKey} size={210} logo={"https://h2801469.stratoserver.net/qr_icon.png"} logoWidth={70}/>
                 </div>
               </Avatar>
-              <Typography variant="h6" style={isFirefox ? {position: "absolute", marginTop: 450, color: "#3F51B5"} : {position: "absolute", marginTop: 230, color: "#3F51B5"}} gutterBottom><b>{strings.linkWithAndroidApp}</b></Typography>
-              <Typography variant="subtitle1" style={isFirefox ? {position: "absolute", marginTop: 560, color: "#666", textAlign: "center"} : {position: "absolute", marginTop: 290, color: "#666", textAlign: "center"}} gutterBottom>{strings.linkInstruction1}<br/>{strings.linkInstruction2}</Typography>
-              <Typography variant="subtitle1" style={isFirefox ? {position: "absolute", marginTop: 690, color: "#666", textAlign: "center"} : {position: "absolute", marginTop: 360, color: "#666", textAlign: "center"}} gutterBottom><i style={{color: "#3F51B5"}}>{strings.linkInstruction3}</i></Typography>
-              <Typography variant="subtitle1" style={isFirefox ? {position: "absolute", marginTop: 800, color: "#666", textAlign: "center", marginBottom: 30} : {position: "absolute", marginTop: 415, color: "#666", textAlign: "center", marginBottom: 30}} gutterBottom>{strings.linkInstruction4}</Typography>
+              <Typography variant="h6" style={isFirefox || isEdge ? {position: "absolute", marginTop: 450, color: "#3F51B5"} : {position: "absolute", marginTop: 230, color: "#3F51B5"}} gutterBottom><b>{strings.linkWithAndroidApp}</b></Typography>
+              <Typography variant="subtitle1" style={isFirefox || isEdge ? {position: "absolute", marginTop: 560, color: "#666", textAlign: "center"} : {position: "absolute", marginTop: 290, color: "#666", textAlign: "center"}} gutterBottom>{strings.linkInstruction1}<br/>{strings.linkInstruction2}</Typography>
+              <Typography variant="subtitle1" style={isFirefox || isEdge ? {position: "absolute", marginTop: 690, color: "#666", textAlign: "center"} : {position: "absolute", marginTop: 360, color: "#666", textAlign: "center"}} gutterBottom><i style={{color: "#3F51B5"}}>{strings.linkInstruction3}</i></Typography>
+              <Typography variant="subtitle1" style={isFirefox || isEdge ? {position: "absolute", marginTop: 800, color: "#666", textAlign: "center", marginBottom: 30} : {position: "absolute", marginTop: 415, color: "#666", textAlign: "center", marginBottom: 30}} gutterBottom>{strings.linkInstruction4}</Typography>
             </div>
           </Scrollbars>
         }
@@ -125,7 +127,7 @@ class LoginContainer extends Component {
                               <ListItemText primary={sensor.name} secondary={sensor.chipId} />
                               <IconButton aria-label="Weitere Optionen" onClick={(event) => this.handleMenuClick(event, sensor.chipId)} style={{zIndex: "3"}} aria-haspopup="true"><MoreVertIcon /></IconButton>
                             </ListItem>
-                            {this.state.clicked !== undefined &&
+                            {this.state.clicked !== null &&
                               <Menu anchorEl={this.state.anchorEl} open={this.state.clicked === sensor.chipId} onClose={() => this.handleMenuClose(0, sensor)} >
                                 <MenuItem onClick={() => this.handleMenuClose(1, sensor)}>{strings.showMeasurements}</MenuItem>
                                 <MenuItem onClick={() => this.handleMenuClose(2, sensor)}>{strings.editSensor}</MenuItem>
@@ -156,7 +158,7 @@ class LoginContainer extends Component {
                               <ListItemText primary={sensor.name} secondary={sensor.chipId} />
                               <IconButton aria-label="Weitere Optionen" onClick={(event) => this.handleMenuClick(event, sensor.chipId)} style={{zIndex: "3"}} aria-haspopup="true"><MoreVertIcon /></IconButton>
                             </ListItem>
-                            {this.state.clicked !== undefined &&
+                            {this.state.clicked !== null &&
                               <Menu anchorEl={this.state.anchorEl} open={this.state.clicked === sensor.chipId} onClose={() => this.handleMenuClose(0, sensor)} >
                                 <MenuItem onClick={() => this.handleMenuClose(1, sensor)}>{strings.showMeasurements}</MenuItem>
                                 <MenuItem onClick={() => this.handleMenuClose(2, sensor)}>{strings.editSensor}</MenuItem>

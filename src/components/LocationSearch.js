@@ -92,16 +92,13 @@ export default function GoogleMaps(props) {
   React.useEffect(() => {
     let active = true;
 
-    if (!autocompleteService.current && window.google) {
+    if (!autocompleteService.current && window.google)
       autocompleteService.current = new window.google.maps.places.AutocompleteService();
-    }
-    if (!autocompleteService.current) {
-      return undefined;
-    }
+    if (!autocompleteService.current) return;
 
     if (inputValue === "") {
       setOptions([]);
-      return undefined;
+      return;
     }
 
     fetch({ input: inputValue }, (results) => {

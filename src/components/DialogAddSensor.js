@@ -227,7 +227,7 @@ class DialogAddSensor extends React.Component {
                     <TextField label={strings.longitude} style={{marginTop: 10, marginRight: "2%", width: "49%"}} type="number" onChange={this.lngChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: -180, max: 180, maxLength: 9 }}variant="outlined" />
                     <TextField label={strings.latitude} style={{marginTop: 10, width: "49%"}} type="number" onChange={this.latChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: -90, max: 90, maxLength: 8 }} variant="outlined" />
                     <TextField label={strings.mountingHeight} style={{marginTop: 10, width: "49%"}} type="number" onChange={this.altChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: 0, max: 999, maxLength: 3 }} variant="outlined" />
-                    {this.state.selectedAddress !== undefined && <div>
+                    {this.state.selectedAddress !== null && <div>
                       <Typography style={{ marginTop: 5, marginBottom: 5 }}><b>{this.state.selectedAddress}</b></Typography>
                       <Typography>{strings.isThisTheRightPlace}</Typography>
                     </div>}

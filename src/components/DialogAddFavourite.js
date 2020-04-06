@@ -21,7 +21,7 @@ const styles = (theme) => ({
 class DialogAddFavourite extends React.Component {
   state = {
     name: "",
-    color: undefined,
+    color: null,
     buttonDisabled: true,
   };
 
@@ -37,7 +37,7 @@ class DialogAddFavourite extends React.Component {
   };
 
   onNameChanged = (event) => {
-    var buttonDisabled = event.target.value.length === 0 || this.state.color === undefined;
+    var buttonDisabled = event.target.value.length === 0 || this.state.color === null;
     this.setState({ name: event.target.value, buttonDisabled: buttonDisabled });
   }
 
