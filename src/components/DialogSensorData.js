@@ -18,21 +18,21 @@ import SwipeableViews from "react-swipeable-views";
 import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import deLocale from "date-fns/locale/de";
-import { SensorIcon } from "./index"
+import { SensorIcon } from "./index";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import Edit from "@material-ui/icons/Edit";
 import { SensorDataTable } from "./index";
 import { Scrollbars } from "react-custom-scrollbars";
 import moment from "moment";
-import { ResponsiveLine } from "@nivo/line"
+import { ResponsiveLine } from "@nivo/line";
 import Slider from "@material-ui/core/Slider";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Switch from "@material-ui/core/Switch";
-import request from "superagent"
-import strings from "../strings"
-import * as Constants from "../constants"
+import request from "superagent";
+import strings from "../strings";
+import * as Constants from "../constants";
 
 let counter = 0;
 
@@ -258,18 +258,18 @@ class FullScreenDialog extends React.Component {
       data.push({ id: strings.pressure, color: "hsl(61, 70%, 50%)", data: this.state.dataPressure });
     }
     if(name === "enabledEUThreshold" && event.target.checked) {
-      data.push({ id: strings.euThreshold + " - " + strings.pm1, color: "hsl(0, 100%, 50%)", data: this.state.dataEUThreshold1 })
-      data.push({ id: strings.euThreshold + " - " + strings.pm2, color: "hsl(1, 100%, 50%)", data: this.state.dataEUThreshold2 })
+      data.push({ id: strings.euThreshold + " - " + strings.pm1, color: "hsl(0, 100%, 50%)", data: this.state.dataEUThreshold1 });
+      data.push({ id: strings.euThreshold + " - " + strings.pm2, color: "hsl(1, 100%, 50%)", data: this.state.dataEUThreshold2 });
     } else if(name !== "enabledEUThreshold" && this.state.enabledEUThreshold) {
-      data.push({ id: strings.euThreshold + " - " + strings.pm1, color: "hsl(0, 100%, 50%)", data: this.state.dataEUThreshold1 })
-      data.push({ id: strings.euThreshold + " - " + strings.pm2, color: "hsl(1, 100%, 50%)", data: this.state.dataEUThreshold2 })
+      data.push({ id: strings.euThreshold + " - " + strings.pm1, color: "hsl(0, 100%, 50%)", data: this.state.dataEUThreshold1 });
+      data.push({ id: strings.euThreshold + " - " + strings.pm2, color: "hsl(1, 100%, 50%)", data: this.state.dataEUThreshold2 });
     }
     if(name === "enabledWHOThreshold" && event.target.checked) {
-      data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 })
+      data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 });
       data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 })
     } else if(name !== "enabledWHOThreshold" && this.state.enabledEUThreshold) {
-      data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 })
-      data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 })
+      data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 });
+      data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 });
     }
     this.setState({ [name]: event.target.checked, dataGraph: data });
   }

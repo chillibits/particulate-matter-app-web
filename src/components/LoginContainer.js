@@ -85,6 +85,8 @@ class LoginContainer extends Component {
         this.props.onSensorDetails(sensor);
         this.setState({ clicked: undefined, anchorEl: null });
         break;
+      default:
+        return;
     }
   };
 
@@ -114,7 +116,7 @@ class LoginContainer extends Component {
               <SwipeableViews axis='x' index={this.state.page} onChangeIndex={this.handlePageChange} animateHeight>
                 <TabContainer style={{overflow: 'auto'}} dir={theme.direction}>
                   {this.props.favorites.length > 0 &&
-                    <List style={{overflow: 'auto'}}>
+                    <List style={{overflow: "auto"}}>
                       {this.props.favorites.map((sensor) => {
                         return (
                           <div key={sensor.chipId}>

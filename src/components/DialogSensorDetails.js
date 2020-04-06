@@ -35,7 +35,7 @@ class DialogSensorDetails extends React.Component {
         var result = res.text.trim();
         if(result === "1") {
           request.post(Constants.BACKEND_URL)
-            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .set("Content-Type", "application/x-www-form-urlencoded")
             .send({ command: "getsensorinfo", chip_id: currentComponent.props.chipId })
             .end(function(err, res) {
               var result = res.text.trim();

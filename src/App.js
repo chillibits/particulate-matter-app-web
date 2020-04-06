@@ -14,12 +14,12 @@ import green from "@material-ui/core/colors/green";
 import red from "@material-ui/core/colors/red";
 import request from "superagent";
 import fire from "./fire";
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import { CustomView, isAndroid } from "react-device-detect";
 import strings from "./strings";
 import * as Constants from "./constants";
 
-const styles = theme => ({
+const styles = (theme) => ({
   main: {
     flexGrow: 1,
     display: "flex",
@@ -85,10 +85,10 @@ class App extends Component {
   }
 
   constructor(props) {
-    super(props)
+    super(props);
 
     //Aktuelle Position ermitteln
-    navigator.geolocation.getCurrentPosition(position => {
+    navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         currentPosition: {
           lat: position.coords.latitude,
@@ -107,7 +107,7 @@ class App extends Component {
     });
 
     //Alle Sensoren laden
-    this.loadAllSensors()
+    this.loadAllSensors();
   }
 
   componentDidMount() {
@@ -126,7 +126,7 @@ class App extends Component {
           var ownSensors = [];
 
           if(data!== null) {
-            data.map(sensor => {
+            data.map((sensor) => {
               if(sensor.fav) {
                 sensor.chipId = sensor.chip_id;
                 favorites.push(sensor);
@@ -146,7 +146,7 @@ class App extends Component {
       } else {
         currentComponent.setState({ signedIn: false, userData: [], favorites: [], ownSensors: [], snackbarErrorOpen: true, snackbarMessage: "Verbindung zur Android-App beendet", firstSyncComplete: false });
       }
-    })
+    });
   }
 
   loadAllSensors = () => {
@@ -162,8 +162,8 @@ class App extends Component {
   }
 
   handleSearchChange = (lat, lng) => {
-    alert(lat)
-    alert(lng)
+    alert(lat);
+    alert(lng);
   };
 
   onShowAddSensorDialog = () => {
@@ -236,7 +236,7 @@ class App extends Component {
 
     if(isAndroid) {
       // Android-Geräte auf Playstore weiterleiten
-      window.location = "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp"
+      window.location = "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.mrgames13.jimdo.feinstaubapp";
     }
 
     return (
@@ -274,10 +274,10 @@ class App extends Component {
                     <LoginContainer signedIn={this.state.signedIn} syncKey={this.state.syncKey} favorites={this.state.favorites} ownSensors={this.state.ownSensors} onShowSensorData={this.onShowSensorDataDialog} onEditSensor={this.onShowEditSensorDialog} onRemoveSensor={this.onShowRemoveSensorDialog} onSensorDetails={this.onShowDetailsDialog} />
                   </Grid>
                   <Grid item>
-                    {this.state.markerData && <MapContainer google={window.google} signedIn={this.state.signedIn} ownPosition={this.state.currentPosition} markerData={this.state.markerData} favorites={this.state.favorites} ownSensors={this.state.ownSensors} onAddFavourite={this.onShowAddFavouriteDialog} onShowSensorData={this.onShowSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} style={{position: 'absolute', top: 0, bottom: 0}}/>}
+                    {this.state.markerData && <MapContainer google={window.google} signedIn={this.state.signedIn} ownPosition={this.state.currentPosition} markerData={this.state.markerData} favorites={this.state.favorites} ownSensors={this.state.ownSensors} onAddFavourite={this.onShowAddFavouriteDialog} onShowSensorData={this.onShowSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} style={{position: "absolute", top: 0, bottom: 0}}/>}
                   </Grid>
                 </Grid>
-                <Paper style={{margin: 0, paddingLeft: 10, paddingRight: 10, paddingTop: 3, paddingBottom: 3, right: 20, top: 80, position: "fixed", backgroundColor: 'rgba(255,255,255,0.5)', cursor: "pointer" }} onClick={() => window.open("https://h2801469.stratoserver.net/stats.php", "_blank")}>
+                <Paper style={{margin: 0, paddingLeft: 10, paddingRight: 10, paddingTop: 3, paddingBottom: 3, right: 20, top: 80, position: "fixed", backgroundColor: "rgba(255,255,255,0.5)", cursor: "pointer" }} onClick={() => window.open("https://h2801469.stratoserver.net/stats.php", "_blank")}>
                   <Typography>{this.state.markerData.length} {strings.sensors}</Typography>
                 </Paper>
                 <Fab color="primary" aria-label={strings.addSensor} style={{margin: 0, right: 20, bottom: 65, position: "fixed" }} onClick={this.onShowAddSensorDialog}><AddIcon/></Fab>
@@ -296,7 +296,7 @@ class App extends Component {
                   <Redirect strict from={"/"} to={"."} />
                 </Switch>
                 {/* Snackbars */}
-                <Snackbar open={this.state.snackbarSuccessOpen} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
+                <Snackbar open={this.state.snackbarSuccessOpen} anchorOrigin={{ vertical: "bottom", horizontal: "right" }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
                   <SnackbarContent
                     message={
                       <span style={{ display: "flex", alignItems: "center" }}>
@@ -310,7 +310,7 @@ class App extends Component {
                     ]}
                     style={{backgroundColor: green[600]}} />
                 </Snackbar>
-                <Snackbar open={this.state.snackbarErrorOpen} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
+                <Snackbar open={this.state.snackbarErrorOpen} anchorOrigin={{ vertical: "bottom", horizontal: "right" }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
                   <SnackbarContent
                     message={
                       <span style={{ display: "flex", alignItems: "center" }}>
@@ -336,12 +336,12 @@ class App extends Component {
           </Fragment>
         </CustomView>
       </Router>
-    )
+    );
   }
 }
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
-}
+};
 
 export default withStyles(styles, { withTheme: true })(App);

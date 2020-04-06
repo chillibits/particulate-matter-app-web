@@ -23,7 +23,7 @@ import strings from "../strings";
 import * as Constants from "../constants";
 import Geocode from "react-geocode";
 
-const styles = theme => ({
+const styles = (theme) => ({
   buttonProgress: {
     position: "absolute",
     color: green[500],
@@ -97,8 +97,6 @@ class DialogAddSensor extends React.Component {
   }
 
   locationChange = (position, address) => {
-    console.log(address);
-    console.log(position);
     this.setState({ locationPickerOpen: false });
   }
 
@@ -161,9 +159,6 @@ class DialogAddSensor extends React.Component {
     Geocode.fromLatLng(this.state.lat, this.state.lng).then(
       (response) => {
         this.setState({ selectedAddress: response.results[0].formatted_address });
-      },
-      (error) => {
-        console.error(error);
       }
     );
   }
@@ -190,7 +185,7 @@ class DialogAddSensor extends React.Component {
                 <StepContent>
                   {/* Content */}
                   <div>
-                    <Typography>{strings.enterChipIdInstruction1} <a href="https://chillibits.com/pmapp/en/faq#6" target="_blank">{strings.faqSite}</a> {strings.enterChipIdInstruction2}</Typography>
+                    <Typography>{strings.enterChipIdInstruction1} <a href="https://chillibits.com/pmapp/en/faq#6" target="_blank" rel="noopener noreferrer">{strings.faqSite}</a> {strings.enterChipIdInstruction2}</Typography>
                     <TextField value={this.state.chipId} label={strings.chipId} type="number" error={this.state.chipIdError} onChange={this.chipIdChange} variant="outlined" onKeyPress={this.onEnterPressed} style={{ marginTop: 15 }} />
                     {this.state.errorDesc !== "" && <Typography color="error" style={{marginTop: 15}}>{this.state.errorDesc}</Typography>}
                   </div>
@@ -264,4 +259,4 @@ DialogAddSensor.propTypes = {
   onSensorAdded: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(DialogAddSensor);;
+export default withStyles(styles)(DialogAddSensor);

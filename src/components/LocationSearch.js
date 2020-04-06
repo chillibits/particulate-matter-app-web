@@ -8,8 +8,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import * as Keys from "../keys";
-import strings from "../strings"
-import request from "superagent"
+import strings from "../strings";
+import request from "superagent";
 
 function loadScript(src, position, id) {
   if (!position) return;
@@ -23,7 +23,7 @@ function loadScript(src, position, id) {
 
 const autocompleteService = { current: null };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: {
     color: theme.palette.text.secondary,
     marginRight: theme.spacing(2),
@@ -54,11 +54,11 @@ export default function GoogleMaps(props) {
     loaded.current = true;
   }
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  const handleClick = id => {
+  const handleClick = (id) => {
     /*request.get("https://maps.googleapis.com/maps/api/place/details/json")
       .set("Content-Type", "application/x-www-form-urlencoded")
       .send({key: Keys.GOOGLE_GEOCODE_KEY, place_id: id, fields: "geometry"})
@@ -74,11 +74,11 @@ export default function GoogleMaps(props) {
         fields: ["geometry"]
       };
 
-      autocompleteService.current.getDetails(request, callback);
-
       function callback(place, status) {
-        alert(place)
+          alert(place);
       }
+
+      autocompleteService.current.getDetails(request, callback);
   }
 
   const fetch = React.useMemo(
@@ -104,10 +104,8 @@ export default function GoogleMaps(props) {
       return undefined;
     }
 
-    fetch({ input: inputValue }, results => {
-      if (active) {
-        setOptions(results || []);
-      }
+    fetch({ input: inputValue }, (results) => {
+      if (active) setOptions(results || []);
     });
 
     return () => {
@@ -119,14 +117,14 @@ export default function GoogleMaps(props) {
     <Autocomplete
       id="google-map-demo"
       style={{ width: 500 }}
-      getOptionLabel={option => (typeof option === "string" ? option : option.description)}
-      filterOptions={x => x}
+      getOptionLabel={(option) => (typeof option === "string" ? option : option.description)}
+      filterOptions={(x) => x}
       options={options}
       autoComplete
       includeInputInList
       freeSolo
       disableOpenOnFocus
-      renderInput={params => (
+      renderInput={(params) => (
         <TextField
           {...params}
           placeholder={strings.searchLocation}
@@ -134,11 +132,11 @@ export default function GoogleMaps(props) {
           onChange={handleChange}
         />
       )}
-      renderOption={option => {
+      renderOption={(option) => {
         const matches = option.structured_formatting.main_text_matched_substrings;
         const parts = parse(
           option.structured_formatting.main_text,
-          matches.map(match => [match.offset, match.offset + match.length]),
+          matches.map((match) => [match.offset, match.offset + match.length]),
         );
 
         return (

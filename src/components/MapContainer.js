@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import * as Keys from '../keys';
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import { Paper, Typography, Avatar, Grid, Button } from '@material-ui/core'
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
-import Geocode from "react-geocode"
-import IconButton from '@material-ui/core/IconButton';
-import { SensorIcon } from './index'
-import InfoIcon from '@material-ui/icons/InfoOutlined';
-import strings from '../strings'
+import React, { Component } from "react";
+import * as Keys from "../keys";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
+import { Paper, Typography, Avatar, Grid, Button } from "@material-ui/core";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import Geocode from "react-geocode";
+import IconButton from "@material-ui/core/IconButton";
+import { SensorIcon } from "./index";
+import InfoIcon from "@material-ui/icons/InfoOutlined";
+import strings from "../strings";
 
 class MapContainer extends Component {
   state = {
