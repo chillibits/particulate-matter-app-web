@@ -308,9 +308,9 @@ export default new LocalizedStrings({
     nextPage: "Page suivante",
     searchLocation: "Rechercher un lieu ...",
     isThisTheRightPlace: "Est-ce le bon endroit? Sinon, essayez de changer les coordonnées.",
-    enableEUThreshold: "Enable EU Threshold",
-    enableWHOThreshold: "Enable WHO Threshold",
-    euThreshold: "EU Threshold",
-    whoThreshold: "WHO Threshold",
+    enableEUThreshold: "Activer le seuil de l'UE",
+    enableWHOThreshold: "Activer le seuil de l'OMS",
+    euThreshold: "Seuil de l'UE",
+    whoThreshold: "Seuil de l'OMS",
   }},
 );
