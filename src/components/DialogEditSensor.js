@@ -45,8 +45,8 @@ class DialogEditSensor extends React.Component {
       }
       return true;
     });
-    var obj = { time: timestamp, device: "web", data: dataNew }
-    fire.database().ref("sync/" + this.props.syncKey).set(obj)
+    var obj = { time: timestamp, device: "web", data: dataNew };
+    fire.database().ref("sync/" + this.props.syncKey).set(obj);
 
     this.props.onClose(1);
   }

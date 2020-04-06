@@ -30,8 +30,8 @@ class DialogAddFavourite extends React.Component {
     var timestamp = Math.floor(Date.now());
     var dataNew = this.props.userData;
     dataNew.push({ chipId: this.props.chipId, color: this.state.color, fav: true, name: this.state.name });
-    var obj = { time: timestamp, device: "web", data: dataNew }
-    fire.database().ref("sync/" + this.props.syncKey).set(obj)
+    var obj = { time: timestamp, device: "web", data: dataNew };
+    fire.database().ref("sync/" + this.props.syncKey).set(obj);
     //Dialog schließen
     this.props.onClose();
   };

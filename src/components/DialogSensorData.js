@@ -79,7 +79,7 @@ function Transition(props) {
 }
 
 function round(x, n) {
-    return Math.round(x * Math.pow(10, n)) / Math.pow(10, n)
+    return Math.round(x * Math.pow(10, n)) / Math.pow(10, n);
 }
 
 class FullScreenDialog extends React.Component {
@@ -113,8 +113,7 @@ class FullScreenDialog extends React.Component {
   };
 
   constructor(props) {
-    super(props)
-
+    super(props);
     this.loadSensorData();
   }
 
@@ -266,7 +265,7 @@ class FullScreenDialog extends React.Component {
     }
     if(name === "enabledWHOThreshold" && event.target.checked) {
       data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 });
-      data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 })
+      data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 });
     } else if(name !== "enabledWHOThreshold" && this.state.enabledEUThreshold) {
       data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 });
       data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 });
@@ -360,7 +359,11 @@ class FullScreenDialog extends React.Component {
                   dotSize={this.state.disableDots ? 0 : 5}
                   dotColor="inherit:darker(0.3)"
                   enableDotLabel={true}
-                  dotLabel={this.state.enableTime ? (function(e){return"".concat(moment(e.x).format("HH:mm"),"")}) : ""}
+                  dotLabel={
+                    this.state.enableTime ? ((e) => {
+                      return "".concat(moment(e.x).format("HH:mm"),"");
+                    }) : ""
+                  }
                   dotLabelYOffset={-12}
                   dotBorderWidth={0}
                   animate={false}

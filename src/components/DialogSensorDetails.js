@@ -29,7 +29,7 @@ class DialogSensorDetails extends React.Component {
     //Serveranfrage machen
     let currentComponent = this;
     request.post(Constants.BACKEND_URL)
-      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .set("Content-Type", "application/x-www-form-urlencoded")
       .send({ command: "issensorexisting", chip_id: this.props.chipId })
       .end(function(err, res) {
         var result = res.text.trim();

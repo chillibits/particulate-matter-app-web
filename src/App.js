@@ -114,9 +114,9 @@ class App extends Component {
     const currentComponent = this;
     var timestamp = Math.floor(Date.now());
 
-    var obj = { time: timestamp, device: "web" }
+    var obj = { time: timestamp, device: "web" };
 
-    fire.database().ref("sync/" + this.state.syncKey).set(obj)
+    fire.database().ref("sync/" + this.state.syncKey).set(obj);
     fire.database().ref("sync/" + this.state.syncKey).on("value", function(snap) {
       if(snap.val() !== null) {
         if(snap.child("time").val() > timestamp) {

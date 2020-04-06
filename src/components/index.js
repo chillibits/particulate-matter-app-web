@@ -14,4 +14,4 @@ import SensorDataTable from "./SensorDataTable";
 
 export {
   AppBar, MapContainer, LocationSearch, LoginContainer, SensorIcon, DialogAddSensor, DialogAddFavourite, DialogSensorData, DialogEditSensor, DialogRemoveSensor, DialogSensorDetails, SensorDataTable, LocationPickerDialog
-}
+};

@@ -122,7 +122,7 @@ class MapContainer extends Component {
     return (
       <Map google={this.props.google} onClick={this.onMapClicked} zoom={7} initialCenter={{lat: (this.props.ownPosition.lat), lng: (this.props.ownPosition.lng) }}>
         {this.state.markers}
-        <InfoWindow marker={this.state.activeMarker} visible={this.state.showingInfoWindow} onOpen={e => {this.onInfoWindowOpen(this.props, e)}}>
+        <InfoWindow marker={this.state.activeMarker} visible={this.state.showingInfoWindow} onOpen={(e) => { this.onInfoWindowOpen(this.props, e); }}>
             <Paper elevation={1} style={{width: 210}}>
               <div>
                 <Grid container>
@@ -155,6 +155,6 @@ MapContainer.propTypes = {
   onShowSensorData: PropTypes.func.isRequired,
   onAddFavourite: PropTypes.func.isRequired,
   onOpenDetails: PropTypes.func.isRequired,
-}
+};
 
-export default GoogleApiWrapper({ apiKey: (Keys.GOOGLE_API_KEY), language: ("de") })(MapContainer)
+export default GoogleApiWrapper({ apiKey: Keys.GOOGLE_API_KEY, language: "de" })(MapContainer);

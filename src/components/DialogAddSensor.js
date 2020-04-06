@@ -149,8 +149,8 @@ class DialogAddSensor extends React.Component {
     var timestamp = Math.floor(Date.now());
     var dataNew = this.props.userData;
     dataNew.push({ chipId: this.state.chipId, color: this.state.color, fav: false, name: this.state.sensorName });
-    var obj = { time: timestamp, device: "web", data: dataNew }
-    fire.database().ref("sync/" + this.props.syncKey).set(obj)
+    var obj = { time: timestamp, device: "web", data: dataNew };
+    fire.database().ref("sync/" + this.props.syncKey).set(obj);
     this.props.onClose(1);
   }
 

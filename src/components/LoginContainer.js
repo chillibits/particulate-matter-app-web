@@ -114,7 +114,7 @@ class LoginContainer extends Component {
           <div style={{height: "calc(100% - 8px)"}}>
             <Scrollbars style={{height: "calc(100% - 64px)"}}>
               <SwipeableViews axis='x' index={this.state.page} onChangeIndex={this.handlePageChange} animateHeight>
-                <TabContainer style={{overflow: 'auto'}} dir={theme.direction}>
+                <TabContainer style={{overflow: "auto"}} dir={theme.direction}>
                   {this.props.favorites.length > 0 &&
                     <List style={{overflow: "auto"}}>
                       {this.props.favorites.map((sensor) => {
