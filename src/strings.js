@@ -104,6 +104,7 @@ export default new LocalizedStrings({
     enableWHOThreshold: "Enable WHO Threshold",
     euThreshold: "EU Threshold",
     whoThreshold: "WHO Threshold",
+    testLocation: "Test coordinates"
   },
   de: {
     appName: "Feinstaub-App",
@@ -144,8 +145,8 @@ export default new LocalizedStrings({
     addSensorToMapInstruction2: "treten.",
     contact: "Kontakt",
     availableSoon: "Bald verfügbar",
-    latitude: "Längengrad",
-    longitude: "Breitengrad",
+    latitude: "Breitengrad",
+    longitude: "Längengrad",
     mountingHeight: "Montagehöhe (Meter)",
     chooseLocation: "Position des Sensors wählen",
     editSensor: "Sensor bearbeiten",
@@ -208,6 +209,7 @@ export default new LocalizedStrings({
     enableWHOThreshold: "WHO Grenzwert aktivieren",
     euThreshold: "EU Grenzwert",
     whoThreshold: "WHO Grenzwert",
+    testLocation: "Koordinaten testen"
   },
   fr: {
     appName: "App Matière Particulaire",
@@ -312,5 +314,6 @@ export default new LocalizedStrings({
     enableWHOThreshold: "Activer le seuil de l'OMS",
     euThreshold: "Seuil de l'UE",
     whoThreshold: "Seuil de l'OMS",
+    testLocation: "Coordonnées du test"
   }},
 );

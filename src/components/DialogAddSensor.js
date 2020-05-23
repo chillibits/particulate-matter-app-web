@@ -102,19 +102,17 @@ class DialogAddSensor extends React.Component {
 
   latChanged = (event) => {
     var nextDisabled = event.target.value.length === 0 || this.state.lng.length === 0 || this.state.alt.length === 0;
-    if(event.target.value.length > 0 && this.state.lng.length > 0) this.checkPlace();
     this.setState({ lat: event.target.value, nextDisabled: nextDisabled });
+    if(this.state.lat.length > 0 && this.state.lat.length > 0) this.checkPlace();
   }
 
   lngChanged = (event) => {
     var nextDisabled = this.state.lat.length === 0 || event.target.value.length === 0 || this.state.alt.length === 0;
-    if(event.target.value.length > 0 && this.state.lat.length > 0) this.checkPlace();
     this.setState({ lng: event.target.value, nextDisabled: nextDisabled });
   }
 
   altChanged = (event) => {
     var nextDisabled = this.state.lat.length === 0 || this.state.lng.length === 0 || event.target.value.length === 0;
-    if(this.state.lat.length > 0 && this.state.lng.length > 0) this.checkPlace();
     this.setState({ alt: event.target.value, nextDisabled: nextDisabled });
   }
 
@@ -131,6 +129,7 @@ class DialogAddSensor extends React.Component {
     }
 
     //Auf dem Server hinzufügen
+    console.log(this.state.chipId);
     let currentComponent = this;
     request.post(Constants.BACKEND_URL)
       .set("Content-Type", "application/x-www-form-urlencoded")
@@ -155,12 +154,16 @@ class DialogAddSensor extends React.Component {
   }
 
   checkPlace = () => {
-    Geocode.setApiKey(Keys.GOOGLE_GEOCODE_KEY);
-    Geocode.fromLatLng(this.state.lat, this.state.lng).then(
-      (response) => {
-        this.setState({ selectedAddress: response.results[0].formatted_address });
-      }
-    );
+    if(this.state.lat.length > 0 && this.state.lng.length > 0) {
+      Geocode.setApiKey(Keys.GOOGLE_GEOCODE_KEY);
+      Geocode.fromLatLng(this.state.lat, this.state.lng).then(
+        (response) => {
+          this.setState({ selectedAddress: response.results[0].formatted_address });
+        }
+      );
+    } else {
+      this.setState({ selectedAddress: "Please enter valid coordinates above" })
+    }
   }
 
   onEnterPressed = (ev) => {
@@ -224,9 +227,10 @@ class DialogAddSensor extends React.Component {
                     <Tooltip title={strings.availableSoon}>
                       <Button variant="outlined" color="primary" _onClick={this.chooseLocation} style={{marginTop: 10, width: "100%"}}>{strings.chooseLocation}</Button>
                     </Tooltip>
-                    <TextField label={strings.longitude} style={{marginTop: 10, marginRight: "2%", width: "49%"}} type="number" onChange={this.lngChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: -180, max: 180, maxLength: 9 }}variant="outlined" />
-                    <TextField label={strings.latitude} style={{marginTop: 10, width: "49%"}} type="number" onChange={this.latChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: -90, max: 90, maxLength: 8 }} variant="outlined" />
-                    <TextField label={strings.mountingHeight} style={{marginTop: 10, width: "49%"}} type="number" onChange={this.altChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: 0, max: 999, maxLength: 3 }} variant="outlined" />
+                    <TextField label={strings.latitude} style={{marginTop: 10, marginRight: "2%", width: "49%"}} type="number" onChange={this.latChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: -180, max: 180, maxLength: 9 }}variant="outlined" />
+                    <TextField label={strings.longitude} style={{marginTop: 10, width: "49%"}} type="number" onChange={this.lngChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: -90, max: 90, maxLength: 8 }} variant="outlined" />
+                    <TextField label={strings.mountingHeight} style={{marginTop: 10, marginRight: "2%", width: "49%"}} type="number" onChange={this.altChanged} onKeyPress={this.onEnterPressed} inputProps={{ min: 0, max: 999, maxLength: 3 }} variant="outlined" />
+                    <Button variant="outlined" color="primary" style={{marginTop: 10, width: "49%"}} onClick={this.checkPlace}>{strings.testLocation}</Button>
                     {this.state.selectedAddress !== null && <div>
                       <Typography style={{ marginTop: 5, marginBottom: 5 }}><b>{this.state.selectedAddress}</b></Typography>
                       <Typography>{strings.isThisTheRightPlace}</Typography>
