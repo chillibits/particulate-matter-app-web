@@ -104,7 +104,8 @@ export default new LocalizedStrings({
     enableWHOThreshold: "Enable WHO Threshold",
     euThreshold: "EU Threshold",
     whoThreshold: "WHO Threshold",
-    testLocation: "Test coordinates"
+    testLocation: "Test coordinates",
+    pleaseEnterValidCoordinates: "Please enter valid coordinates above"
   },
   de: {
     appName: "Feinstaub-App",
@@ -209,7 +210,8 @@ export default new LocalizedStrings({
     enableWHOThreshold: "WHO Grenzwert aktivieren",
     euThreshold: "EU Grenzwert",
     whoThreshold: "WHO Grenzwert",
-    testLocation: "Koordinaten testen"
+    testLocation: "Koordinaten testen",
+    pleaseEnterValidCoordinates: "Bitte geben Sie valide Koordinaten an"
   },
   fr: {
     appName: "App Matière Particulaire",
@@ -314,6 +316,7 @@ export default new LocalizedStrings({
     enableWHOThreshold: "Activer le seuil de l'OMS",
     euThreshold: "Seuil de l'UE",
     whoThreshold: "Seuil de l'OMS",
-    testLocation: "Coordonnées du test"
+    testLocation: "Coordonnées du test",
+    pleaseEnterValidCoordinates: "Veuillez entrer des coordonnées valides ci-dessus"
   }},
 );

@@ -129,11 +129,10 @@ class DialogAddSensor extends React.Component {
     }
 
     //Auf dem Server hinzufügen
-    console.log(this.state.chipId);
     let currentComponent = this;
     request.post(Constants.BACKEND_URL)
       .set("Content-Type", "application/x-www-form-urlencoded")
-      .send({ command: "addsensor", chipId: this.state.chipId, lat: this.state.lat, lng: this.state.lng, alt: this.state.alt })
+      .send({ command: "addsensor", chip_id: this.state.chipId, lat: this.state.lat, lng: this.state.lng, alt: this.state.alt })
       .end(function(err, res) {
         var result = res.text.trim();
         if(result === 0) result = 2;
@@ -162,7 +161,7 @@ class DialogAddSensor extends React.Component {
         }
       );
     } else {
-      this.setState({ selectedAddress: "Please enter valid coordinates above" })
+      this.setState({ selectedAddress: strings.pleaseEnterValidCoordinates });
     }
   }
 
