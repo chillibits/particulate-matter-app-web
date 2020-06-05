@@ -51,7 +51,7 @@ class LocationPickerDialog extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const classes = this.props;
     return (
       <Dialog fullScreen open={true} onClose={this.onClose} TransitionComponent={Transition} >
         <AppBar className={classes.appBar}>

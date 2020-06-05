@@ -27,11 +27,16 @@ class DialogEditSensor extends React.Component {
 
   nameChanged = (event) => {
     var error = event.target.value.length === 0;
-    this.setState({ name: event.target.value, error: error });
+    this.setState({
+      name: event.target.value,
+      error
+    });
   }
 
   colorChanged = (color, event) => {
-    this.setState({ color: color.hex });
+    this.setState({
+      color: color.hex
+    });
   }
 
   saveChangings = () => {

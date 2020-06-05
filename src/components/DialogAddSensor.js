@@ -61,63 +61,102 @@ class DialogAddSensor extends React.Component {
         .end(function(err, res) {
           var result = res.text.trim();
           if(result === "true") {
-            currentComponent.setState({ loading: false, activeStep: 2, nextDisabled: true });
+            currentComponent.setState({
+              loading: false,
+              activeStep: 2,
+              nextDisabled: true
+            });
           } else {
-            currentComponent.setState({ loading: false, chipIdError: true, nextDisabled: true, errorDesc: strings.errorAddSensor });
+            currentComponent.setState({
+              loading: false,
+              chipIdError: true,
+              nextDisabled: true,
+              errorDesc: strings.errorAddSensor
+            });
           }
         });
     } else if(step === 3) {
       this.addSensor();
     } else {
-      this.setState({ activeStep: this.state.activeStep +1, nextDisabled: true });
+      this.setState({
+        activeStep: this.state.activeStep +1,
+        nextDisabled: true
+      });
     }
   };
 
   handleBack = () => {
-    this.setState({ activeStep: this.state.activeStep -1 });
+    this.setState({
+      activeStep: this.state.activeStep -1
+    });
   };
 
   chipIdChange = (event) => {
     var nextDisabled = event.target.value.length === 0;
-    this.setState({ chipId: event.target.value, chipIdError: false, errorDesc: "", nextDisabled: nextDisabled });
+    this.setState({
+      chipId: event.target.value,
+      chipIdError: false,
+      errorDesc: "", nextDisabled
+    });
   }
 
   nameChange = (event) => {
     var nextDisabled = event.target.value.length === 0 || this.state.color === "";
-    this.setState({ sensorName: event.target.value, nextDisabled: nextDisabled });
+    this.setState({
+      sensorName: event.target.value,
+      nextDisabled
+    });
   }
 
   colorChange = (color, event) => {
     var nextDisabled = this.state.sensorName.length === 0;
-    this.setState({ color: color.hex, nextDisabled: nextDisabled });
+    this.setState({
+      color: color.hex,
+      nextDisabled
+    });
   }
 
   chooseLocation = () => {
-    this.setState({ locationPickerOpen: true });
+    this.setState({
+      locationPickerOpen: true
+    });
   }
 
   locationChange = (position, address) => {
-    this.setState({ locationPickerOpen: false });
+    this.setState({
+      locationPickerOpen: false
+    });
   }
 
   latChanged = (event) => {
     var nextDisabled = event.target.value.length === 0 || this.state.lng.length === 0 || this.state.alt.length === 0;
-    this.setState({ lat: event.target.value, nextDisabled: nextDisabled });
+    this.setState({
+      lat: event.target.value,
+      nextDisabled
+    });
     if(this.state.lat.length > 0 && this.state.lat.length > 0) this.checkPlace();
   }
 
   lngChanged = (event) => {
     var nextDisabled = this.state.lat.length === 0 || event.target.value.length === 0 || this.state.alt.length === 0;
-    this.setState({ lng: event.target.value, nextDisabled: nextDisabled });
+    this.setState({
+      lng: event.target.value,
+      nextDisabled
+    });
   }
 
   altChanged = (event) => {
     var nextDisabled = this.state.lat.length === 0 || this.state.lng.length === 0 || event.target.value.length === 0;
-    this.setState({ alt: event.target.value, nextDisabled: nextDisabled });
+    this.setState({
+      alt: event.target.value,
+      nextDisabled
+    });
   }
 
   addSensor = () => {
-    this.setState({ loading: true });
+    this.setState({
+      loading: true
+    });
 
     if(this.props.signedIn) {
       //Beim Nutzer hinzufügen
@@ -157,11 +196,15 @@ class DialogAddSensor extends React.Component {
       Geocode.setApiKey(Keys.GOOGLE_GEOCODE_KEY);
       Geocode.fromLatLng(this.state.lat, this.state.lng).then(
         (response) => {
-          this.setState({ selectedAddress: response.results[0].formatted_address });
+          this.setState({
+            selectedAddress: response.results[0].formatted_address
+          });
         }
       );
     } else {
-      this.setState({ selectedAddress: strings.pleaseEnterValidCoordinates });
+      this.setState({
+        selectedAddress: strings.pleaseEnterValidCoordinates
+      });
     }
   }
 

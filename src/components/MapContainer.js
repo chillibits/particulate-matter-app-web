@@ -38,14 +38,21 @@ class MapContainer extends Component {
         var city = currentComponent.getCity(response.results[0].address_components);
         this.setState({
           selectedAddress: country + ", " + city,
-          country: country,
-          city: city,
+          country,
+          city,
         });
       },
       (error) => {}
     );
 
-    this.setState({ selectedPlace: props, activeMarker: marker, selectedMarkerLat: Math.round(marker.position.lat() * 1000) / 1000, selectedMarkerLng: Math.round(marker.position.lng() * 1000) / 1000, selectedAddress: strings.loadingAddress, showingInfoWindow: true });
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      selectedMarkerLat: Math.round(marker.position.lat() * 1000) / 1000,
+      selectedMarkerLng: Math.round(marker.position.lng() * 1000) / 1000,
+      selectedAddress: strings.loadingAddress,
+      showingInfoWindow: true
+    });
   };
 
   getCountry = (addrComponents) => {
@@ -86,7 +93,7 @@ class MapContainer extends Component {
     var sensor = {
       chipId: this.state.selectedPlace.name,
       name: this.state.selectedAddress
-    }
+    };
     this.props.onOpenDetails(sensor);
   }
 
@@ -105,18 +112,23 @@ class MapContainer extends Component {
     if(this.props.markerData !== this.state.oldMarkerData || this.props.favorites.length !== this.state.oldFavorites.length || this.props.ownSensors.length !== this.state.oldOwnSensors.length) {
       var markers = this.props.markerData.map((marker) => {
         var imageUrl = "markers/blue.png";
-        this.props.favorites.map(sensor => {
+        this.props.favorites.map((sensor) => {
           if(sensor.chipId === marker.i) imageUrl = "markers/red.png";
           return true;
         });
-        this.props.ownSensors.map(sensor => {
+        this.props.ownSensors.map((sensor) => {
           if(sensor.chipId === marker.i) imageUrl = "markers/green.png";
           return true;
         });
         // Attention: !== does not work!
         if(marker.l != 0 || marker.b != 0) return <Marker key={marker.i} icon={{ url: imageUrl }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />;
       });
-      this.setState({ markers: markers, oldMarkerData: this.props.markerData, oldFavorites: this.props.favorites, oldOwnSensors: this.props.ownSensors });
+      this.setState({
+        markers,
+        oldMarkerData: this.props.markerData,
+        oldFavorites: this.props.favorites,
+        oldOwnSensors: this.props.ownSensors
+      });
     }
 
     return (

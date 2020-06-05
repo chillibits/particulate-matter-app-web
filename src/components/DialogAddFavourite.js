@@ -37,11 +37,17 @@ class DialogAddFavourite extends React.Component {
 
   onNameChanged = (event) => {
     var buttonDisabled = event.target.value.length === 0 || this.state.color === null;
-    this.setState({ name: event.target.value, buttonDisabled: buttonDisabled });
+    this.setState({
+      name: event.target.value,
+      buttonDisabled
+    });
   }
 
   onColorChanged = (color, event) => {
-    this.setState({ color: color.hex, buttonDisabled: this.state.name.length === 0 });
+    this.setState({
+      color: color.hex,
+      buttonDisabled: this.state.name.length === 0
+    });
   }
 
   render() {

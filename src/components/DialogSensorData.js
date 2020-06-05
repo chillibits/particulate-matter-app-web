@@ -118,7 +118,9 @@ class FullScreenDialog extends React.Component {
   }
 
   loadSensorData = () => {
-    this.setState({ loading: true });
+    this.setState({
+      loading: true
+    });
 
     let currentComponent = this;
     counter = 0;
@@ -180,16 +182,33 @@ class FullScreenDialog extends React.Component {
           dataRecordsGraph.push({ id: strings.whoThreshold, color: "hsl(3, 100%, 50%)", data: listWHO2 });
         }
 
-        currentComponent.setState({ data: dataRecords, dataGraph: dataRecordsGraph, dataPM1: listPM1, dataPM2: listPM2, dataTemp: listTemp, dataHumidity: listHumidity, dataPressure: listPressure, dataEUThreshold1: listEU1, dataEUThreshold2: listEU2, dataWHOThreshold1: listWHO1, dataWHOThreshold2: listWHO2 , loading: false});
+        currentComponent.setState({
+          data: dataRecords,
+          dataGraph: dataRecordsGraph,
+          dataPM1: listPM1,
+          dataPM2: listPM2,
+          dataTemp: listTemp,
+          dataHumidity: listHumidity,
+          dataPressure: listPressure,
+          dataEUThreshold1: listEU1,
+          dataEUThreshold2: listEU2,
+          dataWHOThreshold1: listWHO1,
+          dataWHOThreshold2: listWHO2,
+          loading: false
+        });
       });
   }
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    this.setState({
+      open: true
+    });
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({
+      open: false
+    });
   };
 
   showDetails = () => {
@@ -197,11 +216,15 @@ class FullScreenDialog extends React.Component {
   }
 
   handleTabChange = (event, value) => {
-    this.setState({ value });
+    this.setState({
+      value
+    });
   };
 
   handleTabChangeIndex = (index) => {
-    this.setState({ value: index });
+    this.setState({
+      value: index
+    });
   };
 
   openPicker = () => {
@@ -210,26 +233,34 @@ class FullScreenDialog extends React.Component {
 
   minusDay = () => {
     var date = this.state.selectedDate;
-    this.setState({ selectedDate: new Date(date.setTime(date.getTime() - 86400000 /* 1 Tag */))});
+    this.setState({
+      selectedDate: new Date(date.setTime(date.getTime() - 86400000 /* 1 Tag */))
+    });
     this.loadSensorData();
   }
 
   plusDay = () => {
     var date = this.state.selectedDate;
-    this.setState({ selectedDate: new Date(date.setTime(date.getTime() + 86400000 /* 1 Tag */))});
+    this.setState({
+      selectedDate: new Date(date.setTime(date.getTime() + 86400000 /* 1 Tag */))
+    });
     this.loadSensorData();
   }
 
   handleDateChange = (date) => {
-    this.setState({ selectedDate: date });
+    this.setState({
+      selectedDate: date
+    });
     this.loadSensorData();
   }
 
   onZoomChange = (event, value) => {
-    this.setState({ currentZoom: value });
+    this.setState({
+      currentZoom: value
+    });
   }
 
-  onCheckedChange = name => event => {
+  onCheckedChange = (name) => (event) => {
     var data = [];
     if(name === "enabledPM1" && event.target.checked) {
       data.push({ id: strings.pm1, color: "hsl(353, 70%, 50%)", data: this.state.dataPM1 });
@@ -270,7 +301,10 @@ class FullScreenDialog extends React.Component {
       data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 });
       data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 });
     }
-    this.setState({ [name]: event.target.checked, dataGraph: data });
+    this.setState({
+      [name]: event.target.checked,
+      dataGraph: data
+    });
   }
 
   render() {

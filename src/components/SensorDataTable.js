@@ -177,15 +177,22 @@ class EnhancedTable extends React.Component {
 
     if (this.state.orderBy === property && this.state.order === "desc") order = "asc";
 
-    this.setState({ order, orderBy });
+    this.setState({
+      order,
+      orderBy
+    });
   };
 
   handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      this.setState(state => ({ selected: this.props.data.map(n => n.id) }));
+      this.setState({
+        selected: this.props.data.map(n => n.id)
+      });
       return;
     }
-    this.setState({ selected: [] });
+    this.setState({
+      selected: []
+    });
   };
 
   handleClick = (event, id) => {
@@ -203,15 +210,21 @@ class EnhancedTable extends React.Component {
       newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
     }
 
-    this.setState({ selected: newSelected });
+    this.setState({
+      selected: newSelected
+    });
   };
 
   handleChangePage = (event, page) => {
-    this.setState({ page });
+    this.setState({
+      page
+    });
   };
 
   handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
+    this.setState({
+      rowsPerPage: event.target.value
+    });
   };
 
   isSelected = (id) => this.state.selected.indexOf(id) !== -1;
@@ -233,7 +246,7 @@ class EnhancedTable extends React.Component {
                 .map((n) => {
                   const isSelected = this.isSelected(n.id);
                   return (
-                    <TableRow hover onClick={event => this.handleClick(event, n.id)} role="checkbox" aria-checked={isSelected} tabIndex={-1} key={n.id} selected={isSelected}>
+                    <TableRow hover onClick={(event) => this.handleClick(event, n.id)} role="checkbox" aria-checked={isSelected} tabIndex={-1} key={n.id} selected={isSelected}>
                       <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
                       </TableCell>

@@ -141,10 +141,26 @@ class App extends Component {
           }
 
           //Anwenden
-          currentComponent.setState({ signedIn: true, userData: data, favorites: favorites, ownSensors: ownSensors, snackbarSuccessOpen: !currentComponent.state.firstSyncComplete, snackbarMessage: "Verknüpfung mit Android-App erfolgreich", firstSyncComplete: true });
+          currentComponent.setState({
+            signedIn: true,
+            userData: data,
+            favorites,
+            ownSensors: ownSensors,
+            snackbarSuccessOpen: !currentComponent.state.firstSyncComplete,
+            snackbarMessage: "Verknüpfung mit Android-App erfolgreich",
+            firstSyncComplete: true
+          });
         }
       } else {
-        currentComponent.setState({ signedIn: false, userData: [], favorites: [], ownSensors: [], snackbarErrorOpen: true, snackbarMessage: "Verbindung zur Android-App beendet", firstSyncComplete: false });
+        currentComponent.setState({
+          signedIn: false,
+          userData: [],
+          favorites: [],
+          ownSensors: [],
+          snackbarErrorOpen: true,
+          snackbarMessage: "Verbindung zur Android-App beendet",
+          firstSyncComplete: false
+        });
       }
     });
   }
@@ -167,67 +183,108 @@ class App extends Component {
   };
 
   onShowAddSensorDialog = () => {
-    this.setState({ dialogAddSensorOpen: true });
+    this.setState({
+      dialogAddSensorOpen: true
+    });
   }
 
   onHideAddSensorDialog = (state) => {
-    this.setState({ dialogAddSensorOpen: false });
+    this.setState({
+      dialogAddSensorOpen: false
+    });
     this.onSnackbarOpen(state, strings.sensorAddedSuccessfully, strings.errorPleaseTryAgain);
   }
 
   onShowAddFavouriteDialog = (selectedId) => {
-    this.setState({ dialogAddFavouriteOpen: true, selectedId: selectedId });
+    this.setState({
+      dialogAddFavouriteOpen: true,
+      selectedId
+    });
   }
 
   onHideAddFavouriteDialog = (state) => {
-    this.setState({ dialogAddFavouriteOpen: false });
+    this.setState({
+      dialogAddFavouriteOpen: false
+    });
     this.onSnackbarOpen(state, strings.sensorFavourized, strings.favourizationFailedTryAgain);
   }
 
   onShowSensorDataDialog = (sensor) => {
-    this.setState({ dialogSensorDataOpen: true, selected: sensor });
+    this.setState({
+      dialogSensorDataOpen: true,
+      selected: sensor
+    });
   }
 
   onHideSensorDataDialog = () => {
-    this.setState({ dialogSensorDataOpen: false, dialogSensorDataRouteOpen: false});
+    this.setState({
+      dialogSensorDataOpen: false,
+      dialogSensorDataRouteOpen: false
+    });
   }
 
   onShowDetailsDialog = (sensor) => {
-    this.setState({ dialogSensorDetailsOpen: true, selected: sensor });
+    this.setState({
+      dialogSensorDetailsOpen: true,
+      selected: sensor
+    });
   }
 
   onHideDetailsDialog = () => {
-    this.setState({ dialogSensorDetailsOpen: false });
+    this.setState({
+      dialogSensorDetailsOpen: false
+    });
   }
 
   onShowEditSensorDialog = (sensor) => {
-    this.setState({ dialogEditSensorOpen: true, selected: sensor });
+    this.setState({
+      dialogEditSensorOpen: true,
+      selected: sensor
+    });
   }
 
   onHideEditSensorDialog = (state) => {
-    this.setState({ dialogEditSensorOpen: false, selected: null });
+    this.setState({
+      dialogEditSensorOpen: false,
+      selected: null
+    });
     this.onSnackbarOpen(state, strings.changesSaved, strings.changesSaveFailed);
   }
 
   onShowRemoveSensorDialog = (selectedId) => {
-    this.setState({ dialogRemoveSensorOpen: true, selectedId: selectedId});
+    this.setState({
+      dialogRemoveSensorOpen: true,
+      selectedId
+    });
   }
 
   onHideRemoveSensorDialog = (state) => {
-    this.setState({ dialogRemoveSensorOpen: false, selected: null });
+    this.setState({
+      dialogRemoveSensorOpen: false,
+      selected: null
+    });
     this.onSnackbarOpen(state, strings.sensorRemovedSuccessfully, strings.sensorRemovalFailed);
   }
 
   onSnackbarOpen = (state, successMessage, errorMessage) => {
     if(state === 1) {
-      this.setState({ snackbarSuccessOpen: true, snackbarMessage: successMessage });
+      this.setState({
+        snackbarSuccessOpen: true,
+        snackbarMessage: successMessage
+      });
     } else if(state === 2) {
-      this.setState({ snackbarErrorOpen: true, snackbarMessage: errorMessage });
+      this.setState({
+        snackbarErrorOpen: true,
+        snackbarMessage: errorMessage
+      });
     }
   }
 
   onSnackbarClose = (event, reason) => {
-    if(reason !== "clickaway") this.setState({ snackbarSuccessOpen: false, snackbarErrorOpen: false });
+    if(reason !== "clickaway") this.setState({
+      snackbarSuccessOpen: false,
+      snackbarErrorOpen: false
+    });
   }
 
   /* Render-Method */

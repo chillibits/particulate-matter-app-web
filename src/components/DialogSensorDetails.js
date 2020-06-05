@@ -48,7 +48,7 @@ class DialogSensorDetails extends React.Component {
                 public: true,
                 lat: obj.lat,
                 lng: obj.lng,
-                alt: alt,
+                alt,
               });
             });
         } else {

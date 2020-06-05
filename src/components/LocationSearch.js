@@ -79,7 +79,7 @@ export default function GoogleMaps(props) {
       }
 
       autocompleteService.current.getDetails(request, callback);
-  }
+  };
 
   const fetch = React.useMemo(
     () =>
