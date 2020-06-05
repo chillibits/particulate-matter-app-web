@@ -98,7 +98,7 @@ export default function GoogleMaps(props) {
 
     if (inputValue === "") {
       setOptions([]);
-      return;
+      return () => {};
     }
 
     fetch({ input: inputValue }, (results) => {

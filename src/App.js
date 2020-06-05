@@ -145,7 +145,7 @@ class App extends Component {
             signedIn: true,
             userData: data,
             favorites,
-            ownSensors: ownSensors,
+            ownSensors,
             snackbarSuccessOpen: !currentComponent.state.firstSyncComplete,
             snackbarMessage: "Verknüpfung mit Android-App erfolgreich",
             firstSyncComplete: true

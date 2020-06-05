@@ -186,7 +186,7 @@ class EnhancedTable extends React.Component {
   handleSelectAllClick = (event) => {
     if (event.target.checked) {
       this.setState({
-        selected: this.props.data.map(n => n.id)
+        selected: this.props.data.map((n) => n.id)
       });
       return;
     }
@@ -221,7 +221,7 @@ class EnhancedTable extends React.Component {
     });
   };
 
-  handleChangeRowsPerPage = event => {
+  handleChangeRowsPerPage = (event) => {
     this.setState({
       rowsPerPage: event.target.value
     });
