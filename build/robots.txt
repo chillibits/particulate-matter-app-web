@@ -1,4 +1,0 @@
-User-agent: Googlebot
-Disallow: /.well-known/
-Disallow: /markers/
-Disallow: /images/

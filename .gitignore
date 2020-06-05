@@ -66,3 +66,6 @@ node_modules/
 
 # Service Worker
 src/ServiceWorker.js
+
+# Build output
+build
