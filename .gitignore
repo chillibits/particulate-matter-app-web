@@ -64,8 +64,5 @@ node_modules/
 # dotenv environment variables file
 .env
 
-# Service Worker
-src/ServiceWorker.js
-
 # Build output
 build
