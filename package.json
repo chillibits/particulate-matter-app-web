@@ -34,7 +34,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.3",
     "react-swipeable-views": "0.13.9",
-    "superagent": "6.0.0"
+    "superagent": "6.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
