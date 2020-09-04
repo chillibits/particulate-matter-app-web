@@ -1,6 +1,6 @@
 # Particulate Matter App Web
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8c8c74cc74c5493b940cea84750b7863)](https://app.codacy.com/gh/ChilliBits/particulate-matter-app-web?utm_source=github.com&utm_medium=referral&utm_content=ChilliBits/particulate-matter-app-web&utm_campaign=Badge_Grade_Dashboard)
-[![Build Status](https://travis-ci.com/ChilliBits/particulate-matter-app-web.svg?branch=master)](https://travis-ci.com/ChilliBits/particulate-matter-app-web)
+![Build Status](https://github.com/ChilliBits/particulate-matter-app-web/workflows/CI/badge.svg)
 [![dependencies Status](https://david-dm.org/chillibits/particulate-matter-app-web/status.svg)](https://david-dm.org/chillibits/particulate-matter-app-web)
 
 Live at [https://pm.chillibits.com](https://pm.chillibits.com)!
