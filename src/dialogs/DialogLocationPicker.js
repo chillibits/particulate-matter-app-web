@@ -24,7 +24,7 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class LocationPickerDialog extends React.Component {
+class DialogLocationPicker extends React.Component {
   state = {
     adress: "",
     position: {
@@ -66,8 +66,8 @@ class LocationPickerDialog extends React.Component {
   }
 }
 
-LocationPickerDialog.propTypes = {
+DialogLocationPicker.propTypes = {
   onChoose: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(LocationPickerDialog);
+export default withStyles(styles)(DialogLocationPicker);

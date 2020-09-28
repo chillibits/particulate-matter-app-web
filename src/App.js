@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Button, Fab, Paper } from "@material-ui/core";
-import { AppBar, MapContainer, LoginContainer, DialogAddSensor, DialogAddFavourite, DialogSensorData, DialogEditSensor, DialogRemoveSensor, DialogSensorDetails } from "./components";
 import AddIcon from "@material-ui/icons/Add";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
@@ -10,14 +9,29 @@ import IconButton from "@material-ui/core/IconButton";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ErrorIcon from "@material-ui/icons/Error";
 import CloseIcon from "@material-ui/icons/Close";
-import green from "@material-ui/core/colors/green";
-import red from "@material-ui/core/colors/red";
+import { green, red } from "@material-ui/core/colors";
 import request from "superagent";
 import fire from "./fire";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import { CustomView, isAndroid } from "react-device-detect";
 import strings from "./strings";
 import * as Constants from "./constants";
+
+import {
+  AppBar,
+  MapContainer,
+  LoginContainer
+} from "./components";
+
+import {
+  DialogAddSensor,
+  DialogAddFavourite,
+  DialogSensorData,
+  DialogEditSensor,
+  DialogRemoveSensor,
+  DialogSensorDetails
+} from "./dialogs";
+
 
 const styles = (theme) => ({
   main: {

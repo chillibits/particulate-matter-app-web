@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import * as Keys from "../keys";
 import { withStyles } from "@material-ui/core/styles";
@@ -16,7 +16,7 @@ import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Tooltip from "@material-ui/core/Tooltip";
 import { CirclePicker } from "react-color";
-import { LocationPickerDialog } from "./index";
+import { DialogLocationPicker } from "./index";
 import green from "@material-ui/core/colors/green";
 import fire from "../fire";
 import strings from "../strings";
@@ -290,7 +290,7 @@ class DialogAddSensor extends React.Component {
             </Stepper>
           </DialogContent>
         </Dialog>
-        {this.state.locationPickerOpen && <LocationPickerDialog onChoose={this.locationChange}/>}
+        {this.state.locationPickerOpen && <DialogLocationPicker onChoose={this.locationChange}/>}
       </Fragment>
     );
   }
