@@ -47,7 +47,7 @@ const styles1 = theme => ({
   },
 });
 
-function SnackbarContent(props) {
+function SnackbarBody(props) {
   const { classes, className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
 
@@ -69,7 +69,7 @@ function SnackbarContent(props) {
   );
 }
 
-SnackbarContent.propTypes = {
+SnackbarBody.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   message: PropTypes.node,
@@ -77,7 +77,7 @@ SnackbarContent.propTypes = {
   variant: PropTypes.oneOf(["success", "warning", "error", "info"]).isRequired,
 };
 
-const SnackbarContentWrapper = withStyles(styles1)(SnackbarContent);
+const SnackbarContentWrapper = withStyles(styles1)(SnackbarBody);
 
 const styles2 = theme => ({
   margin: {
