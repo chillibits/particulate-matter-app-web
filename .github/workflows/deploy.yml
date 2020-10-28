@@ -1,6 +1,6 @@
 # Build and deploy app to firebase on master push
 
-name: CI
+name: Firebase Deploy
 
 on:
   push:
@@ -13,8 +13,11 @@ jobs:
     - uses: actions/checkout@v2
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
-    - run: npm install
-    - run: npm run build --if-present
+    - name: Install & Build
+      run: |
+        npm install
+        npm run build --if-present
+        npm audit fix
       env:
         CI: false
     - uses: w9jds/firebase-action@master
