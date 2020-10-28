@@ -32,7 +32,7 @@
     "react-google-maps": "9.4.5",
     "react-location-picker": "1.5.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "4.0.0",
+    "react-scripts": "3.4.4",
     "react-swipeable-views": "0.13.9",
     "superagent": "6.1.0"
   },
