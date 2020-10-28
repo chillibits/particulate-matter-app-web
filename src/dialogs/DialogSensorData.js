@@ -350,77 +350,70 @@ class FullScreenDialog extends React.Component {
               <Scrollbars style={{height: 600, overflowX: "hidden"}}>
                 {this.state.dataGraph !== [] && <div style={{height: 590, width: this.state.currentZoom}}><ResponsiveLine
                   data={this.state.dataGraph}
-                  margin={{
-                      "top": 10,
-                      "right": 50,
-                      "bottom": 40,
-                      "left": 30
-                  }}
+                  margin={{ top: 10, right: 50, bottom: 40, left: 30 }}
                   xScale={{
-                      "type": "time",
-                      "format": "native",
-                      "precision": "minute"
+                      type: "time",
+                      format: "native",
+                      precision: "minute"
                   }}
                   yScale={{
-                      "type": "linear",
-                      "stacked": false,
-                      "min": "auto",
-                      "max": "auto"
+                      type: "linear",
+                      stacked: false,
+                      min: "auto",
+                      max: "auto"
                   }}
                   curve={this.state.smoothCurve ? (this.state.basisCurve ? "basis" : "cardinal") : "linear"}
                   axisBottom={{
-                      "orient": "bottom",
-                      "tickSize": 5,
-                      "tickPadding": 5,
-                      "tickRotation": 0,
-                      "legend": strings.timeOfDay,
-                      "legendOffset": 35,
-                      "format": "%H:%m",
-                      "legendPosition": "middle"
+                      orient: "bottom",
+                      tickSize: 5,
+                      tickPadding: 5,
+                      tickRotation: 0,
+                      legend: strings.timeOfDay,
+                      legendOffset: 35,
+                      format: "%H:%m",
+                      legendPosition: "middle"
                   }}
                   axisLeft={{
-                      "orient": "left",
-                      "tickSize": 5,
-                      "tickPadding": 5,
-                      "tickRotation": 0,
-                      "legend": strings.measurement,
-                      "legendOffset": -40,
-                      "legendPosition": "middle"
+                      orient: "left",
+                      tickSize: 5,
+                      tickPadding: 5,
+                      tickRotation: 0,
+                      legend: strings.measurement,
+                      legendOffset: -40,
+                      legendPosition: "middle"
                   }}
-                  colors="category10"
+                  colors={{ scheme: "category10" }}
                   lineWidth={1}
-                  dotSize={this.state.disableDots ? 0 : 5}
-                  dotColor="inherit:darker(0.3)"
-                  enableDotLabel={true}
-                  dotLabel={
+                  pointSize={this.state.disableDots ? 0 : 5}
+                  pointBorderWidth={2}
+                  pointBorderColor={{ from: 'serieColor' }}
+                  enablePointLabel={true}
+                  pointLabel={
                     this.state.enableTime ? ((e) => {
                       return "".concat(moment(e.x).format("HH:mm"),"");
                     }) : ""
                   }
-                  dotLabelYOffset={-12}
-                  dotBorderWidth={0}
-                  animate={false}
-                  motionStiffness={90}
-                  motionDamping={15}
+                  enableSlices={'x'}
+                  animate={true}
                   legends={[{
-                          "anchor": "bottom-right",
-                          "direction": "row",
-                          "justify": false,
-                          "translateX": 25,
-                          "translateY": 40,
-                          "itemsSpacing": 10,
-                          "itemDirection": "left-to-right",
-                          "itemWidth": 100,
-                          "itemHeight": 18,
-                          "itemOpacity": 0.75,
-                          "symbolSize": 12,
-                          "symbolShape": "circle",
-                          "symbolBorderColor": "rgba(0, 0, 0, .5)",
-                          "effects": [{
-                              "on": "hover",
-                              "style": {
-                                  "itemBackground": "rgba(0, 0, 0, .03)",
-                                  "itemOpacity": 1
+                          anchor: "bottom-right",
+                          direction: "row",
+                          justify: false,
+                          translateX: 25,
+                          translateY: 40,
+                          itemsSpacing: 10,
+                          itemDirection: "left-to-right",
+                          itemWidth: 100,
+                          itemHeight: 18,
+                          itemOpacity: 0.75,
+                          symbolSize: 12,
+                          symbolShape: "circle",
+                          symbolBorderColor: "rgba(0, 0, 0, .5)",
+                          effects: [{
+                              on: "hover",
+                              style: {
+                                  itemBackground: "rgba(0, 0, 0, .03)",
+                                  itemOpacity: 1
                               }
                           }]
                         }
