@@ -64,8 +64,5 @@ node_modules/
 # dotenv environment variables file
 .env
 
-# IDE files
-.idea/
-
 # Build output
 build
