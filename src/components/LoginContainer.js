@@ -176,7 +176,7 @@ class LoginContainer extends Component {
                   {this.props.ownSensors.length === 0 &&
                     <Fragment>
                       <Avatar src="/images/sensor_large.png" style={{width: 200, height: 200, marginLeft: 85, marginTop: 75, padding: 15}} />
-                      <Typography variant="subtitle1" style={{marginLeft: 20, marginRight: 20, marginTop: 65, height: 200, color: "#666", textAlign: "center"}} gutterBottom><b>{strings.noOwnSensors1} <a href='https://luftdaten.info/feinstaubsensor-bauen/' target='blank'>www.luftdaten.info</a>{strings.noOwnSensors2}</b></Typography>
+                      <Typography variant="subtitle1" style={{marginLeft: 20, marginRight: 20, marginTop: 65, height: 200, color: "#666", textAlign: "center"}} gutterBottom><b>{strings.noOwnSensors1} <a href='https://sensor.community/en/sensors/airrohr/' target='blank'>www.sensor.community</a> {strings.noOwnSensors2}</b></Typography>
                     </Fragment>
                   }
                 </TabContainer>
