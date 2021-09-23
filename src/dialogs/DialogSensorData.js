@@ -162,8 +162,8 @@ class FullScreenDialog extends React.Component {
           listPressure.push({ x: time, y: pressureDouble });
           listEU1.push({ x: time, y: 40 });
           listEU2.push({ x: time, y: 25 });
-          listWHO1.push({ x: time, y: 20 });
-          listWHO2.push({ x: time, y: 10 });
+          listWHO1.push({ x: time, y: 15 });
+          listWHO2.push({ x: time, y: 5 });
           return (item, key);
         });
 
