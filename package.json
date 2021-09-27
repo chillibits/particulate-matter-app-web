@@ -25,7 +25,7 @@
     "react-autosuggest": "10.1.0",
     "react-color": "2.19.3",
     "react-custom-scrollbars": "4.2.1",
-    "react-device-detect": "1.17.0",
+    "react-device-detect": "2.0.0",
     "react-dom": "17.0.2",
     "react-geocode": "0.2.3",
     "react-google-autocomplete": "2.4.2",
