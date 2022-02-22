@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import * as Keys from "../keys";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
@@ -112,7 +112,7 @@ class MapContainer extends Component {
         } else if (this.props.ownSensors.find((sensor) => sensor.chipId === marker.i)) {
           imageUrl = "markers/green.png";
         }
-        return marker.l !== 0 || marker.b !== 0 ? <Marker key={marker.i} icon={{ url: imageUrl }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} /> : <fragment/>;
+        return marker.l !== 0 || marker.b !== 0 ? <Marker key={marker.i} icon={{ url: imageUrl }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} /> : <Fragment/>;
       });
       this.setState({
         markers,

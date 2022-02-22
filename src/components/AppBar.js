@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import strings from "../strings";
@@ -29,9 +29,9 @@ const styles = (theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     width: "100%",
     [theme.breakpoints.up("sm")]: {

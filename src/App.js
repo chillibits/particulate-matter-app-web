@@ -12,7 +12,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { green, red } from "@material-ui/core/colors";
 import request from "superagent";
 import fire from "./fire";
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { CustomView, isAndroid } from "react-device-detect";
 import strings from "./strings";
 import * as Constants from "./constants";
@@ -313,7 +313,7 @@ class App extends Component {
     return (
       <Router>
         <CustomView condition={isAndroid}>
-            <div><p>Sie werden weitergeleitet ...</p></div>
+          <div><p>Sie werden weitergeleitet ...</p></div>
         </CustomView>
         <CustomView condition={!isAndroid}>
           <Fragment>
@@ -359,13 +359,6 @@ class App extends Component {
                 {this.state.selected !== null && this.state.dialogEditSensorOpen && <DialogEditSensor opened={this.state.dialogEditSensorOpen} syncKey={this.state.syncKey} data={this.state.userData} onClose={this.onHideEditSensorDialog} chipId={this.state.selected.chipId} name={this.state.selected.name} fav={this.state.selected.fav} color={this.state.selected.color}/>}
                 {this.state.selectedId !== null && this.state.dialogRemoveSensorOpen && <DialogRemoveSensor opened={this.state.dialogRemoveSensorOpen} syncKey={this.state.syncKey} userData={this.state.userData} onClose={this.onHideRemoveSensorDialog} chipId={this.state.selectedId} />}
                 {this.state.selected !== null && this.state.dialogSensorDetailsOpen && <DialogSensorDetails opened={this.state.dialogSensorDetailsOpen} chipId={this.state.selected.chipId} name={this.state.selected.name} onClose={this.onHideDetailsDialog} />}
-                {/* URL-Parameter */}
-                <Switch>
-                  <Route path="/s/:id" render={(props) => (
-                    <DialogSensorData opened={this.state.dialogSensorDataRouteOpen} onClose={this.onHideSensorDataDialog} onOpenDetails={this.onShowDetailsDialog} sensor={{chipId: props.match.params.id, name: strings.unknownSensor}} />
-                  )} />
-                  <Redirect strict from={"/"} to={"."} />
-                </Switch>
                 {/* Snackbars */}
                 <Snackbar open={this.state.snackbarSuccessOpen} anchorOrigin={{ vertical: "bottom", horizontal: "right" }} autoHideDuration={3000} onClose={this.onSnackbarClose}>
                   <SnackbarContent
@@ -373,7 +366,8 @@ class App extends Component {
                       <span style={{ display: "flex", alignItems: "center" }}>
                         <CheckCircleIcon style={{ fontSize: 20, opacity: 0.9, marginRight: 15 }}/>
                         {this.state.snackbarMessage}
-                      </span>}
+                      </span>
+                    }
                     action={[
                       <IconButton key="success" color="inherit" onClick={this.onSnackbarClose}>
                         <CloseIcon style={{fontSize: 20}} />
@@ -387,7 +381,8 @@ class App extends Component {
                       <span style={{ display: "flex", alignItems: "center" }}>
                         <ErrorIcon style={{ fontSize: 20, opacity: 0.9, marginRight: 15 }}/>
                         {this.state.snackbarMessage}
-                      </span>}
+                      </span>
+                    }
                     action={[
                       <IconButton key="error" color="inherit" onClick={this.onSnackbarClose}>
                         <CloseIcon style={{fontSize: 20}} />
