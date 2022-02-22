@@ -296,7 +296,7 @@ class FullScreenDialog extends React.Component {
     if(name === "enabledWHOThreshold" && event.target.checked) {
       data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 });
       data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 });
-    } else if(name !== "enabledWHOThreshold" && this.state.enabledEUThreshold) {
+    } else if(name !== "enabledWHOThreshold" && this.state.enabledWHOThreshold) {
       data.push({ id: strings.whoThreshold + " - " + strings.pm1, color: "hsl(2, 100%, 50%)", data: this.state.dataWHOThreshold1 });
       data.push({ id: strings.whoThreshold + " - " + strings.pm2, color: "hsl(3, 100%, 50%)", data: this.state.dataWHOThreshold2 });
     }

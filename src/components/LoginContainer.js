@@ -107,10 +107,10 @@ class LoginContainer extends Component {
                   <QRCode value={this.state.syncKey} size={210} logo={"https://h2801469.stratoserver.net/qr_icon.png"} logoWidth={70}/>
                 </div>
               </Avatar>
-              <Typography variant="h6" style={isFirefox || isEdge || (!isChrome && !isOpera) ? {position: "absolute", marginTop: 450, color: "#3F51B5"} : {position: "absolute", marginTop: 230, color: "#3F51B5"}} gutterBottom><b>{strings.linkWithAndroidApp}</b></Typography>
-              <Typography variant="subtitle1" style={isFirefox || isEdge || (!isChrome && !isOpera) ? {position: "absolute", marginTop: 560, color: "#666", textAlign: "center"} : {position: "absolute", marginTop: 290, color: "#666", textAlign: "center"}} gutterBottom>{strings.linkInstruction1}<br/>{strings.linkInstruction2}</Typography>
-              <Typography variant="subtitle1" style={isFirefox || isEdge || (!isChrome && !isOpera) ? {position: "absolute", marginTop: 690, color: "#666", textAlign: "center"} : {position: "absolute", marginTop: 360, color: "#666", textAlign: "center"}} gutterBottom><i style={{color: "#3F51B5"}}>{strings.linkInstruction3}</i></Typography>
-              <Typography variant="subtitle1" style={isFirefox || isEdge || (!isChrome && !isOpera) ? {position: "absolute", marginTop: 800, color: "#666", textAlign: "center", marginBottom: 30} : {position: "absolute", marginTop: 415, color: "#666", textAlign: "center", marginBottom: 30}} gutterBottom>{strings.linkInstruction4}</Typography>
+              <Typography variant="h6" style={isFirefox || isEdge || (isChrome && !isOpera) ? {position: "absolute", marginTop: 450, color: "#3F51B5"} : {position: "absolute", marginTop: 230, color: "#3F51B5"}} gutterBottom><b>{strings.linkWithAndroidApp}</b></Typography>
+              <Typography variant="subtitle1" style={isFirefox || isEdge || (isChrome && !isOpera) ? {position: "absolute", marginTop: 560, color: "#666", textAlign: "center"} : {position: "absolute", marginTop: 290, color: "#666", textAlign: "center"}} gutterBottom>{strings.linkInstruction1}<br/>{strings.linkInstruction2}</Typography>
+              <Typography variant="subtitle1" style={isFirefox || isEdge || (isChrome && !isOpera) ? {position: "absolute", marginTop: 690, color: "#666", textAlign: "center"} : {position: "absolute", marginTop: 360, color: "#666", textAlign: "center"}} gutterBottom><i style={{color: "#3F51B5"}}>{strings.linkInstruction3}</i></Typography>
+              <Typography variant="subtitle1" style={isFirefox || isEdge || (isChrome && !isOpera) ? {position: "absolute", marginTop: 800, color: "#666", textAlign: "center", marginBottom: 30} : {position: "absolute", marginTop: 415, color: "#666", textAlign: "center", marginBottom: 30}} gutterBottom>{strings.linkInstruction4}</Typography>
             </div>
           </Scrollbars>
         }

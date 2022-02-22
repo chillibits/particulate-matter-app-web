@@ -112,7 +112,7 @@ class MapContainer extends Component {
         } else if (this.props.ownSensors.find((sensor) => sensor.chipId === marker.i)) {
           imageUrl = "markers/green.png";
         }
-        if(marker.l !== 0 || marker.b !== 0) return <Marker key={marker.i} icon={{ url: imageUrl }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />;
+        return marker.l !== 0 || marker.b !== 0 ? <Marker key={marker.i} icon={{ url: imageUrl }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} /> : <fragment/>;
       });
       this.setState({
         markers,
