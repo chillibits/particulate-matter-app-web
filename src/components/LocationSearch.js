@@ -9,7 +9,6 @@ import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import * as Keys from "../keys";
 import strings from "../strings";
-import request from "superagent";
 
 function loadScript(src, position, id) {
   if (!position) return;

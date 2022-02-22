@@ -1,5 +1,4 @@
 # Build and deploy app to firebase on master push
-
 name: Firebase Deploy
 
 on:
@@ -10,16 +9,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+
     - name: Install & Build
       run: |
-        npm install
+        npm i --legacy-peer-deps
         npm run build --if-present
-        npm audit fix
       env:
         CI: false
+        
     - uses: w9jds/firebase-action@master
       with:
         args: deploy --only hosting

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SvgIcon from "@material-ui/core/SvgIcon";
 
-export default class extends Component {
+export default class SensorIcon extends Component {
   render() {
     return (
       <SvgIcon>

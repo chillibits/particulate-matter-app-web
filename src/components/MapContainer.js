@@ -24,11 +24,6 @@ class MapContainer extends Component {
     oldOwnSensors: [],
   };
 
-  constructor(props) {
-    super(props);
-    // this.state.markers = this.props.markerData.map(marker => <Marker key={marker.i} icon={{ url: "markers/blue.png" }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />);
-  }
-
   onMarkerClick = (props, marker, e) => {
     let currentComponent = this;
     Geocode.setApiKey(Keys.GOOGLE_GEOCODE_KEY);
@@ -112,16 +107,12 @@ class MapContainer extends Component {
     if(this.props.markerData !== this.state.oldMarkerData || this.props.favorites.length !== this.state.oldFavorites.length || this.props.ownSensors.length !== this.state.oldOwnSensors.length) {
       var markers = this.props.markerData.map((marker) => {
         var imageUrl = "markers/blue.png";
-        this.props.favorites.map((sensor) => {
-          if(sensor.chipId === marker.i) imageUrl = "markers/red.png";
-          return true;
-        });
-        this.props.ownSensors.map((sensor) => {
-          if(sensor.chipId === marker.i) imageUrl = "markers/green.png";
-          return true;
-        });
-        // Attention: !== does not work!
-        if(marker.l != 0 || marker.b != 0) return <Marker key={marker.i} icon={{ url: imageUrl }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />;
+        if (this.props.favorites.find((sensor) => sensor.chipId === marker.i)) {
+          imageUrl = "markers/red.png";
+        } else if (this.props.ownSensors.find((sensor) => sensor.chipId === marker.i)) {
+          imageUrl = "markers/green.png";
+        }
+        if(marker.l !== 0 || marker.b !== 0) return <Marker key={marker.i} icon={{ url: imageUrl }} title={marker.i} name={marker.i} onClick={this.onMarkerClick} position={{lat: marker.l, lng: marker.b}} />;
       });
       this.setState({
         markers,

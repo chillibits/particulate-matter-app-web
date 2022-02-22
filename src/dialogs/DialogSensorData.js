@@ -15,7 +15,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Tooltip from "@material-ui/core/Tooltip";
 import SwipeableViews from "react-swipeable-views";
-import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import deLocale from "date-fns/locale/de";
 import { SensorDataTable, SensorIcon } from "../components/index";
