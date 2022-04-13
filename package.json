@@ -45,7 +45,7 @@
     "superagent": "7.1.2"
   },
   "devDependencies": {
-    "react-scripts": "5.0.0"
+    "react-scripts": "5.0.1"
   },
   "browserslist": [
     ">0.2%",
