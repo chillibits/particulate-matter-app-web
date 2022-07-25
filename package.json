@@ -24,7 +24,7 @@
     "@nivo/line": "^0.79.1",
     "autosuggest-highlight": "3.3.4",
     "classnames": "2.3.1",
-    "date-fns": "2.28.0",
+    "date-fns": "2.29.1",
     "google-maps-react": "2.0.6",
     "localized-strings": "0.2.4",
     "moment": "2.29.4",
